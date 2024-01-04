@@ -1,0 +1,622 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		F8575B642B473A9B00F71F92 /* SpectastropheApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8575B632B473A9B00F71F92 /* SpectastropheApp.swift */; };
+		F8575B662B473A9B00F71F92 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8575B652B473A9B00F71F92 /* ContentView.swift */; };
+		F8575B682B473A9D00F71F92 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F8575B672B473A9D00F71F92 /* Assets.xcassets */; };
+		F8575B6C2B473A9D00F71F92 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F8575B6B2B473A9D00F71F92 /* Preview Assets.xcassets */; };
+		F8575B762B473A9E00F71F92 /* SpectastropheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8575B752B473A9E00F71F92 /* SpectastropheTests.swift */; };
+		F8575B802B473A9E00F71F92 /* SpectastropheUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8575B7F2B473A9E00F71F92 /* SpectastropheUITests.swift */; };
+		F8575B822B473A9E00F71F92 /* SpectastropheUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8575B812B473A9E00F71F92 /* SpectastropheUITestsLaunchTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		F8575B722B473A9E00F71F92 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F8575B582B473A9B00F71F92 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F8575B5F2B473A9B00F71F92;
+			remoteInfo = Spectastrophe;
+		};
+		F8575B7C2B473A9E00F71F92 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F8575B582B473A9B00F71F92 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F8575B5F2B473A9B00F71F92;
+			remoteInfo = Spectastrophe;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		F8575B602B473A9B00F71F92 /* Spectastrophe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Spectastrophe.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F8575B632B473A9B00F71F92 /* SpectastropheApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpectastropheApp.swift; sourceTree = "<group>"; };
+		F8575B652B473A9B00F71F92 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		F8575B672B473A9D00F71F92 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		F8575B692B473A9D00F71F92 /* Spectastrophe.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Spectastrophe.entitlements; sourceTree = "<group>"; };
+		F8575B6B2B473A9D00F71F92 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		F8575B712B473A9E00F71F92 /* SpectastropheTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SpectastropheTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F8575B752B473A9E00F71F92 /* SpectastropheTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpectastropheTests.swift; sourceTree = "<group>"; };
+		F8575B7B2B473A9E00F71F92 /* SpectastropheUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SpectastropheUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F8575B7F2B473A9E00F71F92 /* SpectastropheUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpectastropheUITests.swift; sourceTree = "<group>"; };
+		F8575B812B473A9E00F71F92 /* SpectastropheUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpectastropheUITestsLaunchTests.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		F8575B5D2B473A9B00F71F92 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F8575B6E2B473A9E00F71F92 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F8575B782B473A9E00F71F92 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		F8575B572B473A9B00F71F92 = {
+			isa = PBXGroup;
+			children = (
+				F8575B622B473A9B00F71F92 /* Spectastrophe */,
+				F8575B742B473A9E00F71F92 /* SpectastropheTests */,
+				F8575B7E2B473A9E00F71F92 /* SpectastropheUITests */,
+				F8575B612B473A9B00F71F92 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		F8575B612B473A9B00F71F92 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F8575B602B473A9B00F71F92 /* Spectastrophe.app */,
+				F8575B712B473A9E00F71F92 /* SpectastropheTests.xctest */,
+				F8575B7B2B473A9E00F71F92 /* SpectastropheUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F8575B622B473A9B00F71F92 /* Spectastrophe */ = {
+			isa = PBXGroup;
+			children = (
+				F8575B632B473A9B00F71F92 /* SpectastropheApp.swift */,
+				F8575B652B473A9B00F71F92 /* ContentView.swift */,
+				F8575B672B473A9D00F71F92 /* Assets.xcassets */,
+				F8575B692B473A9D00F71F92 /* Spectastrophe.entitlements */,
+				F8575B6A2B473A9D00F71F92 /* Preview Content */,
+			);
+			path = Spectastrophe;
+			sourceTree = "<group>";
+		};
+		F8575B6A2B473A9D00F71F92 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				F8575B6B2B473A9D00F71F92 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		F8575B742B473A9E00F71F92 /* SpectastropheTests */ = {
+			isa = PBXGroup;
+			children = (
+				F8575B752B473A9E00F71F92 /* SpectastropheTests.swift */,
+			);
+			path = SpectastropheTests;
+			sourceTree = "<group>";
+		};
+		F8575B7E2B473A9E00F71F92 /* SpectastropheUITests */ = {
+			isa = PBXGroup;
+			children = (
+				F8575B7F2B473A9E00F71F92 /* SpectastropheUITests.swift */,
+				F8575B812B473A9E00F71F92 /* SpectastropheUITestsLaunchTests.swift */,
+			);
+			path = SpectastropheUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		F8575B5F2B473A9B00F71F92 /* Spectastrophe */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F8575B852B473A9E00F71F92 /* Build configuration list for PBXNativeTarget "Spectastrophe" */;
+			buildPhases = (
+				F8575B5C2B473A9B00F71F92 /* Sources */,
+				F8575B5D2B473A9B00F71F92 /* Frameworks */,
+				F8575B5E2B473A9B00F71F92 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Spectastrophe;
+			productName = Spectastrophe;
+			productReference = F8575B602B473A9B00F71F92 /* Spectastrophe.app */;
+			productType = "com.apple.product-type.application";
+		};
+		F8575B702B473A9E00F71F92 /* SpectastropheTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F8575B882B473A9E00F71F92 /* Build configuration list for PBXNativeTarget "SpectastropheTests" */;
+			buildPhases = (
+				F8575B6D2B473A9E00F71F92 /* Sources */,
+				F8575B6E2B473A9E00F71F92 /* Frameworks */,
+				F8575B6F2B473A9E00F71F92 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F8575B732B473A9E00F71F92 /* PBXTargetDependency */,
+			);
+			name = SpectastropheTests;
+			productName = SpectastropheTests;
+			productReference = F8575B712B473A9E00F71F92 /* SpectastropheTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		F8575B7A2B473A9E00F71F92 /* SpectastropheUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F8575B8B2B473A9E00F71F92 /* Build configuration list for PBXNativeTarget "SpectastropheUITests" */;
+			buildPhases = (
+				F8575B772B473A9E00F71F92 /* Sources */,
+				F8575B782B473A9E00F71F92 /* Frameworks */,
+				F8575B792B473A9E00F71F92 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F8575B7D2B473A9E00F71F92 /* PBXTargetDependency */,
+			);
+			name = SpectastropheUITests;
+			productName = SpectastropheUITests;
+			productReference = F8575B7B2B473A9E00F71F92 /* SpectastropheUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		F8575B582B473A9B00F71F92 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1510;
+				LastUpgradeCheck = 1510;
+				TargetAttributes = {
+					F8575B5F2B473A9B00F71F92 = {
+						CreatedOnToolsVersion = 15.1;
+					};
+					F8575B702B473A9E00F71F92 = {
+						CreatedOnToolsVersion = 15.1;
+						TestTargetID = F8575B5F2B473A9B00F71F92;
+					};
+					F8575B7A2B473A9E00F71F92 = {
+						CreatedOnToolsVersion = 15.1;
+						TestTargetID = F8575B5F2B473A9B00F71F92;
+					};
+				};
+			};
+			buildConfigurationList = F8575B5B2B473A9B00F71F92 /* Build configuration list for PBXProject "Spectastrophe" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = F8575B572B473A9B00F71F92;
+			productRefGroup = F8575B612B473A9B00F71F92 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				F8575B5F2B473A9B00F71F92 /* Spectastrophe */,
+				F8575B702B473A9E00F71F92 /* SpectastropheTests */,
+				F8575B7A2B473A9E00F71F92 /* SpectastropheUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		F8575B5E2B473A9B00F71F92 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F8575B6C2B473A9D00F71F92 /* Preview Assets.xcassets in Resources */,
+				F8575B682B473A9D00F71F92 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F8575B6F2B473A9E00F71F92 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F8575B792B473A9E00F71F92 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		F8575B5C2B473A9B00F71F92 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F8575B662B473A9B00F71F92 /* ContentView.swift in Sources */,
+				F8575B642B473A9B00F71F92 /* SpectastropheApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F8575B6D2B473A9E00F71F92 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F8575B762B473A9E00F71F92 /* SpectastropheTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F8575B772B473A9E00F71F92 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F8575B822B473A9E00F71F92 /* SpectastropheUITestsLaunchTests.swift in Sources */,
+				F8575B802B473A9E00F71F92 /* SpectastropheUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		F8575B732B473A9E00F71F92 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F8575B5F2B473A9B00F71F92 /* Spectastrophe */;
+			targetProxy = F8575B722B473A9E00F71F92 /* PBXContainerItemProxy */;
+		};
+		F8575B7D2B473A9E00F71F92 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F8575B5F2B473A9B00F71F92 /* Spectastrophe */;
+			targetProxy = F8575B7C2B473A9E00F71F92 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		F8575B832B473A9E00F71F92 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		F8575B842B473A9E00F71F92 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+			};
+			name = Release;
+		};
+		F8575B862B473A9E00F71F92 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Spectastrophe/Spectastrophe.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Spectastrophe/Preview Content\"";
+				DEVELOPMENT_TEAM = K5U7BRQ5VA;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 14.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = dev.ridigilis.Spectastrophe;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		F8575B872B473A9E00F71F92 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Spectastrophe/Spectastrophe.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Spectastrophe/Preview Content\"";
+				DEVELOPMENT_TEAM = K5U7BRQ5VA;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 14.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = dev.ridigilis.Spectastrophe;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		F8575B892B473A9E00F71F92 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = K5U7BRQ5VA;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				MACOSX_DEPLOYMENT_TARGET = 14.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = dev.ridigilis.SpectastropheTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Spectastrophe.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Spectastrophe";
+			};
+			name = Debug;
+		};
+		F8575B8A2B473A9E00F71F92 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = K5U7BRQ5VA;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				MACOSX_DEPLOYMENT_TARGET = 14.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = dev.ridigilis.SpectastropheTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Spectastrophe.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Spectastrophe";
+			};
+			name = Release;
+		};
+		F8575B8C2B473A9E00F71F92 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = K5U7BRQ5VA;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				MACOSX_DEPLOYMENT_TARGET = 14.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = dev.ridigilis.SpectastropheUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Spectastrophe;
+			};
+			name = Debug;
+		};
+		F8575B8D2B473A9E00F71F92 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = K5U7BRQ5VA;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				MACOSX_DEPLOYMENT_TARGET = 14.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = dev.ridigilis.SpectastropheUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Spectastrophe;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		F8575B5B2B473A9B00F71F92 /* Build configuration list for PBXProject "Spectastrophe" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F8575B832B473A9E00F71F92 /* Debug */,
+				F8575B842B473A9E00F71F92 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F8575B852B473A9E00F71F92 /* Build configuration list for PBXNativeTarget "Spectastrophe" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F8575B862B473A9E00F71F92 /* Debug */,
+				F8575B872B473A9E00F71F92 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F8575B882B473A9E00F71F92 /* Build configuration list for PBXNativeTarget "SpectastropheTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F8575B892B473A9E00F71F92 /* Debug */,
+				F8575B8A2B473A9E00F71F92 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F8575B8B2B473A9E00F71F92 /* Build configuration list for PBXNativeTarget "SpectastropheUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F8575B8C2B473A9E00F71F92 /* Debug */,
+				F8575B8D2B473A9E00F71F92 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = F8575B582B473A9B00F71F92 /* Project object */;
+}
