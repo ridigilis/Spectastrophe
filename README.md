@@ -1,5 +1,5 @@
 # Spectastrophe
-Spectastrophe (working title) is a game I'm building in Swift/SwiftUI with the following contstraints:
+Spectastrophe (working title) is a game I'm building in Swift/SwiftUI with the following constraints:
 - I must only use SwiftUI for rendering (so no *Kits specifically intended for game development)
 - I cannot use any external dependencies (unless its a dev tool like swiftlint)
 - I have to create and use my own assets
