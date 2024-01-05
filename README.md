@@ -42,7 +42,11 @@ So think:
 - Inventory management
 - I mentioned loot, right?
 
-Keep in mind, the primary goal here is to improve my Swift and SwiftUI knowledge (and maybe your knowledge too!). Developing a game that works, and one that is actually fun to play, are secondary and tertiary goals respectively.
+**Keep in mind, the primary goal here is to improve my Swift and SwiftUI knowledge (and maybe your knowledge too!). Developing a game that works, and one that is actually fun to play, are secondary and tertiary goals respectively.**
+
+### 2D or 3D?
+Constraining myself to SwiftUI-only pretty much necessitates a 2D game.
+
 
 More details to come.
 
