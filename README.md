@@ -51,6 +51,3 @@ I want to prioritize iPadOS and macOS because I feel like I'm going to need all 
 
 ## Contributing
 Honestly, I haven't thought that far ahead yet. For now, I invite you to engage with me on Mastodon if you have feedback you want to share. If by some wacky turn of events this experiment actually produces something worth maintaining, I'll revisit the idea.
-
-## License
-GNU General Public License (GPL) v3.0
