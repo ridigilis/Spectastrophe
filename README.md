@@ -6,7 +6,7 @@ Spectastrophe (working title) is a game I'm building in Swift/SwiftUI with the f
 - I have to do it all in public
 
 Why? So I can ring a few gongs with one bong:
-- git gud at Swift and SwiftUI fast; I just started learning it a few months ago and I'd like to pay the bills with it, ideally
+- git gud at Swift and SwiftUI; I just started learning it a few months ago
 - develop a deeper understanding of game design and development by implementing the engine from scratch
 - confront my social anxieties and other personal struggles so they'll stop holding me back from joining communities of awesome like-minded people
 
