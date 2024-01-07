@@ -29,6 +29,16 @@ I think that's plenty to work with for now. Let's make some models!
 import Foundation
 import SwiftUI
 
-// We'll probably need an observable game state class, so let's stub that first
 @Observable
 final class GameState {}
+
+// Exciting! Next, let's stub some of the models from above.
+struct Player {}
+struct Enemy {}
+
+struct Deck {}
+struct Card {}
+
+struct OverWorld {}
+struct Encounter {}
+struct Tile {}
