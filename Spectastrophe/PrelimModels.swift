@@ -35,10 +35,20 @@ final class GameState {}
 struct Player: Targettable, HasDeck {
 	let hp: Int
 	let deck: Deck
+
+	init(_ player: Player? = nil, hp: Int? = nil, deck: Deck? = nil) {
+		self.hp = hp ?? player?.hp ?? 0
+		self.deck = deck ?? player?.deck ?? Deck()
+	}
 }
 struct Enemy: Targettable, HasDeck {
 	let hp: Int
 	let deck: Deck
+
+	init(_ enemy: Enemy? = nil, hp: Int? = nil, deck: Deck? = nil) {
+		self.hp = hp ?? player?.hp ?? 0
+		self.deck = deck ?? player?.deck ?? Deck()
+	}
 }
 
 struct Deck {
@@ -77,7 +87,9 @@ struct Deck {
 
 
 }
-struct Card: Equatable {}
+struct Card: Equatable {
+
+}
 
 struct OverWorld {}
 struct Encounter {}
