@@ -46,8 +46,8 @@ struct Enemy: Targettable, HasDeck {
 	let deck: Deck
 
 	init(_ enemy: Enemy? = nil, hp: Int? = nil, deck: Deck? = nil) {
-		self.hp = hp ?? player?.hp ?? 0
-		self.deck = deck ?? player?.deck ?? Deck()
+		self.hp = hp ?? enemy?.hp ?? 0
+		self.deck = deck ?? enemy?.deck ?? Deck()
 	}
 }
 
@@ -82,10 +82,7 @@ struct Deck {
              hand: self.hand.filter { $0 != card },
              playArea: self.playArea + [card]
         )
-
     }
-
-
 }
 struct Card: Equatable {
 
