@@ -32,8 +32,52 @@ import SwiftUI
 @Observable
 final class GameState {}
 
-struct Deck {}
-struct Card {}
+struct Player: Targettable, HasDeck {
+	let hp: Int
+	let deck: Deck
+}
+struct Enemy: Targettable, HasDeck {
+	let hp: Int
+	let deck: Deck
+}
+
+struct Deck {
+	let drawPile: [Card]
+	let hand: [Card]
+	let playArea: [Card]
+	let discardPile: [Card]
+	let exhaustPile: [Card]
+
+	init(_ deck: Deck? = nil, drawPile: [Card]? = nil, hand: [Card]? = nil, playArea: [Card]? = nil, discardPile: [Card]? = nil, exhaustPile: [Card]? = nil) {
+        self.drawPile = drawPile ?? deck?.drawPile ?? []
+        self.hand = hand ?? deck?.hand ?? []
+        self.playArea = playArea ?? deck?.playArea ?? []
+        self.discardPile = discardPile ?? deck?.discardPile ?? []
+        self.exhaustPile = exhaustPile ?? deck?.discardPile ?? []
+	}
+
+    private func drawCards(_ amt: UInt) -> Self {
+        Self(self,
+             drawPile: self.drawPile.enumerated().filter { $0.offset > amt }.map { $0.element },
+             hand: self.hand + self.drawPile.enumerated().filter { $0.offset <= amt }.map { $0.element }
+        )
+    }
+
+    func draw() -> Self {
+        self.drawCards(1)
+    }
+
+    func play(_ card: Card) -> Self {
+        Self(self,
+             hand: self.hand.filter { $0 != card },
+             playArea: self.playArea + [card]
+        )
+
+    }
+
+
+}
+struct Card: Equatable {}
 
 struct OverWorld {}
 struct Encounter {}
@@ -43,16 +87,6 @@ protocol Targettable {
 	var hp: Int { get }
 }
 
-// They'll both need decks of cards too.
 protocol HasDeck {
 	var deck: Deck { get }
-}
-
-struct Player: Targettable, HasDeck {
-	let hp: Int
-	let deck: Deck
-}
-struct Enemy: Targettable, HasDeck {
-	let hp: Int
-	let deck: Deck
 }

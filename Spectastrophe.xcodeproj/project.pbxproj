@@ -14,6 +14,7 @@
 		F8575B762B473A9E00F71F92 /* SpectastropheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8575B752B473A9E00F71F92 /* SpectastropheTests.swift */; };
 		F8575B802B473A9E00F71F92 /* SpectastropheUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8575B7F2B473A9E00F71F92 /* SpectastropheUITests.swift */; };
 		F8575B822B473A9E00F71F92 /* SpectastropheUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8575B812B473A9E00F71F92 /* SpectastropheUITestsLaunchTests.swift */; };
+		F86F7C1F2B4B2E0C0055659F /* PrelimModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = F86F7C1E2B4B2E0C0055659F /* PrelimModels.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,6 +46,7 @@
 		F8575B7B2B473A9E00F71F92 /* SpectastropheUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SpectastropheUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8575B7F2B473A9E00F71F92 /* SpectastropheUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpectastropheUITests.swift; sourceTree = "<group>"; };
 		F8575B812B473A9E00F71F92 /* SpectastropheUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpectastropheUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		F86F7C1E2B4B2E0C0055659F /* PrelimModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrelimModels.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,6 +97,7 @@
 		F8575B622B473A9B00F71F92 /* Spectastrophe */ = {
 			isa = PBXGroup;
 			children = (
+				F86F7C1E2B4B2E0C0055659F /* PrelimModels.swift */,
 				F8575B632B473A9B00F71F92 /* SpectastropheApp.swift */,
 				F8575B652B473A9B00F71F92 /* ContentView.swift */,
 				F8575B672B473A9D00F71F92 /* Assets.xcassets */,
@@ -261,6 +264,7 @@
 			files = (
 				F8575B662B473A9B00F71F92 /* ContentView.swift in Sources */,
 				F8575B642B473A9B00F71F92 /* SpectastropheApp.swift in Sources */,
+				F86F7C1F2B4B2E0C0055659F /* PrelimModels.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
