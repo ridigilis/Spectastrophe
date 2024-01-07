@@ -25,3 +25,10 @@ Let's start with the bones. The stuff and things I know will be in the game rega
 
 I think that's plenty to work with for now. Let's make some models!
 */
+
+import Foundation
+import SwiftUI
+
+// We'll probably need an observable game state class, so let's stub that first
+@Observable
+final class GameState {}
