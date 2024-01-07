@@ -63,7 +63,7 @@ struct Deck {
         self.hand = hand ?? deck?.hand ?? []
         self.playArea = playArea ?? deck?.playArea ?? []
         self.discardPile = discardPile ?? deck?.discardPile ?? []
-        self.exhaustPile = exhaustPile ?? deck?.discardPile ?? []
+        self.exhaustPile = exhaustPile ?? deck?.exhaustPile ?? []
 	}
 
     private func drawCards(_ amt: UInt) -> Self {
