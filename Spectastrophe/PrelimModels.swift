@@ -39,17 +39,20 @@ struct OverWorld {}
 struct Encounter {}
 struct Tile {}
 
-// That's good for now.
-// The Player and enemies will both need hitpoints.
-// So we'll make a Targettable protocol to reflect that.
 protocol Targettable {
 	var hp: Int { get }
 }
 
-// And we'll make them conform to it.
-struct Player: Targettable {
-	let hp: Int
+// They'll both need decks of cards too.
+protocol HasDeck {
+	var deck: Deck { get }
 }
-struct Enemy: Targettable {
+
+struct Player: Targettable, HasDeck {
 	let hp: Int
+	let deck: Deck
+}
+struct Enemy: Targettable, HasDeck {
+	let hp: Int
+	let deck: Deck
 }
