@@ -194,38 +194,60 @@ struct Card: Equatable, Identifiable {
 
 struct OverWorld {
     let board: Board
+
+    struct OverWorldTile: Tile {}
 }
 struct Encounter {
     let board: Board
+
+    struct EncounterTile: Tile {}
 }
 struct Board {
-    let tiles: [Coords: Tile]
+    let tiles: [Coords: Tile?]
+
+    init(_ tiles: [Coords: Tile]? = nil, x: UInt = 0, y: UInt = 0) {
+        if tiles == nil {
+            var t: [Coords: Tile] = [:]
+            for i in 0...x {
+                for j in 0...y {
+                    t[Coords(Int(i), Int(j))] = nil // will be a Tile when that gets fleshed out
+                }
+            }
+            self.tiles = t
+        } else {
+            self.tiles = tiles!
+        }
+    }
 }
-struct OverWorldTile: Tile {}
-struct EncountTile: Tile {}
+
 protocol Tile {}
 
 struct Coords: Hashable {
     let x: Int
     let y: Int
 
+    init(_ x: Int, _ y: Int) {
+        self.x = x
+        self.y = y
+    }
+
     var toE: Self {
-        Self(x: self.x + 1, y: self.y)
+        Self(self.x + 1, self.y)
     }
     var toSE: Self {
-        Self(x: self.x + 1, y: self.y - 1)
+        Self(self.x + 1, self.y - 1)
     }
     var toSW: Self {
-        Self(x: self.x, y: self.y - 1)
+        Self(self.x, self.y - 1)
     }
     var toW: Self {
-        Self(x: self.x - 1, y: self.y)
+        Self(self.x - 1, self.y)
     }
     var toNW: Self {
-        Self(x: self.x - 1, y: self.y + 1)
+        Self(self.x - 1, self.y + 1)
     }
     var toNE: Self {
-        Self(x: self.x, y: self.y + 1)
+        Self(self.x, self.y + 1)
     }
 }
 
