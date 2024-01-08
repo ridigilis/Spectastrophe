@@ -52,36 +52,127 @@ struct Enemy: Targettable, HasDeck {
 }
 
 struct Deck {
-	let drawPile: [Card]
-	let hand: [Card]
-	let playArea: [Card]
-	let discardPile: [Card]
-	let exhaustPile: [Card]
+	let drawPile: DrawPile
+    let hand: Hand
+	let playArea: PlayArea
+	let discardPile: DiscardPile
+	let exhaustPile: ExhaustPile
 
-	init(_ deck: Deck? = nil, drawPile: [Card]? = nil, hand: [Card]? = nil, playArea: [Card]? = nil, discardPile: [Card]? = nil, exhaustPile: [Card]? = nil) {
-        self.drawPile = drawPile ?? deck?.drawPile ?? []
-        self.hand = hand ?? deck?.hand ?? []
-        self.playArea = playArea ?? deck?.playArea ?? []
-        self.discardPile = discardPile ?? deck?.discardPile ?? []
-        self.exhaustPile = exhaustPile ?? deck?.exhaustPile ?? []
+	init(_ deck: Deck? = nil, 
+         drawPile: DrawPile? = nil,
+         hand: Hand? = nil,
+         playArea: PlayArea? = nil,
+         discardPile: DiscardPile? = nil,
+         exhaustPile: ExhaustPile? = nil
+    ) {
+        self.drawPile = drawPile ?? deck?.drawPile ?? DrawPile()
+        self.hand = hand ?? deck?.hand ?? Hand()
+        self.playArea = playArea ?? deck?.playArea ?? PlayArea()
+        self.discardPile = discardPile ?? deck?.discardPile ?? DiscardPile()
+        self.exhaustPile = exhaustPile ?? deck?.exhaustPile ?? ExhaustPile()
 	}
 
-    private func drawCards(_ amt: UInt) -> Self {
-        Self(self,
-             drawPile: self.drawPile.enumerated().filter { $0.offset > amt }.map { $0.element },
-             hand: self.hand + self.drawPile.enumerated().filter { $0.offset <= amt }.map { $0.element }
-        )
-    }
-
     func draw() -> Self {
-        self.drawCards(1)
+        let card = self.drawPile.draw()
+
+        return Self(self,
+             drawPile: DrawPile(self.drawPile.cards.filter { $0 != card }),
+             hand: Hand(self.hand.cards + [card].compactMap{$0})
+        )
     }
 
-    func play(_ card: Card) -> Self {
+    func playFromHand(_ card: Card) -> Self {
         Self(self,
-             hand: self.hand.filter { $0 != card },
-             playArea: self.playArea + [card]
+             hand: Hand(self.hand.cards.filter { $0 != card }),
+             playArea: PlayArea(self.playArea.cards + [card].compactMap{$0})
         )
+    }
+
+    func discardFromHand(_ card: Card) -> Self {
+        Self(self,
+             hand: Hand(self.hand.cards.filter { $0 != card }),
+             discardPile: DiscardPile(self.discardPile.cards + [card].compactMap{$0})
+        )
+    }
+
+    func exhaust(_ card: Card) -> Self {
+        Self(self,
+             playArea: PlayArea(self.playArea.cards.filter { $0 != card }),
+             exhaustPile: ExhaustPile(self.exhaustPile.cards + [card].compactMap{$0})
+        )
+    }
+
+    func shuffleDrawPile() -> Self {
+        Self(self,
+             drawPile: DrawPile(self.drawPile.cards.shuffled())
+        )
+    }
+
+    func shuffleDiscardPileIntoDrawPile() -> Self {
+        let cards = self.drawPile.cards + self.discardPile.cards
+
+        return Self(self,
+                    drawPile: DrawPile(cards.shuffled()),
+                    discardPile: DiscardPile()
+        )
+    }
+
+    func discardHand() -> Self {
+        Self(self,
+             hand: Hand(),
+             discardPile: DiscardPile(self.discardPile.cards + self.hand.cards)
+        )
+    }
+
+    func clearPlayArea() -> Self {
+        Self(self,
+             playArea: PlayArea(),
+             discardPile: DiscardPile(self.discardPile.cards + self.playArea.cards)
+        )
+    }
+
+    struct DrawPile: Pile {
+        internal let cards: [Card]
+
+        init(_ cards: [Card] = []) {
+            self.cards = cards
+        }
+
+        func draw() -> Card? {
+            self.cards.first
+        }
+    }
+
+    struct Hand: Pile {
+        let cards: [Card]
+
+        init(_ cards: [Card] = []) {
+            self.cards = cards
+        }
+    }
+
+    struct PlayArea: Pile {
+        let cards: [Card]
+
+        init(_ cards: [Card] = []) {
+            self.cards = cards
+        }
+    }
+
+    struct DiscardPile: Pile {
+        let cards: [Card]
+
+        init(_ cards: [Card] = []) {
+            self.cards = cards
+        }
+    }
+
+    struct ExhaustPile: Pile {
+        let cards: [Card]
+
+        init(_ cards: [Card] = []) {
+            self.cards = cards
+        }
     }
 }
 struct Card: Equatable {
@@ -98,4 +189,8 @@ protocol Targettable {
 
 protocol HasDeck {
 	var deck: Deck { get }
+}
+
+protocol Pile {
+    var cards: [Card] { get }
 }
