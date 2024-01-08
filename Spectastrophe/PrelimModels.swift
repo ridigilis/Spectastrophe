@@ -175,8 +175,21 @@ struct Deck {
         }
     }
 }
-struct Card: Equatable {
 
+struct Card: Equatable, Identifiable {
+    let id = UUID()
+    let parentId: UUID?
+    let type: CardType
+    let actions: [Action]
+
+    // not sure if this is what I want this to be yet
+    static func ==(lhs: Self, rhs: Self) -> Bool {
+        lhs.id == rhs.id
+    }
+
+    enum CardType {
+        case action, gear
+    }
 }
 
 struct OverWorld {}
@@ -193,4 +206,13 @@ protocol HasDeck {
 
 protocol Pile {
     var cards: [Card] { get }
+}
+
+protocol Action {
+    var targets: [Targettable]? { get }
+    var type: ActionType { get }
+}
+
+enum ActionType {
+    case attack, defend, heal, buff, debuff, move
 }
