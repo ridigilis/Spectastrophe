@@ -29,8 +29,15 @@ I think that's plenty to work with for now. Let's make some models!
 import Foundation
 import SwiftUI
 
-@Observable
-final class GameState {}
+final class GameState: ObservableObject {
+    var player: Player
+    var world: OverWorld
+
+    init(player: Player = Player(), world: OverWorld = OverWorld()) {
+        self.player = player
+        self.world = world
+    }
+}
 
 struct Player: Targettable, HasDeck {
 	let hp: Int
@@ -193,9 +200,10 @@ struct Card: Equatable, Identifiable {
 }
 
 struct OverWorld {
-    let board: Board
+    let board: Board = Board(layers: 7)
 
     struct OverWorldTile: Tile {
+        let id = UUID()
         let encounter: Encounter
     }
 }
@@ -203,6 +211,7 @@ struct Encounter {
     let board: Board
 
     struct EncounterTile: Tile {
+        let id = UUID()
         let occupants: [Targettable]
 
     }
@@ -246,26 +255,42 @@ struct Encounter {
     }
 }
 struct Board {
-    let tiles: [Coords: Tile?]
+    let tiles: [Coords: String?]
 
-    init(_ tiles: [Coords: Tile]? = nil, x: UInt = 0, y: UInt = 0) {
+    static private func generateLayer(amt: UInt, coords: Coords = Coords(0,0), tiles: [Coords: String?] = [:]) -> [Coords: String?] {
+        if amt == 0 {
+            return tiles
+        }
+
+        let newAmt = amt - 1
+        var t = tiles
+
+        t[coords] = "Tile"
+
+        return generateLayer(amt: newAmt, coords: coords.toE, tiles: t)
+            .merging(generateLayer(amt: newAmt, coords: coords.toSE, tiles: t), uniquingKeysWith: { keep, _ in return keep })
+            .merging(generateLayer(amt: newAmt, coords: coords.toSW, tiles: t), uniquingKeysWith: { keep, _ in return keep })
+            .merging(generateLayer(amt: newAmt, coords: coords.toW, tiles: t), uniquingKeysWith: { keep, _ in return keep })
+            .merging(generateLayer(amt: newAmt, coords: coords.toNW, tiles: t), uniquingKeysWith: { keep, _ in return keep })
+            .merging(generateLayer(amt: newAmt, coords: coords.toNE, tiles: t), uniquingKeysWith: { keep, _ in return keep })
+    }
+
+    init(_ tiles: [Coords: String?]? = nil, layers: UInt = 0) {
+        // the recursive function takes too long beyond 7
+        // luckily that was the max I was shooting for,
+        // but need to find a better solution if I want to go higher
+        let lyrs = layers > 7 ? 7 : layers
         if tiles == nil {
-            // this will be handled via procedural generation later
-            // for now, though, enjoy this fantastic nested for loop in all of its O(n*n) glory :)
-            var t: [Coords: Tile] = [:]
-            for i in 0...x {
-                for j in 0...y {
-                    t[Coords(Int(i), Int(j))] = nil // will be a Tile when that gets fleshed out
-                }
-            }
-            self.tiles = t
+            self.tiles = Board.generateLayer(amt: lyrs)
         } else {
             self.tiles = tiles!
         }
     }
 }
 
-protocol Tile {}
+protocol Tile: Identifiable {
+    var id: UUID { get }
+}
 
 struct Coords: Hashable {
     let x: Int

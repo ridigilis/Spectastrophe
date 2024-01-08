@@ -26,6 +26,7 @@ struct Row: View {
 }
 
 struct ContentView: View {
+    @StateObject private var game: GameState = GameState()
     @State private var currentZoom = 0.0
     @State private var totalZoom = 1.0
 
