@@ -207,6 +207,8 @@ struct Board {
 
     init(_ tiles: [Coords: Tile]? = nil, x: UInt = 0, y: UInt = 0) {
         if tiles == nil {
+            // this will be handled via procedural generation later
+            // for now, though, enjoy this fantastic nested for loop in all of its O(n*n) glory :)
             var t: [Coords: Tile] = [:]
             for i in 0...x {
                 for j in 0...y {
