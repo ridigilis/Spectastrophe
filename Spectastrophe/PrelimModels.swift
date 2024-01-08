@@ -192,9 +192,42 @@ struct Card: Equatable, Identifiable {
     }
 }
 
-struct OverWorld {}
-struct Encounter {}
-struct Tile {}
+struct OverWorld {
+    let board: Board
+}
+struct Encounter {
+    let board: Board
+}
+struct Board {
+    let tiles: [Coords: Tile]
+}
+struct OverWorldTile: Tile {}
+struct EncountTile: Tile {}
+protocol Tile {}
+
+struct Coords: Hashable {
+    let x: Int
+    let y: Int
+
+    var toE: Self {
+        Self(x: self.x + 1, y: self.y)
+    }
+    var toSE: Self {
+        Self(x: self.x + 1, y: self.y - 1)
+    }
+    var toSW: Self {
+        Self(x: self.x, y: self.y - 1)
+    }
+    var toW: Self {
+        Self(x: self.x - 1, y: self.y)
+    }
+    var toNW: Self {
+        Self(x: self.x - 1, y: self.y + 1)
+    }
+    var toNE: Self {
+        Self(x: self.x, y: self.y + 1)
+    }
+}
 
 protocol Targettable {
 	var hp: Int { get }
