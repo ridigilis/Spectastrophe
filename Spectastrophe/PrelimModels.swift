@@ -195,12 +195,55 @@ struct Card: Equatable, Identifiable {
 struct OverWorld {
     let board: Board
 
-    struct OverWorldTile: Tile {}
+    struct OverWorldTile: Tile {
+        let encounter: Encounter
+    }
 }
 struct Encounter {
     let board: Board
 
-    struct EncounterTile: Tile {}
+    struct EncounterTile: Tile {
+        let occupants: [Targettable]
+
+    }
+
+    enum TurnState {
+        case player, enemy
+
+        func next() -> Self {
+            if self == .player {
+                return .enemy
+            }
+            return .player
+        }
+
+        func descriptor() -> String {
+            switch self {
+                case .player: return "Player's Turn"
+                case .enemy: return "Enemy's Turn"
+            }
+        }
+    }
+
+    enum PhaseState: UInt {
+        case turnStart, draw, play, turnEnd
+
+        func next() -> PhaseState {
+            if self == .turnEnd {
+                return .turnStart
+            }
+            return Self(rawValue: self.rawValue + 1) ?? .turnStart
+        }
+
+        func descriptor() -> String {
+            switch self {
+                case .turnStart: return "Start of Turn"
+                case .draw: return "Draw Phase"
+                case .play: return "Play Phase"
+                case .turnEnd: return "End of Turn"
+            }
+        }
+    }
 }
 struct Board {
     let tiles: [Coords: Tile?]
