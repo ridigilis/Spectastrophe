@@ -200,20 +200,15 @@ struct Card: Equatable, Identifiable {
 }
 
 struct OverWorld {
-    let board: Board = Board(layers: 7)
+    let encounter = Encounter(board: Board(layers: 7))
 
-    struct OverWorldTile: Tile {
-        let id = UUID()
-        let encounter: Encounter
-    }
 }
 struct Encounter {
     let board: Board
 
-    struct EncounterTile: Tile {
+    struct Tile {
         let id = UUID()
         let occupants: [Targettable]
-
     }
 
     enum TurnState {
@@ -255,9 +250,9 @@ struct Encounter {
     }
 }
 struct Board {
-    let tiles: [Coords: String?]
+    let tiles: BoardMap
 
-    static private func generateLayer(amt: UInt, coords: Coords = Coords(0,0), tiles: [Coords: String?] = [:]) -> [Coords: String?] {
+    static private func generateLayer(amt: UInt, coords: Coords = Coords(0,0), tiles: BoardMap = [:]) -> BoardMap {
         if amt == 0 {
             return tiles
         }
@@ -265,7 +260,7 @@ struct Board {
         let newAmt = amt - 1
         var t = tiles
 
-        t[coords] = "Tile"
+        t[coords] = BoardTile(id: coords)
 
         return generateLayer(amt: newAmt, coords: coords.toE, tiles: t)
             .merging(generateLayer(amt: newAmt, coords: coords.toSE, tiles: t), uniquingKeysWith: { keep, _ in return keep })
@@ -275,7 +270,7 @@ struct Board {
             .merging(generateLayer(amt: newAmt, coords: coords.toNE, tiles: t), uniquingKeysWith: { keep, _ in return keep })
     }
 
-    init(_ tiles: [Coords: String?]? = nil, layers: UInt = 0) {
+    init(_ tiles: BoardMap? = nil, layers: UInt = 0) {
         // the recursive function takes too long beyond 7
         // luckily that was the max I was shooting for,
         // but need to find a better solution if I want to go higher
@@ -288,8 +283,13 @@ struct Board {
     }
 }
 
-protocol Tile: Identifiable {
-    var id: UUID { get }
+typealias BoardMap = [Coords: (any Tile)?]
+
+protocol Tile: Identifiable, Hashable {
+    var id: Coords { get }
+}
+struct BoardTile: Tile, Hashable {
+    var id: Coords
 }
 
 struct Coords: Hashable {
