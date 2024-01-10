@@ -251,6 +251,8 @@ struct Encounter {
 }
 struct Board {
     let tiles: BoardMap
+    let playerPosition: Coords = Coords(1,1)
+
 
     static private func generateLayer(amt: UInt, coords: Coords = Coords(0,0), tiles: BoardMap = [:]) -> BoardMap {
         if amt == 0 {

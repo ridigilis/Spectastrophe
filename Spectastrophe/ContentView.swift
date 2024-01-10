@@ -9,17 +9,30 @@ import SwiftUI
 
 struct BoardView: View {
     var tiles: BoardMap
+    var playerPosition: Coords
 
     var body: some View {
         ForEach(Range(-6...6)) { row in
             HStack {
                 ForEach(tiles.filter { $0.key.y == row }.map { Coords($0.value!.id.x * -1, $0.value!.id.y * -1) }.sorted(by: { $0.x < $1.x }), id:\.self) { tile in
                     Spacer().frame(width: 4)
-                    Circle().fill(.gray).padding(-4)
+                    ZStack {
+                        Circle().fill(.gray).padding(-4)
+                        if playerPosition == tile {
+                            PlayerView()
+                        }
+                    }
+
                     Spacer().frame(width: 8)
                 }
             }
         }
+    }
+}
+
+struct PlayerView: View {
+    var body: some View {
+        Image(systemName: "person").resizable().scaledToFit()
     }
 }
 
@@ -35,7 +48,7 @@ struct ContentView: View {
             Spacer()
             ZStack {
                 VStack {
-                    BoardView(tiles: game.world.encounter.board.tiles)
+                    BoardView(tiles: game.world.encounter.board.tiles, playerPosition: game.world.encounter.board.playerPosition)
                 }
                 .aspectRatio(contentMode: .fit)
                 .scaleEffect(currentZoom + totalZoom)
