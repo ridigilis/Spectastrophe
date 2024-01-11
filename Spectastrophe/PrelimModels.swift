@@ -30,32 +30,34 @@ import Foundation
 import SwiftUI
 
 final class GameState: ObservableObject {
-    var player: Player
+    var player: Pawn
     var world: OverWorld
 
-    init(player: Player = Player(), world: OverWorld = OverWorld()) {
+    init(player: Pawn = Pawn(type: .player), world: OverWorld? = nil) {
         self.player = player
-        self.world = world
+        self.world = world ?? OverWorld(player)
     }
 }
 
-struct Player: Targettable, HasDeck {
-	let hp: Int
-	let deck: Deck
+struct Pawn: Targettable, HasDeck {
+    let type: PawnType
+    let hp: Int
+    let pos: Coords
+    let moves: UInt
 
-	init(_ player: Player? = nil, hp: Int? = nil, deck: Deck? = nil) {
-		self.hp = hp ?? player?.hp ?? 0
-		self.deck = deck ?? player?.deck ?? Deck()
-	}
-}
-struct Enemy: Targettable, HasDeck {
-	let hp: Int
-	let deck: Deck
+    let deck: Deck
 
-	init(_ enemy: Enemy? = nil, hp: Int? = nil, deck: Deck? = nil) {
-		self.hp = hp ?? enemy?.hp ?? 0
-		self.deck = deck ?? enemy?.deck ?? Deck()
-	}
+    init(_ prev: Self? = nil, type: PawnType? = nil, hp: Int? = nil, pos: Coords? = nil, moves: UInt? = nil, deck: Deck? = nil) {
+        self.type = type ?? prev?.type ?? .enemy
+        self.hp = hp ?? prev?.hp ?? 0
+        self.pos = pos ?? prev?.pos ?? Coords(0,0)
+        self.moves = moves ?? prev?.moves ?? 0
+        self.deck = deck ?? prev?.deck ?? Deck()
+    }
+
+    enum PawnType {
+        case player, enemy
+    }
 }
 
 struct Deck {
@@ -72,7 +74,7 @@ struct Deck {
          discardPile: DiscardPile? = nil,
          exhaustPile: ExhaustPile? = nil
     ) {
-        self.drawPile = drawPile ?? deck?.drawPile ?? DrawPile()
+        self.drawPile = drawPile ?? deck?.drawPile ?? DrawPile([Card(type: .action, actions: [gainMoves])])
         self.hand = hand ?? deck?.hand ?? Hand()
         self.playArea = playArea ?? deck?.playArea ?? PlayArea()
         self.discardPile = discardPile ?? deck?.discardPile ?? DiscardPile()
@@ -139,7 +141,7 @@ struct Deck {
     }
 
     struct DrawPile: Pile {
-        internal let cards: [Card]
+        let cards: [Card]
 
         init(_ cards: [Card] = []) {
             self.cards = cards
@@ -187,7 +189,13 @@ struct Card: Equatable, Identifiable {
     let id = UUID()
     let parentId: UUID?
     let type: CardType
-    let actions: [Action]
+    let actions: [([Pawn]) -> any Action]
+
+    init(parentId: UUID? = nil, type: CardType, actions: [([Pawn]) -> any Action]) {
+        self.parentId = parentId
+        self.type = type
+        self.actions = actions
+    }
 
     // not sure if this is what I want this to be yet
     static func ==(lhs: Self, rhs: Self) -> Bool {
@@ -200,15 +208,23 @@ struct Card: Equatable, Identifiable {
 }
 
 struct OverWorld {
-    let encounter = Encounter(board: Board(layers: 7))
+    let player: Pawn
+    let encounter: Encounter
+
+    init(_ player: Pawn? = nil, encounter: Encounter? = nil) {
+        self.player = player ?? Pawn()
+        self.encounter = encounter ?? Encounter(board: Board(layers: 7), player: player ?? Pawn())
+    }
 
 }
 struct Encounter {
     let board: Board
+    let player: Pawn
+    let enemies: [Coords: Pawn] = [Coords(-3, 2): Pawn(hp: 64, pos: Coords(-3, 2), deck: Deck())]
 
     struct Tile {
         let id = UUID()
-        let occupants: [Targettable]
+        let occupants: [Pawn]
     }
 
     enum TurnState {
@@ -251,8 +267,6 @@ struct Encounter {
 }
 struct Board {
     let tiles: BoardMap
-    let playerPosition: Coords = Coords(1,1)
-
 
     static private func generateLayer(amt: UInt, coords: Coords = Coords(0,0), tiles: BoardMap = [:]) -> BoardMap {
         if amt == 0 {
@@ -324,7 +338,22 @@ struct Coords: Hashable {
 }
 
 protocol Targettable {
-	var hp: Int { get }
+    var hp: Int { get }
+    var pos: Coords { get }
+    var moves: UInt { get }
+
+    init(_: Self?, hp: Int?, pos: Coords?, moves: UInt?)
+}
+
+extension Targettable {
+    init(_ s: Self? = nil, hp: Int? = nil, pos: Coords? = nil, moves: UInt? = nil) {
+        self.init(
+            s,
+            hp: hp ?? s?.hp ?? 0,
+            pos: pos ?? s?.pos ?? Coords(0,0),
+            moves: moves ?? s?.moves ?? 0
+            )
+    }
 }
 
 protocol HasDeck {
@@ -336,10 +365,28 @@ protocol Pile {
 }
 
 protocol Action {
-    var targets: [Targettable]? { get }
+    var targets: [Pawn] { get }
     var type: ActionType { get }
+    func perform() -> [Pawn]
 }
 
 enum ActionType {
     case attack, defend, heal, buff, debuff, move
+}
+
+struct GainMoves: Action {
+    let targets: [Pawn]
+    let type: ActionType = .move
+
+    func perform() -> [Pawn] {
+        if targets.isEmpty {
+            []
+        } else {
+            self.targets.map { Pawn($0, moves: $0.moves + 1)}
+        }
+    }
+}
+
+func gainMoves(targets: [Pawn]) -> GainMoves {
+    GainMoves(targets: targets)
 }

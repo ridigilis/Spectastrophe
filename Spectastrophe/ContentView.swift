@@ -9,7 +9,8 @@ import SwiftUI
 
 struct BoardView: View {
     var tiles: BoardMap
-    var playerPosition: Coords
+    var player: Pawn
+    var enemies: [Coords: Pawn] = [:]
 
     var body: some View {
         ForEach(Range(-6...6)) { row in
@@ -18,11 +19,13 @@ struct BoardView: View {
                     Spacer().frame(width: 4)
                     ZStack {
                         Circle().fill(.gray).padding(-4)
-                        if playerPosition == tile {
+                        if player.pos == tile {
                             PlayerView()
                         }
+                        if enemies[tile] != nil {
+                            EnemyView()
+                        }
                     }
-
                     Spacer().frame(width: 8)
                 }
             }
@@ -34,6 +37,13 @@ struct PlayerView: View {
     var body: some View {
         Image(systemName: "person").resizable().scaledToFit()
     }
+}
+
+struct EnemyView: View {
+    var body: some View {
+        Image(systemName: "person").resizable().scaledToFit().foregroundStyle(Color(.red))
+    }
+
 }
 
 struct ContentView: View {
@@ -48,7 +58,7 @@ struct ContentView: View {
             Spacer()
             ZStack {
                 VStack {
-                    BoardView(tiles: game.world.encounter.board.tiles, playerPosition: game.world.encounter.board.playerPosition)
+                    BoardView(tiles: game.world.encounter.board.tiles, player: game.world.encounter.player, enemies: game.world.encounter.enemies)
                 }
                 .aspectRatio(contentMode: .fit)
                 .scaleEffect(currentZoom + totalZoom)
