@@ -74,7 +74,13 @@ struct Deck {
          discardPile: DiscardPile? = nil,
          exhaustPile: ExhaustPile? = nil
     ) {
-        self.drawPile = drawPile ?? deck?.drawPile ?? DrawPile([Card(type: .action, actions: [gainMoves])])
+        self.drawPile = drawPile ?? deck?.drawPile ?? DrawPile([
+            Card(type: .action, actions: [GainMoves()]),
+            Card(type: .action, actions: [GainMoves()]),
+            Card(type: .action, actions: [GainMoves()]),
+            Card(type: .action, actions: [GainMoves()]),
+            Card(type: .action, actions: [GainMoves()]),
+        ])
         self.hand = hand ?? deck?.hand ?? Hand()
         self.playArea = playArea ?? deck?.playArea ?? PlayArea()
         self.discardPile = discardPile ?? deck?.discardPile ?? DiscardPile()
@@ -189,9 +195,9 @@ struct Card: Equatable, Identifiable {
     let id = UUID()
     let parentId: UUID?
     let type: CardType
-    let actions: [([Pawn]) -> any Action]
+    let actions: [any Action]
 
-    init(parentId: UUID? = nil, type: CardType, actions: [([Pawn]) -> any Action]) {
+    init(parentId: UUID? = nil, type: CardType, actions: [any Action]) {
         self.parentId = parentId
         self.type = type
         self.actions = actions
@@ -365,9 +371,8 @@ protocol Pile {
 }
 
 protocol Action {
-    var targets: [Pawn] { get }
     var type: ActionType { get }
-    func perform() -> [Pawn]
+    static func perform(on targets: [Pawn]) -> [Pawn]
 }
 
 enum ActionType {
@@ -375,18 +380,13 @@ enum ActionType {
 }
 
 struct GainMoves: Action {
-    let targets: [Pawn]
     let type: ActionType = .move
 
-    func perform() -> [Pawn] {
+    static func perform(on targets: [Pawn]) -> [Pawn] {
         if targets.isEmpty {
             []
         } else {
-            self.targets.map { Pawn($0, moves: $0.moves + 1)}
+            targets.map { Pawn($0, moves: $0.moves + 1) }
         }
     }
-}
-
-func gainMoves(targets: [Pawn]) -> GainMoves {
-    GainMoves(targets: targets)
 }
