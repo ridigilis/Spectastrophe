@@ -35,7 +35,6 @@ struct TileView: View {
 
         ZStack {
             Circle().fill(.gray).padding(-4)
-            Text("\(tile.id.x), \(tile.id.y)")
             if playerIsMoving && player.tile!.isAdjacent(to: tile.id) {
                 Circle().fill(.green).padding(-4).onTapGesture {
                     player.tile = tile.id
