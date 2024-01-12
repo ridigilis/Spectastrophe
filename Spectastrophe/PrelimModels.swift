@@ -69,131 +69,72 @@ final class Pawn: Targettable, HasDeck, ObservableObject {
 }
 
 final class Deck: ObservableObject {
-    @Published var drawPile: DrawPile
-    @Published var hand: Hand
-    @Published var playArea: PlayArea
-    @Published var discardPile: DiscardPile
-    @Published var exhaustPile: ExhaustPile
+    @Published var drawPile: [Card]
+    @Published var hand: [Card]
+    @Published var playArea: [Card]
+    @Published var discardPile: [Card]
+    @Published var exhaustPile: [Card]
 
-	init(_ deck: Deck? = nil, 
-         drawPile: DrawPile? = nil,
-         hand: Hand? = nil,
-         playArea: PlayArea? = nil,
-         discardPile: DiscardPile? = nil,
-         exhaustPile: ExhaustPile? = nil
+	init(drawPile: [Card] = [],
+         hand: [Card] = [
+            Card(type: .action, actions: [GainMoves()]),
+            Card(type: .action, actions: [GainMoves()]),
+            Card(type: .action, actions: [GainMoves()]),
+            Card(type: .action, actions: [GainMoves()]),
+            Card(type: .action, actions: [GainMoves()]),
+         ],
+         playArea: [Card] = [],
+         discardPile: [Card] = [],
+         exhaustPile: [Card] = []
     ) {
-        self.drawPile = drawPile ?? deck?.drawPile ?? DrawPile()
-        self.hand = hand ?? deck?.hand ?? Hand([
-            Card(type: .action, actions: [GainMoves()]),
-            Card(type: .action, actions: [GainMoves()]),
-            Card(type: .action, actions: [GainMoves()]),
-            Card(type: .action, actions: [GainMoves()]),
-            Card(type: .action, actions: [GainMoves()]),
-        ])
-        self.playArea = playArea ?? deck?.playArea ?? PlayArea()
-        self.discardPile = discardPile ?? deck?.discardPile ?? DiscardPile()
-        self.exhaustPile = exhaustPile ?? deck?.exhaustPile ?? ExhaustPile()
+        self.drawPile = drawPile
+        self.hand = hand
+        self.playArea = playArea
+        self.discardPile = discardPile
+        self.exhaustPile = exhaustPile
 	}
 
-    func draw() -> Self {
-        let card = self.drawPile.draw()
+    func draw() {
+        let card = self.drawPile.first
 
-        return Self(self,
-             drawPile: DrawPile(self.drawPile.cards.filter { $0 != card }),
-             hand: Hand(self.hand.cards + [card].compactMap{$0})
-        )
+        self.drawPile = self.drawPile.filter { $0 != card }
+        self.hand = self.hand + [card].compactMap { $0 }
     }
 
-    func playFromHand(_ card: Card) -> Self {
-        Self(self,
-             hand: Hand(self.hand.cards.filter { $0 != card }),
-             playArea: PlayArea(self.playArea.cards + [card].compactMap{$0})
-        )
+    func playFromHand(_ card: Card) {
+        self.hand = self.hand.filter { $0 != card }
+        self.playArea = self.playArea + [card].compactMap { $0 }
     }
 
     func discardFromHand(_ card: Card) {
-        self.hand.cards = self.hand.cards.filter { $0 != card }
-        self.discardPile.cards = self.discardPile.cards + [card].compactMap{$0}
+        self.hand = self.hand.filter { $0 != card }
+        self.discardPile = self.discardPile + [card].compactMap{ $0 }
     }
 
-    func exhaust(_ card: Card) -> Self {
-        Self(self,
-             playArea: PlayArea(self.playArea.cards.filter { $0 != card }),
-             exhaustPile: ExhaustPile(self.exhaustPile.cards + [card].compactMap{$0})
-        )
+    func exhaust(_ card: Card) {
+        self.playArea = self.playArea.filter { $0 != card }
+        self.exhaustPile = self.exhaustPile + [card].compactMap{ $0 }
     }
 
-    func shuffleDrawPile() -> Self {
-        Self(self,
-             drawPile: DrawPile(self.drawPile.cards.shuffled())
-        )
+    func shuffleDrawPile() {
+        self.drawPile = self.drawPile.shuffled()
     }
 
-    func shuffleDiscardPileIntoDrawPile() -> Self {
-        let cards = self.drawPile.cards + self.discardPile.cards
+    func shuffleDiscardPileIntoDrawPile() {
+        let cards = self.drawPile + self.discardPile
 
-        return Self(self,
-                    drawPile: DrawPile(cards.shuffled()),
-                    discardPile: DiscardPile()
-        )
+        self.drawPile = cards.shuffled()
+        self.discardPile = []
     }
 
-    func discardHand() -> Self {
-        Self(self,
-             hand: Hand(),
-             discardPile: DiscardPile(self.discardPile.cards + self.hand.cards)
-        )
+    func discardHand() {
+        self.discardPile = self.discardPile + self.hand
+        self.hand = []
     }
 
-    func clearPlayArea() -> Self {
-        Self(self,
-             playArea: PlayArea(),
-             discardPile: DiscardPile(self.discardPile.cards + self.playArea.cards)
-        )
-    }
-
-    struct DrawPile: Pile {
-        var cards: [Card]
-
-        init(_ cards: [Card] = []) {
-            self.cards = cards
-        }
-
-        func draw() -> Card? {
-            self.cards.first
-        }
-    }
-
-    final class Hand: Pile, ObservableObject {
-        @Published var cards: [Card]
-
-        init(_ cards: [Card] = []) {
-            self.cards = cards
-        }
-    }
-
-    struct PlayArea: Pile {
-        var cards: [Card]
-
-        init(_ cards: [Card] = []) {
-            self.cards = cards
-        }
-    }
-
-    final class DiscardPile: Pile, ObservableObject {
-        @Published var cards: [Card]
-
-        init(_ cards: [Card] = []) {
-            self.cards = cards
-        }
-    }
-
-    struct ExhaustPile: Pile {
-        var cards: [Card]
-
-        init(_ cards: [Card] = []) {
-            self.cards = cards
-        }
+    func clearPlayArea() {
+        self.discardPile = self.discardPile + self.playArea
+        self.playArea = []
     }
 }
 

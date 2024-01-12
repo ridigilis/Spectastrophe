@@ -82,12 +82,12 @@ struct CardView: View {
 }
 
 struct HandView: View {
-    @ObservedObject var hand: Deck.Hand
+    @ObservedObject var deck: Deck
     @ObservedObject var player: Pawn
 
     var body: some View {
         HStack {
-            ForEach(hand.cards) { card in
+            ForEach(deck.hand) { card in
                 CardView(card: card, player: player)
             }
         }
@@ -134,7 +134,7 @@ struct ContentView: View {
 
                 VStack {
                     Spacer()
-                    HandView(hand: player.deck.hand, player: player)
+                    HandView(deck: player.deck, player: player)
                 }
 
                 VStack {
