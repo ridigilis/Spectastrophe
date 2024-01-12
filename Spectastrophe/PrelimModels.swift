@@ -37,9 +37,9 @@ final class GameState: ObservableObject {
     @Published var world: World
     @Published var location: Coords
 
-    init(player: Pawn = Pawn(.player, tile: Coords(0,0)), world: World = [Coords(0,0): Encounter(Coords(0,0), board: Board())], location: Coords = Coords(0,0)) {
+    init(player: Pawn = Pawn(.player, tile: Coords(0,0)), world: World? = nil, location: Coords = Coords(0,0)) {
         self.player = player
-        self.world = world
+        self.world = world ?? [Coords(0,0): Encounter(Coords(0,0), board: Board(), player: player)]
         self.location = location
     }
 }
@@ -80,14 +80,14 @@ final class Deck: ObservableObject {
     @Published var discardPile: [Card]
     @Published var exhaustPile: [Card]
 
-	init(drawPile: [Card] = [],
-         hand: [Card] = [
-            Card(type: .action, actions: [.movement(for: .constant(1))]),
-            Card(type: .action, actions: [.movement(for: .constant(1))]),
-            Card(type: .action, actions: [.movement(for: .constant(1))]),
-            Card(type: .action, actions: [.movement(for: .constant(1))]),
-            Card(type: .action, actions: [.movement(for: .constant(1))]),
-         ],
+    init(drawPile: [Card] = [
+        Card(type: .action, actions: [.movement(for: .constant(1))]),
+        Card(type: .action, actions: [.movement(for: .constant(1))]),
+        Card(type: .action, actions: [.movement(for: .constant(1))]),
+        Card(type: .action, actions: [.movement(for: .constant(1))]),
+        Card(type: .action, actions: [.movement(for: .constant(1))]),
+    ],
+         hand: [Card] = [],
          playArea: [Card] = [],
          discardPile: [Card] = [],
          exhaustPile: [Card] = []
@@ -99,11 +99,17 @@ final class Deck: ObservableObject {
         self.exhaustPile = exhaustPile
 	}
 
-    func draw() {
+    private func drawCardFromTop() {
         let card = self.drawPile.first
 
         self.drawPile = self.drawPile.filter { $0 != card }
         self.hand = self.hand + [card].compactMap { $0 }
+    }
+
+    func draw(_ amt: UInt = 1) {
+        for _ in 1...amt {
+            self.drawCardFromTop()
+        }
     }
 
     func playFromHand(_ card: Card) {
@@ -173,12 +179,72 @@ final class Encounter: Identifiable, ObservableObject {
     @Published var turn: TurnState
     @Published var phase: PhaseState
 
-    init(_ id: Coords, board: Board = Board(), enemies: [Coords: Pawn] = [:], turn: TurnState = .player, phase: PhaseState = .turnStart) {
+    private let player: Pawn
+
+    init(_ id: Coords, board: Board = Board(), enemies: [Coords: Pawn] = [:], turn: TurnState = .player, phase: PhaseState = .turnStart, player: Pawn) {
         self.id = id
         self.board = board
         self.enemies = enemies
         self.turn = turn
         self.phase = phase
+
+        self.player = player
+
+        self.onEnterTurnStart()
+    }
+
+    private func onEnterTurnStart() {
+        //do something
+        self.onExitTurnStart()
+    }
+
+    private func onExitTurnStart() {
+        //do something
+        self.phase = self.phase.next()
+        self.onEnterDrawPhase()
+    }
+
+    private func onEnterDrawPhase() {
+        //do something
+
+        switch self.turn {
+                // arbitrary amount for now
+            case .player: self.player.deck.draw(3)
+                
+            case .enemy: self.enemies.forEach { $0.value.deck.draw(3) }
+        }
+
+        self.onExitDrawPhase()
+    }
+
+    private func onExitDrawPhase() {
+        //do something
+        self.phase = self.phase.next()
+        self.onEnterPlayPhase()
+    }
+
+    private func onEnterPlayPhase() {
+        //do something
+        //but dont exit until the player decides to exit
+        //or maybe automatically if no other moves can be made?
+    }
+
+    func onExitPlayPhase() {
+        //do something
+        self.phase = self.phase.next()
+        self.onEnterTurnEnd()
+    }
+
+    func onEnterTurnEnd() {
+        //do something
+        self.onExitTurnEnd()
+    }
+
+    func onExitTurnEnd() {
+        //do something
+        self.phase = self.phase.next()
+        self.turn = self.turn.next()
+        self.onEnterTurnStart()
     }
 
     enum TurnState {
