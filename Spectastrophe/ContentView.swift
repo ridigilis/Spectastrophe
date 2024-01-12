@@ -8,28 +8,45 @@
 import SwiftUI
 
 struct BoardView: View {
-    var tiles: BoardMap
-    var player: Pawn
-    var enemies: [Coords: Pawn] = [:]
+    @ObservedObject var encounter: Encounter
+    @ObservedObject var player: Pawn
+
+    var playerIsMoving: Bool
 
     var body: some View {
-        ForEach(Range(-6...6)) { row in
+        ForEach(encounter.board.byRow, id: \.self.indices) { row in
             HStack {
-                ForEach(tiles.filter { $0.key.y == row }.map { Coords($0.value!.id.x * -1, $0.value!.id.y * -1) }.sorted(by: { $0.x < $1.x }), id:\.self) { tile in
-                    Spacer().frame(width: 4)
-                    ZStack {
-                        Circle().fill(.gray).padding(-4)
-                        if player.pos == tile {
-                            PlayerView()
-                        }
-                        if enemies[tile] != nil {
-                            EnemyView()
-                        }
-                    }
-                    Spacer().frame(width: 8)
+                ForEach(row) { tile in
+                    TileView(tile: tile, player: player, enemies: encounter.enemies, playerIsMoving: playerIsMoving)
                 }
             }
         }
+    }
+}
+
+struct TileView: View {
+    var tile: Board.BoardTile
+    var player: Pawn
+    var enemies: [Coords: Pawn]
+    var playerIsMoving: Bool
+
+    var body: some View {
+        Spacer().frame(width: 4)
+
+        ZStack {
+            Circle().fill(.gray).padding(-4)
+            if playerIsMoving && player.tile!.isAdjacent(to: tile.id) {
+                Circle().fill(.green).padding(-4)
+            }
+            if player.tile == tile.id {
+                PlayerView()
+            }
+            if enemies[tile.id] != nil {
+                EnemyView()
+            }
+        }
+
+        Spacer().frame(width: 8)
     }
 }
 
@@ -43,11 +60,46 @@ struct EnemyView: View {
     var body: some View {
         Image(systemName: "person").resizable().scaledToFit().foregroundStyle(Color(.red))
     }
+}
 
+struct CardView: View {
+    var card: Card
+    @ObservedObject var player: Pawn
+
+    var body: some View {
+        RoundedRectangle(cornerRadius: /*@START_MENU_TOKEN@*/25.0/*@END_MENU_TOKEN@*/)
+            .frame(width:120, height: 180)
+            .foregroundColor(.brown)
+            .shadow(radius: 12)
+            .onTapGesture {
+                card.actions.forEach { action in
+                    action.perform(on: [player])
+                }
+
+                player.deck.discardFromHand(card)
+            }
+    }
+}
+
+struct HandView: View {
+    @ObservedObject var hand: Deck.Hand
+    @ObservedObject var player: Pawn
+
+    var body: some View {
+        HStack {
+            ForEach(hand.cards) { card in
+                CardView(card: card, player: player)
+            }
+        }
+    }
 }
 
 struct ContentView: View {
-    @StateObject private var game: GameState = GameState()
+    @ObservedObject var encounter: Encounter
+    @ObservedObject var player: Pawn
+
+    @State private var playerIsMoving = false
+
     @State private var currentZoom = 0.0
     @State private var totalZoom = 1.0
 
@@ -58,7 +110,7 @@ struct ContentView: View {
             Spacer()
             ZStack {
                 VStack {
-                    BoardView(tiles: game.world.encounter.board.tiles, player: game.world.encounter.player, enemies: game.world.encounter.enemies)
+                    BoardView(encounter: encounter, player: player, playerIsMoving: playerIsMoving)
                 }
                 .aspectRatio(contentMode: .fit)
                 .scaleEffect(currentZoom + totalZoom)
@@ -82,23 +134,31 @@ struct ContentView: View {
 
                 VStack {
                     Spacer()
-                    HStack {
-                        RoundedRectangle(cornerRadius: /*@START_MENU_TOKEN@*/25.0/*@END_MENU_TOKEN@*/)
-                            .frame(width:120, height: 180)
-                            .foregroundColor(.brown)
-                            .shadow(radius: 12)
-
-                        RoundedRectangle(cornerRadius: /*@START_MENU_TOKEN@*/25.0/*@END_MENU_TOKEN@*/)
-                            .frame(width:120, height: 180)
-                            .foregroundColor(.brown)
-                            .shadow(radius: 12)
-
-                        RoundedRectangle(cornerRadius: /*@START_MENU_TOKEN@*/25.0/*@END_MENU_TOKEN@*/)
-                            .frame(width:120, height: 180)
-                            .foregroundColor(.brown)
-                            .shadow(radius: 12)
-                    }
+                    HandView(hand: player.deck.hand, player: player)
                 }
+
+                VStack {
+                    HStack {
+                        Spacer()
+
+                        Button(playerIsMoving ? "Moving" : "Move (\(player.moves))") {
+                            playerIsMoving.toggle()
+                        }.disabled(player.moves == 0)
+
+
+                    }
+
+                    HStack {
+                        Spacer()
+                        Button("End Turn") {
+
+                        }
+                    }
+
+                    Spacer()
+                }
+                .padding(24)
+                .buttonStyle(.borderedProminent)
             }
 
             Spacer()
@@ -107,5 +167,6 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView()
+    var game: GameState = GameState()
+    return ContentView(encounter: game.world[game.location]!, player: game.player)
 }

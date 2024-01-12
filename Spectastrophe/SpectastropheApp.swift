@@ -9,9 +9,10 @@ import SwiftUI
 
 @main
 struct SpectastropheApp: App {
+    @StateObject var game: GameState = GameState()
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView(encounter: game.world[game.location]!, player: game.player)
         }
     }
 }
