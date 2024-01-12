@@ -54,6 +54,9 @@ final class Pawn: Targettable, HasDeck, ObservableObject {
 
     @Published var deck: Deck
 
+    @Published var isMoving: Bool
+    @Published var isAttacking: Bool
+
     init(_ type: PawnType = .enemy, hp: Int = 0, tile: Coords? = nil, moves: UInt = 0, deck: Deck = Deck()) {
         self.id = UUID()
         self.type = type
@@ -61,6 +64,8 @@ final class Pawn: Targettable, HasDeck, ObservableObject {
         self.tile = tile
         self.moves = moves
         self.deck = deck
+        self.isMoving = false
+        self.isAttacking = false
     }
 
     enum PawnType {
