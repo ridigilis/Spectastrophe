@@ -11,13 +11,13 @@ struct BoardView: View {
     @ObservedObject var encounter: Encounter
     @ObservedObject var player: Pawn
 
-    var playerIsMoving: Bool
+    @Binding var playerIsMoving: Bool
 
     var body: some View {
-        ForEach(encounter.board.byRow, id: \.self.indices) { row in
+        ForEach(encounter.board.byRow, id: \.self) { row in
             HStack {
                 ForEach(row) { tile in
-                    TileView(tile: tile, player: player, enemies: encounter.enemies, playerIsMoving: playerIsMoving)
+                    TileView(tile: tile, player: player, enemies: encounter.enemies, playerIsMoving: $playerIsMoving)
                 }
             }
         }
@@ -25,18 +25,23 @@ struct BoardView: View {
 }
 
 struct TileView: View {
-    var tile: Board.BoardTile
+    var tile: Tile
     var player: Pawn
     var enemies: [Coords: Pawn]
-    var playerIsMoving: Bool
+    @Binding var playerIsMoving: Bool
 
     var body: some View {
         Spacer().frame(width: 4)
 
         ZStack {
             Circle().fill(.gray).padding(-4)
+            Text("\(tile.id.x), \(tile.id.y)")
             if playerIsMoving && player.tile!.isAdjacent(to: tile.id) {
-                Circle().fill(.green).padding(-4)
+                Circle().fill(.green).padding(-4).onTapGesture {
+                    player.tile = tile.id
+                    player.moves -= 1
+                    playerIsMoving.toggle()
+                }
             }
             if player.tile == tile.id {
                 PlayerView()
@@ -110,7 +115,7 @@ struct ContentView: View {
             Spacer()
             ZStack {
                 VStack {
-                    BoardView(encounter: encounter, player: player, playerIsMoving: playerIsMoving)
+                    BoardView(encounter: encounter, player: player, playerIsMoving: $playerIsMoving)
                 }
                 .aspectRatio(contentMode: .fit)
                 .scaleEffect(currentZoom + totalZoom)

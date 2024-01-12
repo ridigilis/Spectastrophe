@@ -37,7 +37,7 @@ final class GameState: ObservableObject {
     @Published var world: World
     @Published var location: Coords
 
-    init(player: Pawn = Pawn(.player, tile: Coords(0,0)), world: World = [Coords(0,0): Encounter(Coords(0,0), board: Board(layers: 7))], location: Coords = Coords(0,0)) {
+    init(player: Pawn = Pawn(.player, tile: Coords(0,0)), world: World = [Coords(0,0): Encounter(Coords(0,0), board: Board())], location: Coords = Coords(0,0)) {
         self.player = player
         self.world = world
         self.location = location
@@ -216,55 +216,42 @@ final class Encounter: Identifiable, ObservableObject {
 }
 
 struct Board {
-    let tiles: BoardMap
-    let byRow: [[BoardTile]]
+    let tiles: [Coords: Tile]
+    let byRow: [[Tile]]
 
-    static private func generateLayer(amt: UInt, coords: Coords = Coords(0,0), tiles: BoardMap = [:]) -> BoardMap {
-        if amt == 0 {
-            return tiles
+    // creates a contrived hexagonal shaped board
+    // I want this to be procedural in the future
+    init() {
+        var tiles: [Coords: Tile] = [:]
+        var byRow: [Int: [Tile]] = [:]
+        for row in -6...6 {
+            for col in -6...6 {
+                let coords = Coords(col, row)
+                let tile = Tile(id: coords)
+
+                tiles[coords] = tile
+                if byRow[row] == nil {
+                    byRow[row] = []
+                }
+                var byRowAtRow = byRow[row]
+                byRowAtRow!.append(tile)
+                byRow[row] = byRowAtRow
+            }
         }
-
-        let newAmt = amt - 1
-        var t = tiles
-
-        t[coords] = BoardTile(id: coords)
-
-        return generateLayer(amt: newAmt, coords: coords.toE, tiles: t)
-            .merging(generateLayer(amt: newAmt, coords: coords.toSE, tiles: t), uniquingKeysWith: { keep, _ in return keep })
-            .merging(generateLayer(amt: newAmt, coords: coords.toSW, tiles: t), uniquingKeysWith: { keep, _ in return keep })
-            .merging(generateLayer(amt: newAmt, coords: coords.toW, tiles: t), uniquingKeysWith: { keep, _ in return keep })
-            .merging(generateLayer(amt: newAmt, coords: coords.toNW, tiles: t), uniquingKeysWith: { keep, _ in return keep })
-            .merging(generateLayer(amt: newAmt, coords: coords.toNE, tiles: t), uniquingKeysWith: { keep, _ in return keep })
-    }
-
-    init(_ tiles: BoardMap = [:], layers: UInt = 0) {
-        // the recursive function takes too long beyond 7
-        // luckily that was the max I was shooting for,
-        // but need to find a better solution if I want to go higher
-        let lyrs = layers > 7 ? 7 : layers
-        let t = Board.generateLayer(amt: lyrs)
-
-        self.tiles = t
-
-        let min = t.keys.map { $0.y }.min() ?? 0
-        let max = t.keys.map { $0.y }.max() ?? 0
-
-        var arr: [[BoardTile]] = []
-        for row in min...max {
-            arr.append(t.filter { $0.key.y == row }.map { $0.value }.sorted { $0.id.x < $1.id.x })
-        }
-        
-        self.byRow = arr
-    }
-
-    typealias BoardMap = [Coords: BoardTile]
-    struct BoardTile: Tile, Hashable {
-        var id: Coords
+        self.tiles = tiles
+        self.byRow = byRow.sorted { $0.key < $1.key }.map { row in
+            row.value.filter {
+                if $0.id.y > 0 {
+                    return $0.id.x <= 6 - $0.id.y
+                } else {
+                    return $0.id.x >= -6 - $0.id.y
+                }
+            } }.reversed()
     }
 }
 
-protocol Tile: Identifiable, Hashable {
-    var id: Coords { get }
+struct Tile: Identifiable, Hashable {
+    var id: Coords
 }
 
 struct Coords: Hashable {
