@@ -77,11 +77,11 @@ final class Deck: ObservableObject {
 
 	init(drawPile: [Card] = [],
          hand: [Card] = [
-            Card(type: .action, actions: [GainMoves()]),
-            Card(type: .action, actions: [GainMoves()]),
-            Card(type: .action, actions: [GainMoves()]),
-            Card(type: .action, actions: [GainMoves()]),
-            Card(type: .action, actions: [GainMoves()]),
+            Card(type: .action, actions: [.movement(for: .constant(1))]),
+            Card(type: .action, actions: [.movement(for: .constant(1))]),
+            Card(type: .action, actions: [.movement(for: .constant(1))]),
+            Card(type: .action, actions: [.movement(for: .constant(1))]),
+            Card(type: .action, actions: [.movement(for: .constant(1))]),
          ],
          playArea: [Card] = [],
          discardPile: [Card] = [],
@@ -142,9 +142,9 @@ struct Card: Equatable, Identifiable {
     let id = UUID()
     let parentId: UUID?
     let type: CardType
-    let actions: [any Action]
+    let actions: [Action]
 
-    init(parentId: UUID? = nil, type: CardType, actions: [any Action]) {
+    init(parentId: UUID? = nil, type: CardType, actions: [Action]) {
         self.parentId = parentId
         self.type = type
         self.actions = actions
@@ -309,23 +309,116 @@ protocol Pile {
     var cards: [Card] { get set }
 }
 
-protocol Action {
-    var type: ActionType { get }
-    func perform(on targets: [Pawn]) -> Void
+protocol Actionable {
+    func perform(by source: Pawn, on targets: [Pawn]?) -> Void
 }
 
-enum ActionType {
-    case attack, defend, heal, buff, debuff, move
-}
+enum Action: Actionable  {
+    case attack(Attack, for: Quantity)
+    case bolster(for: Quantity)
+    case heal(for: Quantity)
+    case buff(Buff)
+    case debuff(Debuff)
+    case movement(for: Quantity?)
 
-struct GainMoves: Action {
-    let type: ActionType = .move
+    func perform(by source: Pawn, on targets: [Pawn]? = []) {
+        switch self {
+            case let .attack(type, quantity):
+                return
 
-    func perform(on targets: [Pawn]) {
-        if targets.isEmpty {
-            return
-        } else {
-            targets.forEach { $0.moves += 1 }
+            case let .movement(quantity):
+                let amt = switch quantity {
+                case let .constant(num): num
+                case let .random(dice): dice.map { $0.roll().reduce(0, +) }.reduce(0, +)
+                case .none: UInt(1)
+                }
+
+                targets?.forEach { $0.moves += amt }
+
+            default:
+                return
         }
+    }
+
+    enum Quantity {
+        case constant(UInt)
+        case random([Die])
+    }
+
+    // attack
+    enum Attack {
+        case physical(PhysicalAttack)
+        case metaphysical(MetaphysicalAttack)
+    }
+    
+    enum PhysicalAttack {
+        case slash
+        case bludgeon
+        case pierce
+    }
+
+    enum MetaphysicalAttack {
+        case arcane
+        case fire
+        case cold
+        case shock
+        case poison
+        case lux
+        case dark
+        // idk, i just started listing things
+    }
+    // buff
+    enum Buff {}
+
+    // debuff
+    enum Debuff {}
+}
+
+enum Die {
+    case d0
+    case d2
+    case d4
+    case d6
+    case d8
+    case d10
+    case d12
+    case d20
+    case d100
+
+    func roll(_ n: UInt = 1) -> [UInt] {
+        var rolls: [UInt] = Array<UInt>()
+        var fn: () -> UInt
+
+        switch self {
+            case .d0:
+                fn = { 0 }
+            case .d2:
+                fn = { UInt.random(in: 0...1) }
+            case .d4:
+                fn = { UInt.random(in: 1...4) }
+            case .d6:
+                fn = { UInt.random(in: 1...6) }
+            case .d8:
+                fn = { UInt.random(in: 1...8) }
+            case .d10:
+                fn = { UInt.random(in: 0...9) }
+            case .d12:
+                fn = { UInt.random(in: 1...12) }
+            case .d20:
+                fn = { UInt.random(in: 1...20) }
+            case .d100:
+                fn = { UInt.random(in: 0...99) }
+        }
+
+        for _ in 1...n {
+            let result = fn()
+            rolls.append(result)
+        }
+
+        return rolls
+    }
+
+    func sumRoll(_ n: UInt) -> UInt {
+        return self.roll(n).reduce(0) { $0 + $1 }
     }
 }

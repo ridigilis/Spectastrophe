@@ -12,12 +12,13 @@ struct BoardView: View {
     @ObservedObject var player: Pawn
 
     @Binding var playerIsMoving: Bool
+    @Binding var playerIsAttacking: Bool
 
     var body: some View {
         ForEach(encounter.board.byRow, id: \.self) { row in
             HStack {
                 ForEach(row) { tile in
-                    TileView(tile: tile, player: player, enemies: encounter.enemies, playerIsMoving: $playerIsMoving)
+                    TileView(tile: tile, player: player, enemies: encounter.enemies, playerIsMoving: $playerIsMoving, playerIsAttacking: $playerIsAttacking)
                 }
             }
         }
@@ -29,6 +30,7 @@ struct TileView: View {
     var player: Pawn
     var enemies: [Coords: Pawn]
     @Binding var playerIsMoving: Bool
+    @Binding var playerIsAttacking: Bool
 
     var body: some View {
         Spacer().frame(width: 4)
@@ -70,6 +72,8 @@ struct CardView: View {
     var card: Card
     @ObservedObject var player: Pawn
 
+    @Binding var playerIsAttacking: Bool
+
     @State private var fill = Color.brown
     @State private var dragAmount = CGSize.zero
 
@@ -92,7 +96,7 @@ struct CardView: View {
                     .onEnded { _ in
                         if dragAmount.height < -200 {
                             card.actions.forEach { action in
-                                action.perform(on: [player])
+                                action.perform(by: player, on: [player])
                             }
                             player.deck.playFromHand(card)
                         }
@@ -109,10 +113,12 @@ struct HandView: View {
     @ObservedObject var deck: Deck
     @ObservedObject var player: Pawn
 
+    @Binding var playerIsAttacking: Bool
+
     var body: some View {
         HStack {
             ForEach(deck.hand) { card in
-                CardView(card: card, player: player)
+                CardView(card: card, player: player, playerIsAttacking: $playerIsAttacking)
             }
         }
     }
@@ -123,6 +129,7 @@ struct ContentView: View {
     @ObservedObject var player: Pawn
 
     @State private var playerIsMoving = false
+    @State private var playerIsAttacking = false
 
     @State private var currentZoom = 0.0
     @State private var totalZoom = 1.0
@@ -134,7 +141,7 @@ struct ContentView: View {
             Spacer()
             ZStack {
                 VStack {
-                    BoardView(encounter: encounter, player: player, playerIsMoving: $playerIsMoving)
+                    BoardView(encounter: encounter, player: player, playerIsMoving: $playerIsMoving, playerIsAttacking: $playerIsAttacking)
                 }
                 .aspectRatio(contentMode: .fit)
                 .scaleEffect(currentZoom + totalZoom)
@@ -158,7 +165,7 @@ struct ContentView: View {
 
                 VStack {
                     Spacer()
-                    HandView(deck: player.deck, player: player)
+                    HandView(deck: player.deck, player: player, playerIsAttacking: $playerIsAttacking)
                 }
 
                 VStack {
