@@ -71,18 +71,38 @@ struct CardView: View {
     var card: Card
     @ObservedObject var player: Pawn
 
+    @State private var fill = Color.brown
+    @State private var dragAmount = CGSize.zero
+
     var body: some View {
         RoundedRectangle(cornerRadius: /*@START_MENU_TOKEN@*/25.0/*@END_MENU_TOKEN@*/)
+            .fill(fill)
             .frame(width:120, height: 180)
-            .foregroundColor(.brown)
             .shadow(radius: 12)
-            .onTapGesture {
-                card.actions.forEach { action in
-                    action.perform(on: [player])
-                }
+            .offset(dragAmount)
+            .gesture(
+                DragGesture()
+                    .onChanged {
+                        dragAmount = $0.translation
+                        if dragAmount.height < -200 {
+                            fill = Color.teal
+                        } else {
+                            fill = Color.brown
+                        }
+                    }
+                    .onEnded { _ in
+                        if dragAmount.height < -200 {
+                            card.actions.forEach { action in
+                                action.perform(on: [player])
+                            }
+                            player.deck.playFromHand(card)
+                        }
 
-                player.deck.discardFromHand(card)
-            }
+                        fill = Color.brown
+                        dragAmount = .zero
+                    }
+            )
+            .animation(.bouncy, value: dragAmount)
     }
 }
 
