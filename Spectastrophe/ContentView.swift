@@ -107,8 +107,18 @@ struct CardView: View {
                 .fill(fill)
                 .frame(width:120, height: 180)
                 .shadow(radius: 12)
+            VStack {
+                Text(card.title)
+                    .frame(alignment: .topLeading)
+                    .bold()
+                    .padding(.bottom)
+                    .padding(.bottom)
 
-            Text(card.title).padding()
+                Text(card.description)
+                    .font(.footnote)
+                    .padding(.bottom)
+                    .padding(.bottom)
+            }
         }
         .offset(dragAmount)
         .gesture(

@@ -85,9 +85,9 @@ final class Deck: ObservableObject {
     @Published var exhaustPile: [Card]
 
     init(drawPile: [Card] = [
-        Card(type: .action, title: "Get moving", description: "Gain 1 movement", actions: [.movement(for: .constant(1))]),
-        Card(type: .action, title: "Get moving", description: "Gain 1 movement", actions: [.movement(for: .constant(1))]),
-        Card(type: .action, title: "Get moving", description: "Gain 1 movement", actions: [.movement(for: .constant(1))]),
+        Card(type: .action, title: "Move", description: "Gain 1 movement", actions: [.movement(for: .constant(1))]),
+        Card(type: .action, title: "Move", description: "Gain 1 movement", actions: [.movement(for: .constant(1))]),
+        Card(type: .action, title: "Move", description: "Gain 1 movement", actions: [.movement(for: .constant(1))]),
         Card(type: .action, title: "Slash", description: "Deal 1d4 damage", actions: [.attack(.physical(.slash), for: .random([.d4]))]),
         Card(type: .action, title: "Slash", description: "Deal 1d4 damage", actions: [.attack(.physical(.slash), for: .random([.d4]))])
     ].shuffled(),
