@@ -37,9 +37,9 @@ final class GameState: ObservableObject {
     @Published var world: World
     @Published var location: Coords
 
-    init(player: Pawn = Pawn(.player, tile: Coords(0,0)), world: World? = nil, location: Coords = Coords(0,0)) {
+    init(player: Pawn = Pawn(.player, hp: 120, tile: Coords(0,0)), world: World? = nil, location: Coords = Coords(0,0)) {
         self.player = player
-        self.world = world ?? [Coords(0,0): Encounter(Coords(0,0), board: Board(), player: player)]
+        self.world = world ?? [Coords(0,0): Encounter(Coords(0,0), board: Board(), enemies: [Pawn(hp: 60, tile: Coords(3,0))], player: player)]
         self.location = location
     }
 }
@@ -54,8 +54,10 @@ final class Pawn: Targettable, HasDeck, ObservableObject {
 
     @Published var deck: Deck
 
+    @Published var turnToPlay: Bool
     @Published var isMoving: Bool
     @Published var isAttacking: Bool
+    @Published var isAttackingWith: Action?
 
     init(_ type: PawnType = .enemy, hp: Int = 0, tile: Coords? = nil, moves: UInt = 0, deck: Deck = Deck()) {
         self.id = UUID()
@@ -64,8 +66,10 @@ final class Pawn: Targettable, HasDeck, ObservableObject {
         self.tile = tile
         self.moves = moves
         self.deck = deck
+        self.turnToPlay = false
         self.isMoving = false
         self.isAttacking = false
+        self.isAttackingWith = nil
     }
 
     enum PawnType {
@@ -81,12 +85,12 @@ final class Deck: ObservableObject {
     @Published var exhaustPile: [Card]
 
     init(drawPile: [Card] = [
-        Card(type: .action, actions: [.movement(for: .constant(1))]),
-        Card(type: .action, actions: [.movement(for: .constant(1))]),
-        Card(type: .action, actions: [.movement(for: .constant(1))]),
-        Card(type: .action, actions: [.movement(for: .constant(1))]),
-        Card(type: .action, actions: [.movement(for: .constant(1))]),
-    ],
+        Card(type: .action, title: "Get moving", description: "Gain 1 movement", actions: [.movement(for: .constant(1))]),
+        Card(type: .action, title: "Get moving", description: "Gain 1 movement", actions: [.movement(for: .constant(1))]),
+        Card(type: .action, title: "Get moving", description: "Gain 1 movement", actions: [.movement(for: .constant(1))]),
+        Card(type: .action, title: "Slash", description: "Deal 1d4 damage", actions: [.attack(.physical(.slash), for: .random([.d4]))]),
+        Card(type: .action, title: "Slash", description: "Deal 1d4 damage", actions: [.attack(.physical(.slash), for: .random([.d4]))])
+    ].shuffled(),
          hand: [Card] = [],
          playArea: [Card] = [],
          discardPile: [Card] = [],
@@ -154,11 +158,15 @@ struct Card: Equatable, Identifiable {
     let parentId: UUID?
     let type: CardType
     let actions: [Action]
+    let title: String
+    let description: String
 
-    init(parentId: UUID? = nil, type: CardType, actions: [Action]) {
+    init(parentId: UUID? = nil, type: CardType, title: String = "What does this card do?", description: String = "Nobody knows...", actions: [Action]) {
         self.parentId = parentId
         self.type = type
         self.actions = actions
+        self.title = title
+        self.description = description
     }
 
     // not sure if this is what I want this to be yet
@@ -174,14 +182,14 @@ struct Card: Equatable, Identifiable {
 final class Encounter: Identifiable, ObservableObject {
     let id: Coords
     @Published var board: Board
-    @Published var enemies: [Coords: Pawn]
+    @Published var enemies: [Pawn]
 
     @Published var turn: TurnState
     @Published var phase: PhaseState
 
     private let player: Pawn
 
-    init(_ id: Coords, board: Board = Board(), enemies: [Coords: Pawn] = [:], turn: TurnState = .player, phase: PhaseState = .turnStart, player: Pawn) {
+    init(_ id: Coords, board: Board = Board(), enemies: [Pawn] = [], turn: TurnState = .player, phase: PhaseState = .turnStart, player: Pawn) {
         self.id = id
         self.board = board
         self.enemies = enemies
@@ -211,7 +219,7 @@ final class Encounter: Identifiable, ObservableObject {
                 // arbitrary amount for now
             case .player: self.player.deck.draw(3)
                 
-            case .enemy: self.enemies.forEach { $0.value.deck.draw(3) }
+            case .enemy: self.enemies.forEach { $0.deck.draw(3) }
         }
 
         self.onExitDrawPhase()
@@ -225,12 +233,18 @@ final class Encounter: Identifiable, ObservableObject {
 
     private func onEnterPlayPhase() {
         //do something
+        if self.turn == .player {
+            self.player.turnToPlay.toggle()
+        }
         //but dont exit until the player decides to exit
         //or maybe automatically if no other moves can be made?
     }
 
     func onExitPlayPhase() {
         //do something
+        if self.turn == .player {
+            self.player.turnToPlay.toggle()
+        }
         self.phase = self.phase.next()
         self.onEnterTurnEnd()
     }
@@ -366,7 +380,8 @@ struct Coords: Hashable {
     }
 }
 
-protocol Targettable {
+protocol Targettable: Identifiable {
+    var id: UUID { get }
     var hp: Int { get set }
     var tile: Coords? { get set }
     var moves: UInt { get set }
@@ -395,7 +410,12 @@ enum Action: Actionable  {
     func perform(by source: Pawn, on targets: [Pawn]? = []) {
         switch self {
             case let .attack(type, quantity):
-                return
+                let amt = switch quantity {
+                case let .constant(num): num
+                case let .random(dice): dice.map { $0.roll().reduce(0, +) }.reduce(0, +)
+                }
+
+                targets?.forEach { $0.hp -= Int(amt) }
 
             case let .movement(quantity):
                 let amt = switch quantity {

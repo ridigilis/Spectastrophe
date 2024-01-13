@@ -25,7 +25,7 @@ struct BoardView: View {
 struct TileView: View {
     var tile: Tile
     @ObservedObject var player: Pawn
-    var enemies: [Coords: Pawn]
+    var enemies: [Pawn]
 
     var body: some View {
         Spacer().frame(width: 4)
@@ -39,11 +39,31 @@ struct TileView: View {
                     player.isMoving.toggle()
                 }
             }
-            if player.tile == tile.id {
-                PlayerView()
+
+            if player.isAttacking && player.tile!.isAdjacent(to: tile.id) {
+                ForEach(enemies) { enemy in
+                    if enemy.tile == tile.id {
+                        Circle().fill(.green).padding(-4)
+                    } else {
+                        Circle().fill(.red).padding(-4)
+                    }
+                }
             }
-            if enemies[tile.id] != nil {
-                EnemyView()
+
+            if player.tile == tile.id {
+                PlayerView(player: player)
+            }
+
+            ForEach(enemies) { enemy in
+                if enemy.tile == tile.id {
+                    EnemyView(enemy: enemy).onTapGesture {
+                        if let action = player.isAttackingWith {
+                            action.perform(by: player, on: [enemy])
+                            player.isAttacking.toggle()
+                            player.isAttackingWith = nil
+                        }
+                    }
+                }
             }
         }
 
@@ -52,14 +72,24 @@ struct TileView: View {
 }
 
 struct PlayerView: View {
+    @ObservedObject var player: Pawn
     var body: some View {
-        Image(systemName: "person").resizable().scaledToFit()
+        if player.hp <= 0 {
+            Text("☠️")
+        } else {
+            Image(systemName: "person").resizable().scaledToFit()
+        }
     }
 }
 
 struct EnemyView: View {
+    @ObservedObject var enemy: Pawn
     var body: some View {
-        Image(systemName: "person").resizable().scaledToFit().foregroundStyle(Color(.red))
+        if enemy.hp <= 0 {
+            Text("☠️")
+        } else {
+            Image(systemName: "person").resizable().scaledToFit().foregroundStyle(Color(.red))
+        }
     }
 }
 
@@ -68,17 +98,23 @@ struct CardView: View {
     @ObservedObject var player: Pawn
 
     @State private var fill = Color.brown
-    @State private var dragAmount = CGSize.zero
 
+    @State private var dragAmount = CGSize.zero
+    
     var body: some View {
-        RoundedRectangle(cornerRadius: /*@START_MENU_TOKEN@*/25.0/*@END_MENU_TOKEN@*/)
-            .fill(fill)
-            .frame(width:120, height: 180)
-            .shadow(radius: 12)
-            .offset(dragAmount)
-            .gesture(
-                DragGesture()
-                    .onChanged {
+        ZStack {
+            RoundedRectangle(cornerRadius: 25.0)
+                .fill(fill)
+                .frame(width:120, height: 180)
+                .shadow(radius: 12)
+
+            Text(card.title).padding()
+        }
+        .offset(dragAmount)
+        .gesture(
+            DragGesture()
+                .onChanged {
+                    if player.turnToPlay {
                         dragAmount = $0.translation
                         if dragAmount.height < -200 {
                             fill = Color.teal
@@ -86,10 +122,18 @@ struct CardView: View {
                             fill = Color.brown
                         }
                     }
-                    .onEnded { _ in
+                }
+                .onEnded { _ in
+                    if player.turnToPlay {
                         if dragAmount.height < -200 {
                             card.actions.forEach { action in
-                                action.perform(by: player, on: [player])
+                                switch action {
+                                    case .attack:
+                                        player.isAttacking.toggle()
+                                        player.isAttackingWith = action
+                                    case .movement: action.perform(by: player, on: [player])
+                                    default: return
+                                }
                             }
                             player.deck.playFromHand(card)
                         }
@@ -97,8 +141,9 @@ struct CardView: View {
                         fill = Color.brown
                         dragAmount = .zero
                     }
-            )
-            .animation(.bouncy, value: dragAmount)
+                }
+        )
+        .animation(.bouncy, value: dragAmount)
     }
 }
 
@@ -170,8 +215,8 @@ struct ContentView: View {
                     HStack {
                         Spacer()
                         Button("End Turn") {
-
-                        }
+                            encounter.onExitPlayPhase()
+                        }.disabled(!(encounter.turn == .player && encounter.phase == .play))
                     }
 
                     Spacer()
