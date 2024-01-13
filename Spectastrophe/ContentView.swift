@@ -226,7 +226,7 @@ struct ContentView: View {
                         Spacer()
                         Button("End Turn") {
                             encounter.onExitPlayPhase()
-                        }.disabled(!(encounter.turn == .player && encounter.phase == .play))
+                        }.disabled(!player.turnToPlay)
                     }
 
                     Spacer()

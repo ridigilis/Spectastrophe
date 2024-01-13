@@ -112,6 +112,9 @@ final class Deck: ObservableObject {
 
     func draw(_ amt: UInt = 1) {
         for _ in 1...amt {
+            if self.drawPile.count == 0 {
+                self.shuffleDiscardPileIntoDrawPile()
+            }
             self.drawCardFromTop()
         }
     }
@@ -219,7 +222,7 @@ final class Encounter: Identifiable, ObservableObject {
                 // arbitrary amount for now
             case .player: self.player.deck.draw(3)
                 
-            case .enemy: self.enemies.forEach { $0.deck.draw(3) }
+            case .enemy: self.enemies.filter { $0.hp > 0 }.forEach { $0.deck.draw(3) }
         }
 
         self.onExitDrawPhase()
@@ -233,11 +236,67 @@ final class Encounter: Identifiable, ObservableObject {
 
     private func onEnterPlayPhase() {
         //do something
-        if self.turn == .player {
-            self.player.turnToPlay.toggle()
+        switch self.turn {
+            case .player:
+                self.player.turnToPlay.toggle()
+                //but dont exit until the player decides to exit
+                //or maybe automatically if no other moves can be made?
+            case .enemy:
+                self.enemies.filter { $0.hp > 0 }.forEach { enemy in
+                    enemy.deck.hand.forEach { card in
+                        if card.title == "Move" {
+                            enemy.deck.playFromHand(card)
+                            card.actions.forEach { action in
+                                action.perform(by: enemy, on: [enemy])
+                            }
+                        }
+                    }
+
+                    if !self.player.tile!.isAdjacent(to: enemy.tile!) {
+                        // move closer to player if possible
+                        // ideally with a pathfinding algorithm like astar
+                        // but for now, wander aimlessly unless within two tiles of player
+                        for _ in 0...enemy.moves {
+                            if enemy.tile!.toE.isAdjacent(to: self.player.tile!) {
+                                enemy.tile = enemy.tile!.toE
+                            } else if enemy.tile!.toSE.isAdjacent(to: self.player.tile!) {
+                                enemy.tile = enemy.tile!.toSE
+                            } else if enemy.tile!.toSW.isAdjacent(to: self.player.tile!) {
+                                enemy.tile = enemy.tile!.toSW
+                            } else if enemy.tile!.toW.isAdjacent(to: self.player.tile!) {
+                                enemy.tile = enemy.tile!.toW
+                            } else if enemy.tile!.toNW.isAdjacent(to: self.player.tile!) {
+                                enemy.tile = enemy.tile!.toNW
+                            } else if enemy.tile!.toNE.isAdjacent(to: self.player.tile!) {
+                                enemy.tile = enemy.tile!.toNE
+                            } else {
+                                enemy.tile = [
+                                    enemy.tile!.toE,
+                                    enemy.tile!.toSE,
+                                    enemy.tile!.toSW,
+                                    enemy.tile!.toW,
+                                    enemy.tile!.toNW,
+                                    enemy.tile!.toNE
+                                ].randomElement()
+                            }
+                        }
+                    }
+
+                    if self.player.tile!.isAdjacent(to: enemy.tile!) {
+                        enemy.deck.hand.forEach { card in
+                            if card.title == "Slash" {
+                                enemy.deck.playFromHand(card)
+                                card.actions.forEach { action in
+                                    action.perform(by: enemy, on: [self.player])
+                                }
+                            }
+                        }
+                    }
+                }
+
+                self.phase = self.phase.next()
+                self.onExitPlayPhase()
         }
-        //but dont exit until the player decides to exit
-        //or maybe automatically if no other moves can be made?
     }
 
     func onExitPlayPhase() {
@@ -245,12 +304,22 @@ final class Encounter: Identifiable, ObservableObject {
         if self.turn == .player {
             self.player.turnToPlay.toggle()
         }
+        self.player.deck.clearPlayArea()
+        self.player.deck.discardHand()
+        self.enemies.forEach { enemy in
+            enemy.deck.clearPlayArea()
+            enemy.deck.discardHand()
+        }
         self.phase = self.phase.next()
         self.onEnterTurnEnd()
     }
 
     func onEnterTurnEnd() {
         //do something
+        self.player.moves = 0
+        self.enemies.forEach { enemy in
+            enemy.moves = 0
+        }
         self.onExitTurnEnd()
     }
 
