@@ -253,31 +253,18 @@ final class Encounter: Identifiable, ObservableObject {
                     }
 
                     if !self.player.tile!.isAdjacent(to: enemy.tile!) {
-                        // move closer to player if possible
-                        // ideally with a pathfinding algorithm like astar
-                        // but for now, wander aimlessly unless within two tiles of player
-                        for _ in 0...enemy.moves {
-                            if enemy.tile!.toE.isAdjacent(to: self.player.tile!) {
-                                enemy.tile = enemy.tile!.toE
-                            } else if enemy.tile!.toSE.isAdjacent(to: self.player.tile!) {
-                                enemy.tile = enemy.tile!.toSE
-                            } else if enemy.tile!.toSW.isAdjacent(to: self.player.tile!) {
-                                enemy.tile = enemy.tile!.toSW
-                            } else if enemy.tile!.toW.isAdjacent(to: self.player.tile!) {
-                                enemy.tile = enemy.tile!.toW
-                            } else if enemy.tile!.toNW.isAdjacent(to: self.player.tile!) {
-                                enemy.tile = enemy.tile!.toNW
-                            } else if enemy.tile!.toNE.isAdjacent(to: self.player.tile!) {
-                                enemy.tile = enemy.tile!.toNE
+                        let path = self.board.shortestPath(from: self.board.tiles[enemy.tile!]!, to: self.board.tiles[self.player.tile!]!)
+
+                        if path.isEmpty {
+                            return
+                        }
+
+                        for tile in path {
+                            if enemy.moves > 0 {
+                                enemy.tile = tile.id
+                                enemy.moves -= 1
                             } else {
-                                enemy.tile = [
-                                    enemy.tile!.toE,
-                                    enemy.tile!.toSE,
-                                    enemy.tile!.toSW,
-                                    enemy.tile!.toW,
-                                    enemy.tile!.toNW,
-                                    enemy.tile!.toNE
-                                ].randomElement()
+                                break
                             }
                         }
                     }
@@ -402,13 +389,55 @@ struct Board {
                 }
             } }.reversed()
     }
+    
+    // TODO: this seems to be working, but might need some love later
+    func shortestPath(from: Tile, to: Tile, _ closed: [Coords:Bool] = [:], _ path: [Tile] = []) -> [Tile]{
+        let currentTile = path.last ?? from
+
+        if currentTile == to {
+            return path
+        }
+
+        if currentTile.id.isAdjacent(to: to.id) {
+            return path + [to]
+        }
+
+        //
+
+        let adjacentCoords = currentTile.id.allAdjacentCoords
+
+        let scored: [(Coords, UInt)] = adjacentCoords
+            .filter { closed[$0] == true ? false : true }
+            .map { coords in
+                print("to, cur", to.id, currentTile.id)
+                return (coords, UInt(abs(to.id.x - coords.x) + abs(to.id.y - coords.y)))
+            }
+
+        let best = scored.min { a, b in a.1 < b.1 }
+
+        var newClosed = closed
+        adjacentCoords.forEach { coords in
+            newClosed[coords] = true
+        }
+
+        if self.tiles[best!.0] != nil {
+            return shortestPath(from: from, to: to, newClosed, path + [tiles[best!.0]!])
+        } else {
+            return []
+        }
+
+    }
 }
 
-struct Tile: Identifiable, Hashable {
+struct Tile: Identifiable, Hashable, Equatable {
     var id: Coords
+
+    static func ==(lhs: Tile, rhs: Tile) -> Bool {
+        lhs.id == rhs.id
+    }
 }
 
-struct Coords: Hashable {
+struct Coords: Hashable, Equatable {
     let x: Int
     let y: Int
 
@@ -436,7 +465,7 @@ struct Coords: Hashable {
         Self(self.x, self.y + 1)
     }
 
-    func isAdjacent(to coords: Coords) -> Bool {
+    func isAdjacent(to coords: Self) -> Bool {
         switch coords {
             case self.toE: return true
             case self.toW: return true
@@ -446,6 +475,17 @@ struct Coords: Hashable {
             case self.toSW: return true
             default: return false
         }
+    }
+
+    var allAdjacentCoords: [Self] {
+        [
+            self.toE,
+            self.toSE,
+            self.toSW,
+            self.toW,
+            self.toNW,
+            self.toNE
+        ]
     }
 }
 
