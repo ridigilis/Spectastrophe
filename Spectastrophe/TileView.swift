@@ -36,12 +36,12 @@ struct TileView: View {
             }
 
             if player.tile == tile.id {
-                PlayerView(player: player)
+                PawnView(pawn: player)
             }
 
             ForEach(enemies) { enemy in
                 if enemy.tile == tile.id {
-                    EnemyView(enemy: enemy).onTapGesture {
+                    PawnView(pawn: enemy).onTapGesture {
                         if let action = player.isAttackingWith {
                             action.perform(by: player, on: [enemy])
                             player.isAttacking.toggle()
@@ -57,5 +57,9 @@ struct TileView: View {
 }
 
 #Preview {
-    TileView()
+    let tile = Tile(id: Coords(0,0))
+    let player = Pawn(.player)
+    let enemies = [Pawn(.enemy)]
+
+    return TileView(tile: tile, player: player, enemies: enemies)
 }

@@ -21,5 +21,8 @@ struct HandView: View {
 }
 
 #Preview {
-    HandView()
+    let deck = Deck()
+    let player = Pawn(.player)
+
+    return HandView(deck: deck, player: player)
 }

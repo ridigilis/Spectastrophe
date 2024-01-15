@@ -23,5 +23,8 @@ struct BoardView: View {
 }
 
 #Preview {
-    BoardView()
+    let player = Pawn(.player)
+    let encounter = Encounter(Coords(0,0), player: player)
+    
+    return BoardView(encounter: encounter, player: player)
 }

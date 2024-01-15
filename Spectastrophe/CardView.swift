@@ -72,5 +72,8 @@ struct CardView: View {
 }
 
 #Preview {
-    CardView()
+    let card = Card(type: .action, actions: [])
+    let player = Pawn(.player)
+    
+    return CardView(card: card, player: player)
 }

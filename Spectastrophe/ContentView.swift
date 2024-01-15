@@ -78,6 +78,10 @@ struct ContentView: View {
 }
 
 #Preview {
-    var game: GameState = GameState()
+    let player = Pawn(.player)
+    let world = [Coords: Encounter]()
+    let location = Coords(0,0)
+    let game: GameState = GameState(player: player, world: world, location: location)
+    
     return ContentView(encounter: game.world[game.location]!, player: game.player)
 }

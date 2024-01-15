@@ -8,33 +8,25 @@
 import SwiftUI
 
 struct PawnView: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-    }
-}
+    @ObservedObject var pawn: Pawn
 
-struct PlayerView: View {
-    @ObservedObject var player: Pawn
+    @ViewBuilder var Avatar: some View {
+        Image(systemName: "person").resizable().scaledToFit()
+    }
+
     var body: some View {
-        if player.hp <= 0 {
+        if pawn.hp <= 0 {
             Text("☠️")
         } else {
-            Image(systemName: "person").resizable().scaledToFit()
-        }
-    }
-}
-
-struct EnemyView: View {
-    @ObservedObject var enemy: Pawn
-    var body: some View {
-        if enemy.hp <= 0 {
-            Text("☠️")
-        } else {
-            Image(systemName: "person").resizable().scaledToFit().foregroundStyle(Color(.red))
+            switch pawn.type {
+                case .player: Avatar
+                case .enemy: Avatar.foregroundStyle(Color.red)
+            }
         }
     }
 }
 
 #Preview {
-    PawnView()
+    let pawn = Pawn()
+    return PawnView(pawn: pawn)
 }
