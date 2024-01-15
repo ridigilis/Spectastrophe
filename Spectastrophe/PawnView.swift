@@ -11,12 +11,12 @@ struct PawnView: View {
     @ObservedObject var pawn: Pawn
 
     @ViewBuilder var Avatar: some View {
-        Image(systemName: "person").resizable().scaledToFit()
+        Image(systemName: "person.fill").resizable().scaledToFit()
     }
 
     var body: some View {
         if pawn.hp <= 0 {
-            Text("☠️")
+            Image(systemName: "person.slash.fill").resizable().scaledToFit().foregroundColor(.brown)
         } else {
             switch pawn.type {
                 case .player: Avatar
@@ -27,6 +27,11 @@ struct PawnView: View {
 }
 
 #Preview {
-    let pawn = Pawn()
-    return PawnView(pawn: pawn)
+    let player = Pawn(.player, hp: 120)
+    let enemy = Pawn(.enemy, hp: 60)
+    return HStack {
+        PawnView(pawn: player)
+        PawnView(pawn: enemy)
+        PawnView(pawn: Pawn())
+    }
 }
