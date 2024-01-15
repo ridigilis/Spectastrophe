@@ -105,10 +105,10 @@
 		F8575B572B473A9B00F71F92 = {
 			isa = PBXGroup;
 			children = (
+				F8575B612B473A9B00F71F92 /* Products */,
 				F8575B622B473A9B00F71F92 /* Spectastrophe */,
 				F8575B742B473A9E00F71F92 /* SpectastropheTests */,
 				F8575B7E2B473A9E00F71F92 /* SpectastropheUITests */,
-				F8575B612B473A9B00F71F92 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
@@ -125,26 +125,26 @@
 		F8575B622B473A9B00F71F92 /* Spectastrophe */ = {
 			isa = PBXGroup;
 			children = (
-				F8575B632B473A9B00F71F92 /* SpectastropheApp.swift */,
-				F8575B652B473A9B00F71F92 /* ContentView.swift */,
-				F8575B672B473A9D00F71F92 /* Assets.xcassets */,
-				F8575B692B473A9D00F71F92 /* Spectastrophe.entitlements */,
-				F8575B6A2B473A9D00F71F92 /* Preview Content */,
-				F83CF3AC2B549DAC00A8F1F9 /* GameState.swift */,
-				F83CF3AE2B549F3A00A8F1F9 /* Pawn.swift */,
-				F83CF3B02B549F8600A8F1F9 /* Deck.swift */,
-				F83CF3B22B54A04B00A8F1F9 /* Card.swift */,
-				F83CF3B42B54A09900A8F1F9 /* Encounter.swift */,
-				F83CF3B62B54A0DB00A8F1F9 /* Board.swift */,
-				F83CF3B82B54A10B00A8F1F9 /* Tile.swift */,
-				F83CF3BA2B54A13A00A8F1F9 /* Coords.swift */,
 				F83CF3BC2B54A1CC00A8F1F9 /* Action.swift */,
-				F83CF3BE2B54A21D00A8F1F9 /* Die.swift */,
+				F8575B672B473A9D00F71F92 /* Assets.xcassets */,
+				F83CF3B62B54A0DB00A8F1F9 /* Board.swift */,
 				F83CF3C02B54A2AE00A8F1F9 /* BoardView.swift */,
-				F83CF3C22B54A32900A8F1F9 /* TileView.swift */,
-				F83CF3C42B54A34C00A8F1F9 /* PawnView.swift */,
+				F83CF3B22B54A04B00A8F1F9 /* Card.swift */,
 				F83CF3C62B54A38D00A8F1F9 /* CardView.swift */,
+				F8575B652B473A9B00F71F92 /* ContentView.swift */,
+				F83CF3BA2B54A13A00A8F1F9 /* Coords.swift */,
+				F83CF3B02B549F8600A8F1F9 /* Deck.swift */,
+				F83CF3BE2B54A21D00A8F1F9 /* Die.swift */,
+				F83CF3B42B54A09900A8F1F9 /* Encounter.swift */,
+				F83CF3AC2B549DAC00A8F1F9 /* GameState.swift */,
 				F83CF3C82B54A3D900A8F1F9 /* HandView.swift */,
+				F83CF3AE2B549F3A00A8F1F9 /* Pawn.swift */,
+				F83CF3C42B54A34C00A8F1F9 /* PawnView.swift */,
+				F8575B6A2B473A9D00F71F92 /* Preview Content */,
+				F8575B692B473A9D00F71F92 /* Spectastrophe.entitlements */,
+				F8575B632B473A9B00F71F92 /* SpectastropheApp.swift */,
+				F83CF3B82B54A10B00A8F1F9 /* Tile.swift */,
+				F83CF3C22B54A32900A8F1F9 /* TileView.swift */,
 			);
 			path = Spectastrophe;
 			sourceTree = "<group>";
