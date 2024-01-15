@@ -14,7 +14,16 @@ final class Deck: ObservableObject {
     @Published var discardPile: [Card]
     @Published var exhaustPile: [Card]
 
-    init(drawPile: [Card] = [],
+    init(drawPile: [Card] = [
+        Card(type: .action, title: "Move", actions: [.movement(for: .constant(1))]),
+        Card(type: .action, title: "Move", actions: [.movement(for: .constant(1))]),
+        Card(type: .action, title: "Move", actions: [.movement(for: .constant(1))]),
+        Card(type: .action, title: "Slash", actions: [.attack(.physical(.slash), for: .random([.d4]))]),
+        Card(type: .action, title: "Slash", actions: [.attack(.physical(.slash), for: .random([.d4]))]),
+        Card(type: .action, title: "Slash", actions: [.attack(.physical(.slash), for: .random([.d4]))]),
+        Card(type: .action, title: "Slash", actions: [.attack(.physical(.slash), for: .random([.d4]))]),
+        Card(type: .action, title: "Slash", actions: [.attack(.physical(.slash), for: .random([.d4]))])
+    ],
          hand: [Card] = [],
          playArea: [Card] = [],
          discardPile: [Card] = [],
