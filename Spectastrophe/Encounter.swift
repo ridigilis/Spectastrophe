@@ -71,9 +71,7 @@ final class Encounter: Identifiable, ObservableObject {
                     enemy.deck.hand.forEach { card in
                         if card.title == "Move" {
                             enemy.deck.playFromHand(card)
-                            card.actions.forEach { action in
-                                action.perform(by: enemy, on: [enemy])
-                            }
+                            card.action.perform(by: enemy, on: [enemy])
                         }
                     }
 
@@ -98,9 +96,7 @@ final class Encounter: Identifiable, ObservableObject {
                         enemy.deck.hand.forEach { card in
                             if card.title == "Slash" {
                                 enemy.deck.playFromHand(card)
-                                card.actions.forEach { action in
-                                    action.perform(by: enemy, on: [self.player])
-                                }
+                                card.action.perform(by: enemy, on: [self.player])
                             }
                         }
                     }

@@ -13,7 +13,7 @@ struct HandView: View {
 
     var body: some View {
         HStack {
-            ForEach(deck.hand) { card in
+            ForEach(deck.hand, id: \.self.id) { card in
                 CardView(card: card, player: player)
             }
         }

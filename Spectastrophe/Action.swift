@@ -14,10 +14,11 @@ enum Action: Actionable  {
     case buff(Buff)
     case debuff(Debuff)
     case movement(for: Quantity?)
+    case equip(to: Deck.GearSlot)
 
-    func perform(by source: Pawn, on targets: [Pawn]? = []) {
+    func perform(by source: Pawn, on targets: [Pawn]? = [], using card: GearCard? = nil) {
         switch self {
-            case let .attack(type, quantity):
+            case let .attack(_, quantity):
                 let amt = switch quantity {
                 case let .constant(num): num
                 case let .random(dice): dice.map { $0.roll().reduce(0, +) }.reduce(0, +)
@@ -34,6 +35,22 @@ enum Action: Actionable  {
 
                 targets?.forEach { $0.moves += amt }
 
+            case let .equip(to):
+                let equipment = source.deck.equipment
+                switch to {
+                    case .head:
+                            // TODO: unequip -> move existing gear card to discard pile and remove all child cards from deck
+                            equipment.head = card
+                    case .torso:
+                            // TODO: unequip -> move existing gear card to discard pile and remove all child cards from deck
+                            equipment.torso = card
+                    case .feet:
+                            // TODO: unequip -> move existing gear card to discard pile and remove all child cards from deck
+                            equipment.feet = card
+                    case .hands:
+                            // TODO: unequip -> move existing gear card to discard pile and remove all child cards from deck
+                            equipment.hands = card
+                }
             default:
                 return
         }
@@ -74,5 +91,5 @@ enum Action: Actionable  {
 }
 
 protocol Actionable {
-    func perform(by source: Pawn, on targets: [Pawn]?) -> Void
+    func perform(by source: Pawn, on targets: [Pawn]?, using card: GearCard?) -> Void
 }

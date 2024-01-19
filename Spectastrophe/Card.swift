@@ -7,28 +7,53 @@
 
 import Foundation
 
-struct Card: Equatable, Identifiable {
+protocol Card: Identifiable {
+    var id: UUID { get }
+    var parentId: UUID? { get }
+
+    var action: Action { get }
+
+    var title: String { get }
+    var description: String { get }
+}
+
+struct ActionCard: Card {
     let id = UUID()
     let parentId: UUID?
-    let type: CardType
-    let actions: [Action]
+    let action: Action
     let title: String
     let description: String
 
-    init(parentId: UUID? = nil, type: CardType, title: String = "What does this card do?", description: String = "Nobody knows...", actions: [Action]) {
+    init(parentId: UUID? = nil, title: String = "What does this card do?", description: String = "Nobody knows...", action: Action) {
         self.parentId = parentId
-        self.type = type
-        self.actions = actions
+        self.action = action
         self.title = title
         self.description = description
     }
+}
 
-    // not sure if this is what I want this to be yet
-    static func ==(lhs: Self, rhs: Self) -> Bool {
-        lhs.id == rhs.id
-    }
+struct GearCard: Card {
+    let id: UUID
+    let parentId: UUID? = nil
+    let action: Action
+    let title: String
+    let description: String
 
-    enum CardType {
-        case action, gear
+    let slot: Deck.GearSlot
+    let cards: [any Card]
+
+    init(slot: Deck.GearSlot, title: String, description: String, cards: [any Card]) {
+        let id = UUID()
+
+        self.id = id
+        self.slot = slot
+        self.title = title
+        self.description = description
+
+        self.action = .equip(to: self.slot)
+
+        self.cards = cards.map { card in
+            ActionCard(parentId: id, title: card.title, description: card.description, action: card.action)
+        }
     }
 }

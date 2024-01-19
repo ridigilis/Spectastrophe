@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CardView: View {
-    var card: Card
+    var card: any Card
     @ObservedObject var player: Pawn
 
     @State private var fill = Color.brown
@@ -50,14 +50,13 @@ struct CardView: View {
                 .onEnded { _ in
                     if player.turnToPlay {
                         if dragAmount.height < -200 {
-                            card.actions.forEach { action in
-                                switch action {
-                                    case .attack:
-                                        player.isAttacking.toggle()
-                                        player.isAttackingWith = action
-                                    case .movement: action.perform(by: player, on: [player])
-                                    default: return
-                                }
+                            switch card.action {
+                                case .attack:
+                                    player.isAttacking.toggle()
+                                    player.isAttackingWith = card.action
+                                case .movement: card.action.perform(by: player, on: [player])
+                                case .equip: card.action.perform(by: player, on: [player], using: card as? GearCard)
+                                default: return
                             }
                             player.deck.playFromHand(card)
                         }
@@ -72,7 +71,7 @@ struct CardView: View {
 }
 
 #Preview {
-    let card = Card(type: .action, actions: [])
+    let card = ActionCard(action: .attack(.physical(.bludgeon), for: .constant(1)))
     let player = Pawn(.player)
     
     return CardView(card: card, player: player)
