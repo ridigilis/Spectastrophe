@@ -12,10 +12,17 @@ struct BoardView: View {
     @ObservedObject var player: Pawn
 
     var body: some View {
-        ForEach(encounter.board.byRow, id: \.self) { row in
-            HStack {
-                ForEach(row) { tile in
-                    TileView(tile: tile, player: player, enemies: encounter.enemies)
+        // TODO: figure out how to make the grid remain static and not reposition the tiles when a pawn moves to/from the center row
+        Grid {
+            ForEach(encounter.board.byRow, id: \.self) { row in
+                GridRow {
+                    HStack{
+                        Spacer()
+                        ForEach(row) { tile in
+                            TileView(tile: tile, player: player, enemies: encounter.enemies)
+                        }
+                        Spacer()
+                    }
                 }
             }
         }
