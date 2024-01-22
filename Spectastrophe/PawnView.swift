@@ -14,7 +14,7 @@ struct PawnView: View {
         VStack {
             ProgressView(value: Float(pawn.hp), total: Float(pawn.maxHp))
             Image(systemName: "person.fill").resizable().scaledToFit()
-        }
+        }.scaledToFit()
     }
 
     var body: some View {
