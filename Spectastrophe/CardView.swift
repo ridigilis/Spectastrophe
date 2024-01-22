@@ -16,23 +16,24 @@ struct CardView: View {
     @State private var dragAmount = CGSize.zero
 
     var body: some View {
-        ZStack {
+        VStack {
+            Text(card.title)
+                .frame(alignment: .topLeading)
+                .bold()
+                .padding(.top)
+
+            Spacer()
+
+            Text(card.description)
+                .font(.footnote)
+
+            Spacer()
+        }
+        .frame(maxWidth: 180, maxHeight: 240)
+        .background {
             RoundedRectangle(cornerRadius: 25.0)
                 .fill(fill)
-                .frame(width:120, height: 180)
                 .shadow(radius: 12)
-            VStack {
-                Text(card.title)
-                    .frame(alignment: .topLeading)
-                    .bold()
-                    .padding(.bottom)
-                    .padding(.bottom)
-
-                Text(card.description)
-                    .font(.footnote)
-                    .padding(.bottom)
-                    .padding(.bottom)
-            }
         }
         .offset(dragAmount)
         .gesture(
