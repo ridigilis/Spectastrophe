@@ -12,6 +12,7 @@ final class Pawn: Targettable, HasDeck, ObservableObject {
     let type: PawnType
 
     @Published var hp: Int
+    @Published var maxHp: Int
     @Published var tile: Coords?
     @Published var moves: UInt
 
@@ -22,10 +23,11 @@ final class Pawn: Targettable, HasDeck, ObservableObject {
     @Published var isAttacking: Bool
     @Published var isAttackingWith: Action?
 
-    init(_ type: PawnType = .enemy, hp: Int = 0, tile: Coords? = nil, moves: UInt = 0, deck: Deck = Deck()) {
+    init(_ type: PawnType = .enemy, maxHp: Int = 0, tile: Coords? = nil, moves: UInt = 0, deck: Deck = Deck()) {
         self.id = UUID()
         self.type = type
-        self.hp = hp
+        self.hp = maxHp
+        self.maxHp = maxHp
         self.tile = tile
         self.moves = moves
         self.deck = deck

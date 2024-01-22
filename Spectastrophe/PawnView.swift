@@ -11,7 +11,10 @@ struct PawnView: View {
     @ObservedObject var pawn: Pawn
 
     @ViewBuilder var Avatar: some View {
-        Image(systemName: "person.fill").resizable().scaledToFit()
+        VStack {
+            ProgressView(value: Float(pawn.hp), total: Float(pawn.maxHp))
+            Image(systemName: "person.fill").resizable().scaledToFit()
+        }
     }
 
     var body: some View {
@@ -27,8 +30,8 @@ struct PawnView: View {
 }
 
 #Preview {
-    let player = Pawn(.player, hp: 120)
-    let enemy = Pawn(.enemy, hp: 60)
+    let player = Pawn(.player, maxHp: 120)
+    let enemy = Pawn(.enemy, maxHp: 60)
     return HStack {
         PawnView(pawn: player)
         PawnView(pawn: enemy)
