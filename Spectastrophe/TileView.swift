@@ -27,7 +27,12 @@ struct TileView: View {
             if player.isAttackingWith != nil && player.tile!.isAdjacent(to: tile.id) {
                 ForEach(enemies) { enemy in
                     if enemy.tile == tile.id {
-                        Circle().fill(.green).padding(-4)
+                        Circle().fill(.green).padding(-4).onTapGesture {
+                            if let action = player.isAttackingWith?.action {
+                                action.perform(by: player, on: [enemy])
+                                player.isAttackingWith = nil
+                            }
+                        }
                     } else {
                         Circle().fill(.red).padding(-4)
                     }
@@ -40,12 +45,7 @@ struct TileView: View {
 
             ForEach(enemies) { enemy in
                 if enemy.tile == tile.id {
-                    PawnView(pawn: enemy).onTapGesture {
-                        if let action = player.isAttackingWith?.action {
-                            action.perform(by: player, on: [enemy])
-                            player.isAttackingWith = nil
-                        }
-                    }
+                    PawnView(pawn: enemy)
                 }
             }
         }
