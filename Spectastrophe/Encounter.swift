@@ -68,13 +68,6 @@ final class Encounter: Identifiable, ObservableObject {
                 //or maybe automatically if no other moves can be made?
             case .enemy:
                 self.enemies.filter { $0.hp > 0 }.forEach { enemy in
-                    enemy.deck.hand.forEach { card in
-                        if card.title == "Move" {
-                            enemy.deck.playFromHand(card)
-                            card.action.perform(by: enemy, on: [enemy])
-                        }
-                    }
-
                     if !self.player.tile!.isAdjacent(to: enemy.tile!) {
                         let path = self.board.shortestPath(from: self.board.tiles[enemy.tile!]!, to: self.board.tiles[self.player.tile!]!)
 
@@ -83,9 +76,9 @@ final class Encounter: Identifiable, ObservableObject {
                         }
 
                         for tile in path {
-                            if enemy.moves > 0 {
+                            if let card = enemy.deck.hand.first(where: { $0.title == "Move"}) {
+                                enemy.deck.playFromHand(card)
                                 enemy.tile = tile.id
-                                enemy.moves -= 1
                             } else {
                                 break
                             }
@@ -94,7 +87,7 @@ final class Encounter: Identifiable, ObservableObject {
 
                     if self.player.tile!.isAdjacent(to: enemy.tile!) {
                         enemy.deck.hand.forEach { card in
-                            if card.title == "Slash" {
+                            if card.title == "Pierce" {
                                 enemy.deck.playFromHand(card)
                                 card.action.perform(by: enemy, on: [self.player])
                             }
@@ -124,9 +117,9 @@ final class Encounter: Identifiable, ObservableObject {
 
     func onEnterTurnEnd() {
         //do something
-        self.player.moves = 0
+        self.player.isMovingWith = nil
         self.enemies.forEach { enemy in
-            enemy.moves = 0
+            enemy.isMovingWith = nil
         }
         self.onExitTurnEnd()
     }

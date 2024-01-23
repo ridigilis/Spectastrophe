@@ -14,39 +14,49 @@ final class Pawn: Targettable, HasDeck, ObservableObject {
     @Published var hp: Int
     @Published var maxHp: Int
     @Published var tile: Coords?
-    @Published var moves: UInt
 
     @Published var deck: Deck
 
     @Published var turnToPlay: Bool
-    @Published var isMoving: Bool
-    @Published var isAttacking: Bool
-    @Published var isAttackingWith: Action?
+    @Published var isMovingWith: ActionCard?
+    @Published var isAttackingWith: ActionCard?
 
-    init(_ type: PawnType = .enemy, maxHp: Int = 0, tile: Coords? = nil, moves: UInt = 0, deck: Deck = Deck()) {
+    init(_ type: PawnType = .enemy, maxHp: Int = 0, tile: Coords? = nil, deck: Deck = Deck()) {
         self.id = UUID()
         self.type = type
         self.hp = maxHp
         self.maxHp = maxHp
         self.tile = tile
-        self.moves = moves
         self.deck = deck
         self.turnToPlay = false
-        self.isMoving = false
-        self.isAttacking = false
+        self.isMovingWith = nil
         self.isAttackingWith = nil
     }
 
     enum PawnType {
         case player, enemy
     }
+
+    func cancelMovementAction() {
+        if let card = self.isMovingWith {
+            self.deck.undoPlayFromHand(card)
+            self.isMovingWith = nil
+        }
+    }
+
+    func cancelAttackAction() {
+        if let card = self.isAttackingWith {
+            self.deck.undoPlayFromHand(card)
+            self.isAttackingWith = nil
+        }
+    }
 }
 
 protocol Targettable: Identifiable {
     var id: UUID { get }
     var hp: Int { get set }
+    var maxHp: Int { get set }
     var tile: Coords? { get set }
-    var moves: UInt { get set }
 }
 
 protocol HasDeck {

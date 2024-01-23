@@ -33,8 +33,6 @@ enum Action: Actionable  {
                 case .none: UInt(1)
                 }
 
-                targets?.forEach { $0.moves += amt }
-
             case let .equip(to):
                 let equipment = source.deck.equipment
                 switch to {

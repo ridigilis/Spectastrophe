@@ -51,12 +51,17 @@ struct ContentView: View {
                 VStack {
                     HStack {
                         Spacer()
+                        if player.isMovingWith != nil {
+                            Button("Cancel") {
+                                player.cancelMovementAction()
+                            }
+                        }
 
-                        Button(player.isMoving ? "Moving" : "Move (\(player.moves))") {
-                            player.isMoving.toggle()
-                        }.disabled(player.moves == 0)
-
-
+                        if player.isAttackingWith != nil {
+                            Button("Cancel") {
+                                player.cancelAttackAction()
+                            }
+                        }
                     }
 
                     HStack {

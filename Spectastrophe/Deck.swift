@@ -62,6 +62,11 @@ final class Deck: ObservableObject {
         self.playArea = self.playArea + [card].compactMap { $0 }
     }
 
+    func undoPlayFromHand(_ card: any Card) {
+        self.playArea = self.playArea.filter { $0.id != card.id }
+        self.hand = self.hand + [card].compactMap { $0 }
+    }
+
     func discardFromHand(_ card: any Card) {
         self.hand = self.hand.filter { $0.id != card.id }
         self.discardPile = self.discardPile + [card].compactMap{ $0 }

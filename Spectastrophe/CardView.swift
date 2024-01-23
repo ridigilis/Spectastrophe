@@ -49,13 +49,11 @@ struct CardView: View {
                     }
                 }
                 .onEnded { _ in
-                    if player.turnToPlay {
+                    if player.turnToPlay && player.isMovingWith == nil && player.isAttackingWith == nil {
                         if dragAmount.height < -200 {
                             switch card.action {
-                                case .attack:
-                                    player.isAttacking.toggle()
-                                    player.isAttackingWith = card.action
-                                case .movement: card.action.perform(by: player, on: [player])
+                                case .attack: player.isAttackingWith = card as? ActionCard
+                                case .movement: player.isMovingWith = card as? ActionCard
                                 case .equip: card.action.perform(by: player, on: [player], using: card as? GearCard)
                                 default: return
                             }
