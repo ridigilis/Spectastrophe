@@ -49,32 +49,50 @@ struct ContentView: View {
                 }
 
                 VStack {
+                    Spacer()
+
                     HStack {
                         Spacer()
                         if player.isMovingWith != nil {
-                            Button("Cancel") {
+                            Button("Cancel Action") {
                                 player.cancelMovementAction()
                             }
+                            .bold()
+                            .padding()
+                            .background(.red)
+                            .foregroundColor(.white.opacity(0.8))
+                            .clipShape(RoundedRectangle(cornerRadius: 5))
                         }
 
                         if player.isAttackingWith != nil {
-                            Button("Cancel") {
+                            Button("Cancel Action") {
                                 player.cancelAttackAction()
                             }
+                            .bold()
+                            .padding()
+                            .background(.red)
+                            .foregroundColor(.white.opacity(0.8))
+                            .clipShape(RoundedRectangle(cornerRadius: 5))
                         }
                     }
+                    .padding(.bottom)
+                    .padding(.bottom)
 
                     HStack {
                         Spacer()
                         Button("End Turn") {
                             encounter.onExitPlayPhase()
-                        }.disabled(!player.turnToPlay)
-                    }
+                        }
+                        .bold()
+                        .padding()
+                        .background(.green)
+                        .foregroundColor(.white.opacity(0.8))
+                        .clipShape(RoundedRectangle(cornerRadius: 5))
+                        .disabled(!player.turnToPlay)
 
-                    Spacer()
+                    }
                 }
                 .padding(24)
-                .buttonStyle(.borderedProminent)
             }
 
             Spacer()
