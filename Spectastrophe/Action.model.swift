@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum Action: Actionable  {
+enum Action: Actionable {
     case attack(Attack, for: Quantity)
     case bolster(for: Quantity)
     case heal(for: Quantity)
@@ -86,8 +86,4 @@ enum Action: Actionable  {
 
     // debuff
     enum Debuff {}
-}
-
-protocol Actionable {
-    func perform(by source: Pawn, on targets: [Pawn]?, using card: GearCard?) -> Void
 }
