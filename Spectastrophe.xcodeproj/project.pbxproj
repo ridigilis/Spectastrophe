@@ -157,9 +157,9 @@
 				F8142D2B2B6E8E97002BCCAD /* HasDeck.protocol.swift */,
 				F83CF3AE2B549F3A00A8F1F9 /* Pawn.model.swift */,
 				F83CF3C42B54A34C00A8F1F9 /* Pawn.view.swift */,
+				F8142D292B6E8D9D002BCCAD /* Targettable.protocol.swift */,
 				F83CF3B82B54A10B00A8F1F9 /* Tile.model.swift */,
 				F83CF3C22B54A32900A8F1F9 /* Tile.view.swift */,
-				F8142D292B6E8D9D002BCCAD /* Targettable.protocol.swift */,
 			);
 			path = Spectastrophe;
 			sourceTree = "<group>";
