@@ -11,7 +11,7 @@
 		F83CF3AD2B549DAC00A8F1F9 /* GameState.model.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83CF3AC2B549DAC00A8F1F9 /* GameState.model.swift */; };
 		F83CF3AF2B549F3A00A8F1F9 /* Pawn.model.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83CF3AE2B549F3A00A8F1F9 /* Pawn.model.swift */; };
 		F83CF3B12B549F8600A8F1F9 /* Deck.model.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83CF3B02B549F8600A8F1F9 /* Deck.model.swift */; };
-		F83CF3B32B54A04B00A8F1F9 /* Card.model.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83CF3B22B54A04B00A8F1F9 /* Card.model.swift */; };
+		F83CF3B32B54A04B00A8F1F9 /* Card.protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83CF3B22B54A04B00A8F1F9 /* Card.protocol.swift */; };
 		F83CF3B52B54A09900A8F1F9 /* Encounter.model.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83CF3B42B54A09900A8F1F9 /* Encounter.model.swift */; };
 		F83CF3B72B54A0DB00A8F1F9 /* Board.model.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83CF3B62B54A0DB00A8F1F9 /* Board.model.swift */; };
 		F83CF3B92B54A10B00A8F1F9 /* Tile.model.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83CF3B82B54A10B00A8F1F9 /* Tile.model.swift */; };
@@ -54,7 +54,7 @@
 		F83CF3AC2B549DAC00A8F1F9 /* GameState.model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameState.model.swift; sourceTree = "<group>"; };
 		F83CF3AE2B549F3A00A8F1F9 /* Pawn.model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pawn.model.swift; sourceTree = "<group>"; };
 		F83CF3B02B549F8600A8F1F9 /* Deck.model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Deck.model.swift; sourceTree = "<group>"; };
-		F83CF3B22B54A04B00A8F1F9 /* Card.model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.model.swift; sourceTree = "<group>"; };
+		F83CF3B22B54A04B00A8F1F9 /* Card.protocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.protocol.swift; sourceTree = "<group>"; };
 		F83CF3B42B54A09900A8F1F9 /* Encounter.model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Encounter.model.swift; sourceTree = "<group>"; };
 		F83CF3B62B54A0DB00A8F1F9 /* Board.model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Board.model.swift; sourceTree = "<group>"; };
 		F83CF3B82B54A10B00A8F1F9 /* Tile.model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tile.model.swift; sourceTree = "<group>"; };
@@ -135,7 +135,7 @@
 				F8142D212B6E87DC002BCCAD /* Actionable.protocol.swift */,
 				F83CF3B62B54A0DB00A8F1F9 /* Board.model.swift */,
 				F83CF3C02B54A2AE00A8F1F9 /* Board.view.swift */,
-				F83CF3B22B54A04B00A8F1F9 /* Card.model.swift */,
+				F83CF3B22B54A04B00A8F1F9 /* Card.protocol.swift */,
 				F83CF3C62B54A38D00A8F1F9 /* Card.view.swift */,
 				F8575B652B473A9B00F71F92 /* Content.view.swift */,
 				F83CF3BA2B54A13A00A8F1F9 /* Coords.model.swift */,
@@ -314,7 +314,7 @@
 				F83CF3C12B54A2AE00A8F1F9 /* Board.view.swift in Sources */,
 				F83CF3BD2B54A1CC00A8F1F9 /* Action.model.swift in Sources */,
 				F8575B662B473A9B00F71F92 /* Content.view.swift in Sources */,
-				F83CF3B32B54A04B00A8F1F9 /* Card.model.swift in Sources */,
+				F83CF3B32B54A04B00A8F1F9 /* Card.protocol.swift in Sources */,
 				F83CF3AD2B549DAC00A8F1F9 /* GameState.model.swift in Sources */,
 				F8575B642B473A9B00F71F92 /* SpectastropheApp.swift in Sources */,
 				F83CF3C32B54A32900A8F1F9 /* Tile.view.swift in Sources */,
