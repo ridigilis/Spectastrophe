@@ -51,7 +51,3 @@ final class Pawn: Targettable, HasDeck, ObservableObject {
         }
     }
 }
-
-protocol HasDeck {
-    var deck: Deck { get set }
-}
