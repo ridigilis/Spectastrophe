@@ -48,10 +48,50 @@ struct ContentView: View {
                     HandView(deck: player.deck, player: player)
                 }
 
-                VStack {
+                HStack {
+                    VStack {
+                        Spacer()
+                        Grid {
+                            GridRow {
+                                ZStack {
+                                    RoundedRectangle(cornerRadius: 6)
+                                        .strokeBorder(.black, lineWidth: 6)
+                                        .frame(width:96, height: 96)
+                                    
+                                    Text("Head")
+                                }
+                            }
+                            GridRow {
+                                ZStack {
+                                    RoundedRectangle(cornerRadius: 6)
+                                        .strokeBorder(.black, lineWidth: 6)
+                                        .frame(width:96, height: 96)
+                                    
+                                    Text("Torso")
+                                }
+                            }
+                            GridRow {
+                                ZStack {
+                                    RoundedRectangle(cornerRadius: 6)
+                                        .strokeBorder(.black, lineWidth: 6)
+                                        .frame(width:96, height: 96)
+                                    
+                                    Text("Hands")
+                                }
+                            }
+                            GridRow {
+                                ZStack {
+                                    RoundedRectangle(cornerRadius: 6)
+                                        .strokeBorder(.black, lineWidth: 6)
+                                        .frame(width:96, height: 96)
+                                    
+                                    Text("Feet")
+                                }
+                            }
+                        }
+                    }
                     Spacer()
-
-                    HStack {
+                    VStack {
                         Spacer()
                         if player.isMovingWith != nil {
                             Button("Cancel Action") {
@@ -74,12 +114,7 @@ struct ContentView: View {
                             .foregroundColor(.white.opacity(0.8))
                             .clipShape(RoundedRectangle(cornerRadius: 5))
                         }
-                    }
-                    .padding(.bottom)
-                    .padding(.bottom)
-
-                    HStack {
-                        Spacer()
+                        
                         Button("End Turn") {
                             encounter.onExitPlayPhase()
                         }
@@ -89,7 +124,6 @@ struct ContentView: View {
                         .foregroundColor(.white.opacity(0.8))
                         .clipShape(RoundedRectangle(cornerRadius: 5))
                         .disabled(!player.turnToPlay)
-
                     }
                 }
                 .padding(24)
