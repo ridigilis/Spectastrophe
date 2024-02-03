@@ -17,21 +17,6 @@ protocol Card: Identifiable {
     var description: String { get }
 }
 
-struct ActionCard: Card {
-    let id = UUID()
-    let parentId: UUID?
-    let action: Action
-    let title: String
-    let description: String
-
-    init(parentId: UUID? = nil, title: String = "What does this card do?", description: String = "Nobody knows...", action: Action) {
-        self.parentId = parentId
-        self.action = action
-        self.title = title
-        self.description = description
-    }
-}
-
 struct GearCard: Card {
     let id: UUID
     let parentId: UUID? = nil
