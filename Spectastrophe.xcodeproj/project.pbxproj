@@ -7,23 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		F83CF3AD2B549DAC00A8F1F9 /* GameState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83CF3AC2B549DAC00A8F1F9 /* GameState.swift */; };
-		F83CF3AF2B549F3A00A8F1F9 /* Pawn.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83CF3AE2B549F3A00A8F1F9 /* Pawn.swift */; };
-		F83CF3B12B549F8600A8F1F9 /* Deck.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83CF3B02B549F8600A8F1F9 /* Deck.swift */; };
-		F83CF3B32B54A04B00A8F1F9 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83CF3B22B54A04B00A8F1F9 /* Card.swift */; };
-		F83CF3B52B54A09900A8F1F9 /* Encounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83CF3B42B54A09900A8F1F9 /* Encounter.swift */; };
-		F83CF3B72B54A0DB00A8F1F9 /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83CF3B62B54A0DB00A8F1F9 /* Board.swift */; };
-		F83CF3B92B54A10B00A8F1F9 /* Tile.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83CF3B82B54A10B00A8F1F9 /* Tile.swift */; };
-		F83CF3BB2B54A13A00A8F1F9 /* Coords.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83CF3BA2B54A13A00A8F1F9 /* Coords.swift */; };
-		F83CF3BD2B54A1CC00A8F1F9 /* Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83CF3BC2B54A1CC00A8F1F9 /* Action.swift */; };
-		F83CF3BF2B54A21D00A8F1F9 /* Die.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83CF3BE2B54A21D00A8F1F9 /* Die.swift */; };
-		F83CF3C12B54A2AE00A8F1F9 /* BoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83CF3C02B54A2AE00A8F1F9 /* BoardView.swift */; };
-		F83CF3C32B54A32900A8F1F9 /* TileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83CF3C22B54A32900A8F1F9 /* TileView.swift */; };
-		F83CF3C52B54A34C00A8F1F9 /* PawnView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83CF3C42B54A34C00A8F1F9 /* PawnView.swift */; };
-		F83CF3C72B54A38D00A8F1F9 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83CF3C62B54A38D00A8F1F9 /* CardView.swift */; };
-		F83CF3C92B54A3D900A8F1F9 /* HandView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83CF3C82B54A3D900A8F1F9 /* HandView.swift */; };
+		F83CF3AD2B549DAC00A8F1F9 /* GameState.model.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83CF3AC2B549DAC00A8F1F9 /* GameState.model.swift */; };
+		F83CF3AF2B549F3A00A8F1F9 /* Pawn.model.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83CF3AE2B549F3A00A8F1F9 /* Pawn.model.swift */; };
+		F83CF3B12B549F8600A8F1F9 /* Deck.model.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83CF3B02B549F8600A8F1F9 /* Deck.model.swift */; };
+		F83CF3B32B54A04B00A8F1F9 /* Card.model.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83CF3B22B54A04B00A8F1F9 /* Card.model.swift */; };
+		F83CF3B52B54A09900A8F1F9 /* Encounter.model.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83CF3B42B54A09900A8F1F9 /* Encounter.model.swift */; };
+		F83CF3B72B54A0DB00A8F1F9 /* Board.model.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83CF3B62B54A0DB00A8F1F9 /* Board.model.swift */; };
+		F83CF3B92B54A10B00A8F1F9 /* Tile.model.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83CF3B82B54A10B00A8F1F9 /* Tile.model.swift */; };
+		F83CF3BB2B54A13A00A8F1F9 /* Coords.model.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83CF3BA2B54A13A00A8F1F9 /* Coords.model.swift */; };
+		F83CF3BD2B54A1CC00A8F1F9 /* Action.model.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83CF3BC2B54A1CC00A8F1F9 /* Action.model.swift */; };
+		F83CF3BF2B54A21D00A8F1F9 /* Die.model.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83CF3BE2B54A21D00A8F1F9 /* Die.model.swift */; };
+		F83CF3C12B54A2AE00A8F1F9 /* Board.view.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83CF3C02B54A2AE00A8F1F9 /* Board.view.swift */; };
+		F83CF3C32B54A32900A8F1F9 /* Tile.view.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83CF3C22B54A32900A8F1F9 /* Tile.view.swift */; };
+		F83CF3C52B54A34C00A8F1F9 /* Pawn.view.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83CF3C42B54A34C00A8F1F9 /* Pawn.view.swift */; };
+		F83CF3C72B54A38D00A8F1F9 /* Card.view.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83CF3C62B54A38D00A8F1F9 /* Card.view.swift */; };
+		F83CF3C92B54A3D900A8F1F9 /* Hand.view.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83CF3C82B54A3D900A8F1F9 /* Hand.view.swift */; };
 		F8575B642B473A9B00F71F92 /* SpectastropheApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8575B632B473A9B00F71F92 /* SpectastropheApp.swift */; };
-		F8575B662B473A9B00F71F92 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8575B652B473A9B00F71F92 /* ContentView.swift */; };
+		F8575B662B473A9B00F71F92 /* Content.view.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8575B652B473A9B00F71F92 /* Content.view.swift */; };
 		F8575B682B473A9D00F71F92 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F8575B672B473A9D00F71F92 /* Assets.xcassets */; };
 		F8575B6C2B473A9D00F71F92 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F8575B6B2B473A9D00F71F92 /* Preview Assets.xcassets */; };
 		F8575B762B473A9E00F71F92 /* SpectastropheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8575B752B473A9E00F71F92 /* SpectastropheTests.swift */; };
@@ -49,24 +49,24 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		F83CF3AC2B549DAC00A8F1F9 /* GameState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameState.swift; sourceTree = "<group>"; };
-		F83CF3AE2B549F3A00A8F1F9 /* Pawn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pawn.swift; sourceTree = "<group>"; };
-		F83CF3B02B549F8600A8F1F9 /* Deck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Deck.swift; sourceTree = "<group>"; };
-		F83CF3B22B54A04B00A8F1F9 /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
-		F83CF3B42B54A09900A8F1F9 /* Encounter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Encounter.swift; sourceTree = "<group>"; };
-		F83CF3B62B54A0DB00A8F1F9 /* Board.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
-		F83CF3B82B54A10B00A8F1F9 /* Tile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tile.swift; sourceTree = "<group>"; };
-		F83CF3BA2B54A13A00A8F1F9 /* Coords.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coords.swift; sourceTree = "<group>"; };
-		F83CF3BC2B54A1CC00A8F1F9 /* Action.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Action.swift; sourceTree = "<group>"; };
-		F83CF3BE2B54A21D00A8F1F9 /* Die.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Die.swift; sourceTree = "<group>"; };
-		F83CF3C02B54A2AE00A8F1F9 /* BoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardView.swift; sourceTree = "<group>"; };
-		F83CF3C22B54A32900A8F1F9 /* TileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TileView.swift; sourceTree = "<group>"; };
-		F83CF3C42B54A34C00A8F1F9 /* PawnView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PawnView.swift; sourceTree = "<group>"; };
-		F83CF3C62B54A38D00A8F1F9 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
-		F83CF3C82B54A3D900A8F1F9 /* HandView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandView.swift; sourceTree = "<group>"; };
+		F83CF3AC2B549DAC00A8F1F9 /* GameState.model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameState.model.swift; sourceTree = "<group>"; };
+		F83CF3AE2B549F3A00A8F1F9 /* Pawn.model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pawn.model.swift; sourceTree = "<group>"; };
+		F83CF3B02B549F8600A8F1F9 /* Deck.model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Deck.model.swift; sourceTree = "<group>"; };
+		F83CF3B22B54A04B00A8F1F9 /* Card.model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.model.swift; sourceTree = "<group>"; };
+		F83CF3B42B54A09900A8F1F9 /* Encounter.model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Encounter.model.swift; sourceTree = "<group>"; };
+		F83CF3B62B54A0DB00A8F1F9 /* Board.model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Board.model.swift; sourceTree = "<group>"; };
+		F83CF3B82B54A10B00A8F1F9 /* Tile.model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tile.model.swift; sourceTree = "<group>"; };
+		F83CF3BA2B54A13A00A8F1F9 /* Coords.model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coords.model.swift; sourceTree = "<group>"; };
+		F83CF3BC2B54A1CC00A8F1F9 /* Action.model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Action.model.swift; sourceTree = "<group>"; };
+		F83CF3BE2B54A21D00A8F1F9 /* Die.model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Die.model.swift; sourceTree = "<group>"; };
+		F83CF3C02B54A2AE00A8F1F9 /* Board.view.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Board.view.swift; sourceTree = "<group>"; };
+		F83CF3C22B54A32900A8F1F9 /* Tile.view.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tile.view.swift; sourceTree = "<group>"; };
+		F83CF3C42B54A34C00A8F1F9 /* Pawn.view.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pawn.view.swift; sourceTree = "<group>"; };
+		F83CF3C62B54A38D00A8F1F9 /* Card.view.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.view.swift; sourceTree = "<group>"; };
+		F83CF3C82B54A3D900A8F1F9 /* Hand.view.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hand.view.swift; sourceTree = "<group>"; };
 		F8575B602B473A9B00F71F92 /* Spectastrophe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Spectastrophe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8575B632B473A9B00F71F92 /* SpectastropheApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpectastropheApp.swift; sourceTree = "<group>"; };
-		F8575B652B473A9B00F71F92 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		F8575B652B473A9B00F71F92 /* Content.view.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Content.view.swift; sourceTree = "<group>"; };
 		F8575B672B473A9D00F71F92 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F8575B692B473A9D00F71F92 /* Spectastrophe.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Spectastrophe.entitlements; sourceTree = "<group>"; };
 		F8575B6B2B473A9D00F71F92 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -125,26 +125,26 @@
 		F8575B622B473A9B00F71F92 /* Spectastrophe */ = {
 			isa = PBXGroup;
 			children = (
-				F83CF3BC2B54A1CC00A8F1F9 /* Action.swift */,
-				F8575B672B473A9D00F71F92 /* Assets.xcassets */,
-				F83CF3B62B54A0DB00A8F1F9 /* Board.swift */,
-				F83CF3C02B54A2AE00A8F1F9 /* BoardView.swift */,
-				F83CF3B22B54A04B00A8F1F9 /* Card.swift */,
-				F83CF3C62B54A38D00A8F1F9 /* CardView.swift */,
-				F8575B652B473A9B00F71F92 /* ContentView.swift */,
-				F83CF3BA2B54A13A00A8F1F9 /* Coords.swift */,
-				F83CF3B02B549F8600A8F1F9 /* Deck.swift */,
-				F83CF3BE2B54A21D00A8F1F9 /* Die.swift */,
-				F83CF3B42B54A09900A8F1F9 /* Encounter.swift */,
-				F83CF3AC2B549DAC00A8F1F9 /* GameState.swift */,
-				F83CF3C82B54A3D900A8F1F9 /* HandView.swift */,
-				F83CF3AE2B549F3A00A8F1F9 /* Pawn.swift */,
-				F83CF3C42B54A34C00A8F1F9 /* PawnView.swift */,
 				F8575B6A2B473A9D00F71F92 /* Preview Content */,
+				F8575B672B473A9D00F71F92 /* Assets.xcassets */,
 				F8575B692B473A9D00F71F92 /* Spectastrophe.entitlements */,
 				F8575B632B473A9B00F71F92 /* SpectastropheApp.swift */,
-				F83CF3B82B54A10B00A8F1F9 /* Tile.swift */,
-				F83CF3C22B54A32900A8F1F9 /* TileView.swift */,
+				F83CF3BC2B54A1CC00A8F1F9 /* Action.model.swift */,
+				F83CF3B62B54A0DB00A8F1F9 /* Board.model.swift */,
+				F83CF3C02B54A2AE00A8F1F9 /* Board.view.swift */,
+				F83CF3B22B54A04B00A8F1F9 /* Card.model.swift */,
+				F83CF3C62B54A38D00A8F1F9 /* Card.view.swift */,
+				F8575B652B473A9B00F71F92 /* Content.view.swift */,
+				F83CF3BA2B54A13A00A8F1F9 /* Coords.model.swift */,
+				F83CF3B02B549F8600A8F1F9 /* Deck.model.swift */,
+				F83CF3BE2B54A21D00A8F1F9 /* Die.model.swift */,
+				F83CF3B42B54A09900A8F1F9 /* Encounter.model.swift */,
+				F83CF3AC2B549DAC00A8F1F9 /* GameState.model.swift */,
+				F83CF3C82B54A3D900A8F1F9 /* Hand.view.swift */,
+				F83CF3AE2B549F3A00A8F1F9 /* Pawn.model.swift */,
+				F83CF3C42B54A34C00A8F1F9 /* Pawn.view.swift */,
+				F83CF3B82B54A10B00A8F1F9 /* Tile.model.swift */,
+				F83CF3C22B54A32900A8F1F9 /* Tile.view.swift */,
 			);
 			path = Spectastrophe;
 			sourceTree = "<group>";
@@ -304,23 +304,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F83CF3B12B549F8600A8F1F9 /* Deck.swift in Sources */,
-				F83CF3C92B54A3D900A8F1F9 /* HandView.swift in Sources */,
-				F83CF3BF2B54A21D00A8F1F9 /* Die.swift in Sources */,
-				F83CF3C52B54A34C00A8F1F9 /* PawnView.swift in Sources */,
-				F83CF3C12B54A2AE00A8F1F9 /* BoardView.swift in Sources */,
-				F83CF3BD2B54A1CC00A8F1F9 /* Action.swift in Sources */,
-				F8575B662B473A9B00F71F92 /* ContentView.swift in Sources */,
-				F83CF3B32B54A04B00A8F1F9 /* Card.swift in Sources */,
-				F83CF3AD2B549DAC00A8F1F9 /* GameState.swift in Sources */,
+				F83CF3B12B549F8600A8F1F9 /* Deck.model.swift in Sources */,
+				F83CF3C92B54A3D900A8F1F9 /* Hand.view.swift in Sources */,
+				F83CF3BF2B54A21D00A8F1F9 /* Die.model.swift in Sources */,
+				F83CF3C52B54A34C00A8F1F9 /* Pawn.view.swift in Sources */,
+				F83CF3C12B54A2AE00A8F1F9 /* Board.view.swift in Sources */,
+				F83CF3BD2B54A1CC00A8F1F9 /* Action.model.swift in Sources */,
+				F8575B662B473A9B00F71F92 /* Content.view.swift in Sources */,
+				F83CF3B32B54A04B00A8F1F9 /* Card.model.swift in Sources */,
+				F83CF3AD2B549DAC00A8F1F9 /* GameState.model.swift in Sources */,
 				F8575B642B473A9B00F71F92 /* SpectastropheApp.swift in Sources */,
-				F83CF3C32B54A32900A8F1F9 /* TileView.swift in Sources */,
-				F83CF3B52B54A09900A8F1F9 /* Encounter.swift in Sources */,
-				F83CF3AF2B549F3A00A8F1F9 /* Pawn.swift in Sources */,
-				F83CF3BB2B54A13A00A8F1F9 /* Coords.swift in Sources */,
-				F83CF3B92B54A10B00A8F1F9 /* Tile.swift in Sources */,
-				F83CF3C72B54A38D00A8F1F9 /* CardView.swift in Sources */,
-				F83CF3B72B54A0DB00A8F1F9 /* Board.swift in Sources */,
+				F83CF3C32B54A32900A8F1F9 /* Tile.view.swift in Sources */,
+				F83CF3B52B54A09900A8F1F9 /* Encounter.model.swift in Sources */,
+				F83CF3AF2B549F3A00A8F1F9 /* Pawn.model.swift in Sources */,
+				F83CF3BB2B54A13A00A8F1F9 /* Coords.model.swift in Sources */,
+				F83CF3B92B54A10B00A8F1F9 /* Tile.model.swift in Sources */,
+				F83CF3C72B54A38D00A8F1F9 /* Card.view.swift in Sources */,
+				F83CF3B72B54A0DB00A8F1F9 /* Board.model.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
