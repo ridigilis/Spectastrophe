@@ -12,11 +12,6 @@ struct HUDView: View {
     @ObservedObject var player: Pawn
     
     var body: some View {
-        VStack {
-            Spacer()
-            HandView(deck: player.deck, player: player)
-        }
-
         HStack {
             VStack {
                 Spacer()
@@ -96,6 +91,11 @@ struct HUDView: View {
             }
         }
         .padding(24)
+        
+        VStack {
+            Spacer()
+            HandView(deck: player.deck, player: player)
+        }
     }
 }
 
