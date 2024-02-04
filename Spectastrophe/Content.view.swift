@@ -42,93 +42,9 @@ struct ContentView: View {
                         totalZoom -= 1
                     }
                 }
-
-                VStack {
-                    Spacer()
-                    HandView(deck: player.deck, player: player)
-                }
-
-                HStack {
-                    VStack {
-                        Spacer()
-                        Grid {
-                            GridRow {
-                                ZStack {
-                                    RoundedRectangle(cornerRadius: 6)
-                                        .strokeBorder(.black, lineWidth: 6)
-                                        .frame(width:96, height: 96)
-                                    
-                                    Text("Head")
-                                }
-                            }
-                            GridRow {
-                                ZStack {
-                                    RoundedRectangle(cornerRadius: 6)
-                                        .strokeBorder(.black, lineWidth: 6)
-                                        .frame(width:96, height: 96)
-                                    
-                                    Text("Torso")
-                                }
-                            }
-                            GridRow {
-                                ZStack {
-                                    RoundedRectangle(cornerRadius: 6)
-                                        .strokeBorder(.black, lineWidth: 6)
-                                        .frame(width:96, height: 96)
-                                    
-                                    Text("Hands")
-                                }
-                            }
-                            GridRow {
-                                ZStack {
-                                    RoundedRectangle(cornerRadius: 6)
-                                        .strokeBorder(.black, lineWidth: 6)
-                                        .frame(width:96, height: 96)
-                                    
-                                    Text("Feet")
-                                }
-                            }
-                        }
-                    }
-                    Spacer()
-                    VStack {
-                        Spacer()
-                        if player.isMovingWith != nil {
-                            Button("Cancel Action") {
-                                player.cancelMovementAction()
-                            }
-                            .bold()
-                            .padding()
-                            .background(.red)
-                            .foregroundColor(.white.opacity(0.8))
-                            .clipShape(RoundedRectangle(cornerRadius: 5))
-                        }
-
-                        if player.isAttackingWith != nil {
-                            Button("Cancel Action") {
-                                player.cancelAttackAction()
-                            }
-                            .bold()
-                            .padding()
-                            .background(.red)
-                            .foregroundColor(.white.opacity(0.8))
-                            .clipShape(RoundedRectangle(cornerRadius: 5))
-                        }
-                        
-                        Button("End Turn") {
-                            encounter.onExitPlayPhase()
-                        }
-                        .bold()
-                        .padding()
-                        .background(.green)
-                        .foregroundColor(.white.opacity(0.8))
-                        .clipShape(RoundedRectangle(cornerRadius: 5))
-                        .disabled(!player.turnToPlay)
-                    }
-                }
-                .padding(24)
+                
+                HUDView(encounter: encounter, player: player)
             }
-
             Spacer()
         }
     }
