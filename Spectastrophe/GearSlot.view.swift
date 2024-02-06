@@ -9,9 +9,16 @@ import SwiftUI
 
 struct GearSlotView: View {
     let gearSlot: Deck.GearSlot
-    let gear: GearCard?
+    @ObservedObject var equipment: Deck.Equipment
     
     var body: some View {
+        let gear: GearCard? = switch gearSlot {
+        case .head: equipment.head
+        case .torso: equipment.torso
+        case .feet: equipment.feet
+        case .hands: equipment.hands
+        }
+        
         if gear == nil {
             VStack {
                 Text(gearSlot.rawValue).foregroundStyle(Color.gray)
@@ -39,5 +46,5 @@ struct GearSlotView: View {
 #Preview {
     let player = Pawn(.player)
     
-    return GearSlotView(gearSlot: .head, gear: player.deck.equipment.head)
+    return GearSlotView(gearSlot: .head, equipment: player.deck.equipment)
 }

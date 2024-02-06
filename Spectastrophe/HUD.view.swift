@@ -17,16 +17,16 @@ struct HUDView: View {
                 Spacer()
                 Grid {
                     GridRow {
-                        GearSlotView(gearSlot: .head, gear: player.deck.equipment.head)
+                        GearSlotView(gearSlot: .head, equipment: player.deck.equipment)
                     }
                     GridRow {
-                        GearSlotView(gearSlot: .torso, gear: player.deck.equipment.torso)
+                        GearSlotView(gearSlot: .torso, equipment: player.deck.equipment)
                     }
                     GridRow {
-                        GearSlotView(gearSlot: .hands, gear: player.deck.equipment.hands)
+                        GearSlotView(gearSlot: .hands, equipment: player.deck.equipment)
                     }
                     GridRow {
-                        GearSlotView(gearSlot: .feet, gear: player.deck.equipment.feet)
+                        GearSlotView(gearSlot: .feet, equipment: player.deck.equipment)
                     }
                 }
             }

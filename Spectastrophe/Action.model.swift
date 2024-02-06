@@ -34,20 +34,23 @@ enum Action: Actionable {
                 }
 
             case let .equip(to):
-                let equipment = source.deck.equipment
+                if card == nil { return }
                 switch to {
                     case .head:
-                            // TODO: unequip -> move existing gear card to discard pile and remove all child cards from deck
-                            equipment.head = card
+                    source.deck.unequipGearCard(.head)
+                    source.deck.equipGearCard(card!)
+                    
                     case .torso:
-                            // TODO: unequip -> move existing gear card to discard pile and remove all child cards from deck
-                            equipment.torso = card
+                    source.deck.unequipGearCard(.torso)
+                    source.deck.equipGearCard(card!)
+                    
                     case .feet:
-                            // TODO: unequip -> move existing gear card to discard pile and remove all child cards from deck
-                            equipment.feet = card
+                    source.deck.unequipGearCard(.feet)
+                    source.deck.equipGearCard(card!)
+                    
                     case .hands:
-                            // TODO: unequip -> move existing gear card to discard pile and remove all child cards from deck
-                            equipment.hands = card
+                    source.deck.unequipGearCard(.hands)
+                    source.deck.equipGearCard(card!)
                 }
             default:
                 return

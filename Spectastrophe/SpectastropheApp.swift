@@ -10,7 +10,11 @@ import SwiftUI
 @main
 struct SpectastropheApp: App {
     @StateObject var game: GameState = GameState(
-        player: Pawn(.player, maxHp: 120, tile: Coords(0,0)),
+        player: Pawn(.player, maxHp: 120, tile: Coords(0,0), deck: Deck(drawPile: [
+            GearCard(slot: .hands, title: "Legendary Warhammer", description: "Adds 1 Bludgeon", cards: [
+                ActionCard(title: "Bludgeon", description: "Attack an adjacent enemy for 1d100", action: .attack(.physical(.bludgeon), for: .random([.d100])))
+            ])
+        ])),
         world: [Coords: Encounter](),
         location: Coords(0,0)
     )

@@ -59,6 +59,9 @@ final class Deck: ObservableObject {
 
     func playFromHand(_ card: any Card) {
         self.hand = self.hand.filter { $0.id != card.id }
+        
+        if card is GearCard { return }
+        
         self.playArea = self.playArea + [card].compactMap { $0 }
     }
 
@@ -96,6 +99,35 @@ final class Deck: ObservableObject {
     func clearPlayArea() {
         self.discardPile = self.discardPile + self.playArea
         self.playArea = []
+    }
+    
+    func equipGearCard(_ card: GearCard) {
+        self.discardPile = self.discardPile + card.cards
+        self.playArea = self.playArea.filter { $0.id != card.id }
+        
+        switch card.slot {
+        case .head: self.equipment.head = card
+        case .torso: self.equipment.torso = card
+        case .hands: self.equipment.hands = card
+        case .feet: self.equipment.feet = card
+        }
+    }
+    
+    func unequipGearCard(_ slot: GearSlot) {
+        let card: GearCard? = switch slot {
+        case .head: self.equipment.head
+        case .torso: self.equipment.torso
+        case .hands: self.equipment.hands
+        case .feet: self.equipment.feet
+        }
+        
+        self.drawPile = self.drawPile.filter { $0.parentId != card?.id }
+        self.hand = self.hand.filter { $0.parentId != card?.id }
+        self.playArea = self.playArea.filter { $0.parentId != card?.id }
+        self.discardPile = self.discardPile.filter { $0.parentId != card?.id }
+        self.exhaustPile = self.exhaustPile.filter { $0.parentId != card?.id }
+        
+        self.discardPile = self.discardPile + [card ?? nil].compactMap { $0 }
     }
 
     enum GearSlot: String {
