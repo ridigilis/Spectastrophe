@@ -98,7 +98,7 @@ final class Deck: ObservableObject {
         self.playArea = []
     }
 
-    enum GearSlot {
+    enum GearSlot: String {
         case head
         case torso
         case feet

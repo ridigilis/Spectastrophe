@@ -17,40 +17,16 @@ struct HUDView: View {
                 Spacer()
                 Grid {
                     GridRow {
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 6)
-                                .strokeBorder(.black, lineWidth: 6)
-                                .frame(width:96, height: 96)
-                            
-                            Text("Head")
-                        }
+                        GearSlotView(gearSlot: .head, gear: player.deck.equipment.head)
                     }
                     GridRow {
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 6)
-                                .strokeBorder(.black, lineWidth: 6)
-                                .frame(width:96, height: 96)
-                            
-                            Text("Torso")
-                        }
+                        GearSlotView(gearSlot: .torso, gear: player.deck.equipment.torso)
                     }
                     GridRow {
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 6)
-                                .strokeBorder(.black, lineWidth: 6)
-                                .frame(width:96, height: 96)
-                            
-                            Text("Hands")
-                        }
+                        GearSlotView(gearSlot: .hands, gear: player.deck.equipment.hands)
                     }
                     GridRow {
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 6)
-                                .strokeBorder(.black, lineWidth: 6)
-                                .frame(width:96, height: 96)
-                            
-                            Text("Feet")
-                        }
+                        GearSlotView(gearSlot: .feet, gear: player.deck.equipment.feet)
                     }
                 }
             }
@@ -67,7 +43,7 @@ struct HUDView: View {
                     .foregroundColor(.white.opacity(0.8))
                     .clipShape(RoundedRectangle(cornerRadius: 5))
                 }
-
+                
                 if player.isAttackingWith != nil {
                     Button("Cancel Action") {
                         player.cancelAttackAction()
@@ -105,5 +81,5 @@ struct HUDView: View {
     let location = Coords(0,0)
     let game: GameState = GameState(player: player, world: world, location: location)
     
-    return HUDView(encounter: game.world[game.location]!, player: game.player)
+    return HUDView(encounter: game.world[game.location] ?? Encounter(Coords(0,0), player: player), player: game.player)
 }

@@ -56,5 +56,6 @@ struct ContentView: View {
     let location = Coords(0,0)
     let game: GameState = GameState(player: player, world: world, location: location)
     
-    return ContentView(encounter: game.world[game.location]!, player: game.player)
+    return HUDView(encounter: game.world[game.location] ?? Encounter(Coords(0,0), player: player), player: game.player)
+
 }
