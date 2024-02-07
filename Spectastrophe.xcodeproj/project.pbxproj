@@ -15,6 +15,7 @@
 		F8142D2E2B6F2B3A002BCCAD /* HUD.view.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8142D2D2B6F2B3A002BCCAD /* HUD.view.swift */; };
 		F8142D692B727547002BCCAD /* GearSlot.view.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8142D682B727546002BCCAD /* GearSlot.view.swift */; };
 		F8142D6B2B730E20002BCCAD /* Hexagon.shape.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8142D6A2B730E20002BCCAD /* Hexagon.shape.swift */; };
+		F8142D6D2B741EFA002BCCAD /* MainMenu.view.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8142D6C2B741EFA002BCCAD /* MainMenu.view.swift */; };
 		F83CF3AD2B549DAC00A8F1F9 /* GameState.model.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83CF3AC2B549DAC00A8F1F9 /* GameState.model.swift */; };
 		F83CF3AF2B549F3A00A8F1F9 /* Pawn.model.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83CF3AE2B549F3A00A8F1F9 /* Pawn.model.swift */; };
 		F83CF3B12B549F8600A8F1F9 /* Deck.model.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83CF3B02B549F8600A8F1F9 /* Deck.model.swift */; };
@@ -65,6 +66,7 @@
 		F8142D2D2B6F2B3A002BCCAD /* HUD.view.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HUD.view.swift; sourceTree = "<group>"; };
 		F8142D682B727546002BCCAD /* GearSlot.view.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GearSlot.view.swift; sourceTree = "<group>"; };
 		F8142D6A2B730E20002BCCAD /* Hexagon.shape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hexagon.shape.swift; sourceTree = "<group>"; };
+		F8142D6C2B741EFA002BCCAD /* MainMenu.view.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenu.view.swift; sourceTree = "<group>"; };
 		F83CF3AC2B549DAC00A8F1F9 /* GameState.model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameState.model.swift; sourceTree = "<group>"; };
 		F83CF3AE2B549F3A00A8F1F9 /* Pawn.model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pawn.model.swift; sourceTree = "<group>"; };
 		F83CF3B02B549F8600A8F1F9 /* Deck.model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Deck.model.swift; sourceTree = "<group>"; };
@@ -164,6 +166,7 @@
 				F8142D2B2B6E8E97002BCCAD /* HasDeck.protocol.swift */,
 				F8142D6A2B730E20002BCCAD /* Hexagon.shape.swift */,
 				F8142D2D2B6F2B3A002BCCAD /* HUD.view.swift */,
+				F8142D6C2B741EFA002BCCAD /* MainMenu.view.swift */,
 				F83CF3AE2B549F3A00A8F1F9 /* Pawn.model.swift */,
 				F83CF3C42B54A34C00A8F1F9 /* Pawn.view.swift */,
 				F8142D292B6E8D9D002BCCAD /* Targettable.protocol.swift */,
@@ -335,6 +338,7 @@
 				F83CF3BF2B54A21D00A8F1F9 /* Die.model.swift in Sources */,
 				F8142D242B6E89F8002BCCAD /* ActionCard.model.swift in Sources */,
 				F83CF3C52B54A34C00A8F1F9 /* Pawn.view.swift in Sources */,
+				F8142D6D2B741EFA002BCCAD /* MainMenu.view.swift in Sources */,
 				F83CF3C12B54A2AE00A8F1F9 /* Board.view.swift in Sources */,
 				F83CF3BD2B54A1CC00A8F1F9 /* Action.model.swift in Sources */,
 				F8142D282B6E8C47002BCCAD /* GearCard.model.swift in Sources */,
