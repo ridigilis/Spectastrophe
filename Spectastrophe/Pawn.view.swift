@@ -13,8 +13,9 @@ struct PawnView: View {
     @ViewBuilder var Avatar: some View {
         VStack {
             ProgressView(value: Float(pawn.hp), total: Float(pawn.maxHp))
-            Image(systemName: "person.fill").resizable().scaledToFit()
-        }.scaledToFit()
+            Image(systemName: "person.fill").resizable().scaledToFill()
+        }
+        .frame(width: 30, height: 30, alignment: .center)
     }
 
     var body: some View {

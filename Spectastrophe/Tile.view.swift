@@ -16,13 +16,14 @@ struct TileView: View {
         Hexagon()
             .fill(.gray)
             .overlay {
-                VStack {
                     if player.isMovingWith != nil && player.tile!.isAdjacent(to: tile.id) {
                         Hexagon()
                             .fill(.green)
                             .onTapGesture {
-                                player.tile = tile.id
-                                player.isMovingWith = nil
+                                withAnimation {
+                                    player.tile = tile.id
+                                    player.isMovingWith = nil
+                                }
                             }
                     }
                     
@@ -43,18 +44,6 @@ struct TileView: View {
                             }
                         }
                     }
-                    
-                    if player.tile == tile.id {
-                        PawnView(pawn: player)
-                    }
-                    
-                    ForEach(enemies) { enemy in
-                        if enemy.tile == tile.id {
-                            PawnView(pawn: enemy)
-                        }
-                    }
-                }
-                .frame(alignment: .center)
             }
     }
 }

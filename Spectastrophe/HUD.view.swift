@@ -35,7 +35,9 @@ struct HUDView: View {
                 Spacer()
                 if player.isMovingWith != nil {
                     Button("Cancel Action") {
-                        player.cancelMovementAction()
+                        withAnimation {
+                            player.cancelMovementAction()
+                        }
                     }
                     .bold()
                     .padding()
@@ -46,7 +48,9 @@ struct HUDView: View {
                 
                 if player.isAttackingWith != nil {
                     Button("Cancel Action") {
-                        player.cancelAttackAction()
+                        withAnimation {
+                            player.cancelAttackAction()
+                        }
                     }
                     .bold()
                     .padding()
@@ -56,7 +60,9 @@ struct HUDView: View {
                 }
                 
                 Button("End Turn") {
-                    encounter.onExitPlayPhase()
+                    withAnimation {
+                        encounter.onExitPlayPhase()
+                    }
                 }
                 .bold()
                 .padding()
