@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct GameView: View {
     @ObservedObject var encounter: Encounter
     @ObservedObject var player: Pawn
 
@@ -56,6 +56,6 @@ struct ContentView: View {
     let location = Coords(0,0)
     let game: GameState = GameState(player: player, world: world, location: location)
     
-    return HUDView(encounter: game.world[game.location] ?? Encounter(Coords(0,0), player: player), player: game.player)
+    return GameView(encounter: game.world[game.location] ?? Encounter(Coords(0,0), player: player), player: game.player)
 
 }

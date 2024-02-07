@@ -20,7 +20,7 @@ struct SpectastropheApp: App {
     )
     var body: some Scene {
         WindowGroup {
-            ContentView(encounter: Encounter(game.location, enemies: [Pawn(.enemy, maxHp: 60, tile: Coords(-3, 6))], player: game.player), player: game.player)
+            GameView(encounter: Encounter(game.location, enemies: [Pawn(.enemy, maxHp: 60, tile: Coords(-3, 6))], player: game.player), player: game.player)
         }
     }
 }
