@@ -25,6 +25,7 @@ struct GameView: View {
                 }
                 .aspectRatio(contentMode: .fit)
                 .scaleEffect(currentZoom + totalZoom)
+                .rotation3DEffect(.degrees(45), axis: (x: 1, y: 0, z: 0))
                 .gesture(
                     MagnifyGesture()
                         .onChanged { value in
