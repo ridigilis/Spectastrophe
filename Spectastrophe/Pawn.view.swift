@@ -9,7 +9,9 @@ import SwiftUI
 
 struct PawnView: View {
     @ObservedObject var pawn: Pawn
-
+    @State private var showDamage = false
+    @State private var prevDamageTaken = 0
+    
     @ViewBuilder var Avatar: some View {
         VStack {
             ProgressView(value: Float(pawn.hp), total: Float(pawn.maxHp))
@@ -18,6 +20,27 @@ struct PawnView: View {
         .rotation3DEffect(.degrees(-22.5), axis: (x: 1, y: 0, z: 0))
         .frame(width: 40, height: 80, alignment: .center)
         .offset(y: -12)
+        .onChange(of: pawn.hp) { old, new in
+            prevDamageTaken = old - new
+            withAnimation {
+                showDamage.toggle()
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+                withAnimation {
+                    showDamage.toggle()
+                }
+            }
+        }
+        .overlay(alignment: .top) {
+            if showDamage {
+                Text(String(prevDamageTaken))
+                    .font(.title2)
+                    .bold()
+                    .foregroundStyle(.red)
+                    .offset(y: -48)
+                    .transition(.push(from: .bottom))
+            }
+        }
     }
 
     var body: some View {

@@ -34,8 +34,10 @@ struct TileView: View {
                                     .fill(.green)
                                     .onTapGesture {
                                         if let action = player.isAttackingWith?.action {
-                                            action.perform(by: player, on: [enemy])
-                                            player.isAttackingWith = nil
+                                            withAnimation {
+                                                action.perform(by: player, on: [enemy])
+                                                player.isAttackingWith = nil
+                                            }
                                         }
                                     }
                             } else {

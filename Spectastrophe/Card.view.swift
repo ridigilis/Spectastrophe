@@ -59,15 +59,18 @@ struct CardView: View {
                                 case .equip: card.action.perform(by: player, on: [player], using: card as? GearCard)
                                 default: return
                             }
-                            player.deck.playFromHand(card)
+                            withAnimation {
+                                player.deck.playFromHand(card)
+                            }
+                        } else {
+                            fill = Color.white
+                            dragAmount = .zero
                         }
-
-                        fill = Color.white
-                        dragAmount = .zero
                     }
                 }
         )
         .animation(.bouncy, value: dragAmount)
+        .transition(.push(from: .leading))
     }
 }
 
