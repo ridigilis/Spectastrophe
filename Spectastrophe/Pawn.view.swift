@@ -15,7 +15,9 @@ struct PawnView: View {
             ProgressView(value: Float(pawn.hp), total: Float(pawn.maxHp))
             Image(systemName: "person.fill").resizable().scaledToFill()
         }
-        .frame(width: 30, height: 30, alignment: .center)
+        .rotation3DEffect(.degrees(-22.5), axis: (x: 1, y: 0, z: 0))
+        .frame(width: 40, height: 80, alignment: .center)
+        .offset(y: -12)
     }
 
     var body: some View {

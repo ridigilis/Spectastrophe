@@ -20,14 +20,16 @@ struct BoardView: View {
                     ForEach(row) { tile in
                         TileView(tile: tile, player: player, enemies: encounter.enemies)
                             .frame(width: 60, height: 60)
-                            .overlay {
+                            .overlay(alignment: .bottom) {
                                 if player.tile == tile.id {
-                                    PawnView(pawn: player).matchedGeometryEffect(id: player.id, in: animation)
+                                    PawnView(pawn: player)
+                                        .matchedGeometryEffect(id: player.id, in: animation)
                                 }
                                 
                                 ForEach(encounter.enemies) { enemy in
                                     if enemy.tile == tile.id {
-                                        PawnView(pawn: enemy).matchedGeometryEffect(id: enemy.id, in: animation)
+                                        PawnView(pawn: enemy)
+                                            .matchedGeometryEffect(id: enemy.id, in: animation)
                                     }
                                 }
                             }

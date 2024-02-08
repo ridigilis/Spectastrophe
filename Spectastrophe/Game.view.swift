@@ -20,12 +20,11 @@ struct GameView: View {
             Spacer()
             Spacer()
             ZStack {
-                VStack {
-                    BoardView(encounter: encounter, player: player)
-                }
+                ScrollView([.horizontal, .vertical], showsIndicators: false) {
+                    BoardView(encounter: encounter, player: player).rotation3DEffect(.degrees(45), axis: (x: 1, y: 0, z: 0))                }
                 .aspectRatio(contentMode: .fit)
                 .scaleEffect(currentZoom + totalZoom)
-                .rotation3DEffect(.degrees(45), axis: (x: 1, y: 0, z: 0))
+                
                 .gesture(
                     MagnifyGesture()
                         .onChanged { value in
