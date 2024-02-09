@@ -11,14 +11,20 @@ struct TileView: View {
     var tile: Tile
     @ObservedObject var player: Pawn
     var enemies: [Pawn]
+    
+    @ViewBuilder var Tile: some View {
+        Image("grassytile").resizable().scaledToFit()
+    }
+    
+    @ViewBuilder var SelectableTile: some View {
+        Image("grassytile-can-select").resizable().scaledToFit()
+    }
 
     var body: some View {
-        Hexagon()
-            .fill(.gray)
+        Tile
             .overlay {
                     if player.isMovingWith != nil && player.tile!.isAdjacent(to: tile.id) {
-                        Hexagon()
-                            .fill(.green)
+                        SelectableTile
                             .onTapGesture {
                                 withAnimation {
                                     player.tile = tile.id
@@ -30,8 +36,7 @@ struct TileView: View {
                     if player.isAttackingWith != nil && player.tile!.isAdjacent(to: tile.id) {
                         ForEach(enemies) { enemy in
                             if enemy.tile == tile.id {
-                                Hexagon()
-                                    .fill(.green)
+                                SelectableTile
                                     .onTapGesture {
                                         if let action = player.isAttackingWith?.action {
                                             withAnimation {
@@ -40,9 +45,6 @@ struct TileView: View {
                                             }
                                         }
                                     }
-                            } else {
-                                Hexagon()
-                                    .fill(.red)
                             }
                         }
                     }

@@ -14,12 +14,19 @@ struct PawnView: View {
     
     @ViewBuilder var Avatar: some View {
         VStack {
-            ProgressView(value: Float(pawn.hp), total: Float(pawn.maxHp))
-            Image(systemName: "person.fill").resizable().scaledToFill()
+            if pawn.hp > 0 {
+                ProgressView(value: Float(pawn.hp), total: Float(pawn.maxHp))
+                    .tint(.red)
+                    .border(Color.black)
+                    .frame(width: 48)
+                    .scaleEffect(y: 2)
+            }
+            switch pawn.type {
+            case .player: Image("playerpawn").resizable().scaledToFit()
+            case .enemy: Image("enemypawn").resizable().scaledToFit()
+            }
         }
-        .rotation3DEffect(.degrees(-22.5), axis: (x: 1, y: 0, z: 0))
-        .frame(width: 40, height: 80, alignment: .center)
-        .offset(y: -12)
+        .offset(y: -40)
         .onChange(of: pawn.hp) { old, new in
             prevDamageTaken = old - new
             withAnimation {
@@ -45,12 +52,9 @@ struct PawnView: View {
 
     var body: some View {
         if pawn.hp <= 0 {
-            Image(systemName: "person.slash.fill").resizable().scaledToFit().foregroundColor(.brown)
+            Avatar.rotationEffect(.degrees(90)).offset(x: -40, y: -12)
         } else {
-            switch pawn.type {
-                case .player: Avatar
-                case .enemy: Avatar.foregroundStyle(Color.red)
-            }
+            Avatar
         }
     }
 }

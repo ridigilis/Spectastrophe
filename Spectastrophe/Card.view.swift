@@ -11,7 +11,7 @@ struct CardView: View {
     var card: any Card
     @ObservedObject var player: Pawn
 
-    @State private var fill = Color(.white)
+    @State private var fill = Color(.brown)
 
     @State private var dragAmount = CGSize.zero
 
@@ -30,11 +30,15 @@ struct CardView: View {
 
             Spacer()
         }
-        .frame(maxWidth: 180, maxHeight: 240)
+        .frame(width: 180, height: 240)
         .background {
-            RoundedRectangle(cornerRadius: 20)
-                .fill(fill)
-                .strokeBorder(.brown, lineWidth: 12)
+            RoundedRectangle(cornerRadius: 20).fill(fill)
+            Image("parchment-light")
+                .resizable()
+                .clipShape(
+                    RoundedRectangle(cornerRadius: 12)
+                )
+                .padding(8)
         }
         .shadow(radius: 12)
         .offset(dragAmount)
@@ -46,7 +50,7 @@ struct CardView: View {
                         if dragAmount.height < -200 {
                             fill = Color.teal
                         } else {
-                            fill = Color.white
+                            fill = Color.brown
                         }
                     }
                 }
@@ -63,7 +67,7 @@ struct CardView: View {
                                 player.deck.playFromHand(card)
                             }
                         } else {
-                            fill = Color.white
+                            fill = Color.brown
                             dragAmount = .zero
                         }
                     }

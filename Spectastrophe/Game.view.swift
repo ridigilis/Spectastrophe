@@ -15,16 +15,9 @@ struct GameView: View {
     @State private var totalZoom = 1.0
 
     var body: some View {
-        HStack {
-            Spacer()
-            Spacer()
-            Spacer()
-            ZStack {
-                ScrollView([.horizontal, .vertical], showsIndicators: false) {
-                    BoardView(encounter: encounter, player: player).rotation3DEffect(.degrees(45), axis: (x: 1, y: 0, z: 0))                }
-                .aspectRatio(contentMode: .fit)
+        ScrollView([.horizontal, .vertical], showsIndicators: false) {
+            BoardView(encounter: encounter, player: player)
                 .scaleEffect(currentZoom + totalZoom)
-                
                 .gesture(
                     MagnifyGesture()
                         .onChanged { value in
@@ -42,10 +35,13 @@ struct GameView: View {
                         totalZoom -= 1
                     }
                 }
-                
-                HUDView(encounter: encounter, player: player)
-            }
-            Spacer()
+        }
+        .background {
+            Image("parchment-dark").resizable().scaledToFit()
+        }
+        .ignoresSafeArea()
+        .overlay {
+            HUDView(encounter: encounter, player: player)
         }
     }
 }
