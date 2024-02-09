@@ -38,6 +38,7 @@
 		F8575B762B473A9E00F71F92 /* SpectastropheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8575B752B473A9E00F71F92 /* SpectastropheTests.swift */; };
 		F8575B802B473A9E00F71F92 /* SpectastropheUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8575B7F2B473A9E00F71F92 /* SpectastropheUITests.swift */; };
 		F8575B822B473A9E00F71F92 /* SpectastropheUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8575B812B473A9E00F71F92 /* SpectastropheUITestsLaunchTests.swift */; };
+		F8C2FB312B76A9290096825C /* TileTappableArea.shape.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C2FB302B76A9290096825C /* TileTappableArea.shape.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -93,6 +94,7 @@
 		F8575B7B2B473A9E00F71F92 /* SpectastropheUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SpectastropheUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8575B7F2B473A9E00F71F92 /* SpectastropheUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpectastropheUITests.swift; sourceTree = "<group>"; };
 		F8575B812B473A9E00F71F92 /* SpectastropheUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpectastropheUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		F8C2FB302B76A9290096825C /* TileTappableArea.shape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TileTappableArea.shape.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -172,6 +174,7 @@
 				F8142D292B6E8D9D002BCCAD /* Targettable.protocol.swift */,
 				F83CF3B82B54A10B00A8F1F9 /* Tile.model.swift */,
 				F83CF3C22B54A32900A8F1F9 /* Tile.view.swift */,
+				F8C2FB302B76A9290096825C /* TileTappableArea.shape.swift */,
 			);
 			path = Spectastrophe;
 			sourceTree = "<group>";
@@ -347,6 +350,7 @@
 				F83CF3AD2B549DAC00A8F1F9 /* GameState.model.swift in Sources */,
 				F8575B642B473A9B00F71F92 /* SpectastropheApp.swift in Sources */,
 				F83CF3C32B54A32900A8F1F9 /* Tile.view.swift in Sources */,
+				F8C2FB312B76A9290096825C /* TileTappableArea.shape.swift in Sources */,
 				F83CF3B52B54A09900A8F1F9 /* Encounter.model.swift in Sources */,
 				F83CF3AF2B549F3A00A8F1F9 /* Pawn.model.swift in Sources */,
 				F8142D692B727547002BCCAD /* GearSlot.view.swift in Sources */,
