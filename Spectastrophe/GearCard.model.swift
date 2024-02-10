@@ -33,7 +33,7 @@ struct GearCard: Card {
         self.description = description
 
         self.cards = cards.map { card in
-            ActionCard(parentId: id, title: card.title, description: card.description, action: card.action)
+            ActionCard(parentId: id, rarity: card.rarity, title: card.title, description: card.description, action: card.action)
         }
     }
 }

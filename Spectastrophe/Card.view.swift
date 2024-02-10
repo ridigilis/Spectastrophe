@@ -21,6 +21,12 @@ struct CardView: View {
                 .frame(alignment: .topLeading)
                 .bold()
                 .padding(.top).padding(.top)
+            
+            if card is GearCard {
+                Text(card.rarity.rawValue)
+                    .frame(alignment: .topLeading)
+                    .italic()
+            }
 
             Spacer()
 

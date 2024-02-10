@@ -66,24 +66,38 @@ enum Action: Actionable {
     enum Attack {
         case physical(PhysicalAttack)
         case metaphysical(MetaphysicalAttack)
+        
+        enum PhysicalAttack {
+            case slash
+            case bludgeon
+            case pierce
+        }
+        
+        enum MetaphysicalAttack {
+            case arcane
+            case fire
+            case cold
+            case shock
+            case poison
+            case lux
+            case dark
+            // idk, i just started listing things
+        }
     }
-
-    enum PhysicalAttack {
-        case slash
-        case bludgeon
-        case pierce
+    
+    enum Range {
+        case melee
+        case reach
+        case ranged(Distance)
+        
+        enum Distance {
+            case short
+            case medium
+            case long
+            case infinite
+        }
     }
-
-    enum MetaphysicalAttack {
-        case arcane
-        case fire
-        case cold
-        case shock
-        case poison
-        case lux
-        case dark
-        // idk, i just started listing things
-    }
+    
     // buff
     enum Buff {}
 

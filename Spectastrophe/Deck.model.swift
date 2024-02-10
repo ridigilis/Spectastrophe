@@ -150,12 +150,7 @@ final class Deck: ObservableObject {
                 ActionCard(title: "Move", description: "Move to an adjacent space", action: .movement(for: .constant(1))),
                 ActionCard(title: "Move", description: "Move to an adjacent space", action: .movement(for: .constant(1))),
             ]),
-            hands: GearCard? = GearCard(slot: .hands, rarity: .common, title: "Sword", description: "Adds 4 Pierce to deck", cards: [
-                ActionCard(title: "Pierce", description: "Damage an adjacent enemy for 1d4", action: .attack(.physical(.pierce), for: .random([.d4]))),
-                ActionCard(title: "Pierce", description: "Damage an adjacent enemy for 1d4", action: .attack(.physical(.pierce), for: .random([.d4]))),
-                ActionCard(title: "Pierce", description: "Damage an adjacent enemy for 1d4", action: .attack(.physical(.pierce), for: .random([.d4]))),
-                ActionCard(title: "Pierce", description: "Damage an adjacent enemy for 1d4", action: .attack(.physical(.pierce), for: .random([.d4]))),
-            ])
+            hands: GearCard? = LootMachine().gimme()
         ) {
             self.head = head
             self.torso = torso

@@ -12,9 +12,9 @@ struct SpectastropheApp: App {
     @State private var isPlaying = false
     @StateObject var game: GameState = GameState(
         player: Pawn(.player, maxHp: 120, tile: Coords(0,0), deck: Deck(drawPile: [
-            GearCard(slot: .hands, rarity: .legendary, title: "Warhammer", description: "Adds 1 Bludgeon to deck", cards: [
-                ActionCard(title: "Bludgeon", description: "Attack an adjacent enemy for 1d100", action: .attack(.physical(.bludgeon), for: .random([.d100])))
-            ])
+            LootMachine().gimme(),
+            LootMachine().gimme(),
+            LootMachine().gimme()
         ])),
         world: [Coords: Encounter](),
         location: Coords(0,0)
