@@ -146,11 +146,11 @@ final class Deck: ObservableObject {
         init(
             head: GearCard? = nil,
             torso: GearCard? = nil,
-            feet: GearCard? = GearCard(slot: .feet, title: "Common Boots", description: "Adds 2 Move to deck", cards: [
+            feet: GearCard? = GearCard(slot: .feet, rarity: .common, title: "Boots", description: "Adds 2 Move to deck", cards: [
                 ActionCard(title: "Move", description: "Move to an adjacent space", action: .movement(for: .constant(1))),
                 ActionCard(title: "Move", description: "Move to an adjacent space", action: .movement(for: .constant(1))),
             ]),
-            hands: GearCard? = GearCard(slot: .hands, title: "Common Sword", description: "Adds 4 Pierce to deck", cards: [
+            hands: GearCard? = GearCard(slot: .hands, rarity: .common, title: "Sword", description: "Adds 4 Pierce to deck", cards: [
                 ActionCard(title: "Pierce", description: "Damage an adjacent enemy for 1d4", action: .attack(.physical(.pierce), for: .random([.d4]))),
                 ActionCard(title: "Pierce", description: "Damage an adjacent enemy for 1d4", action: .attack(.physical(.pierce), for: .random([.d4]))),
                 ActionCard(title: "Pierce", description: "Damage an adjacent enemy for 1d4", action: .attack(.physical(.pierce), for: .random([.d4]))),

@@ -21,24 +21,47 @@ struct GearSlotView: View {
         
         if gear == nil {
             VStack {
-                Text(gearSlot.rawValue).foregroundStyle(Color.gray)
+                Text("\(gearSlot.rawValue) (empty)").foregroundStyle(Color.gray).font(.footnote)
             }
             .frame(width:96, height: 96)
-            .background(
-                RoundedRectangle(cornerRadius: 6)
-                    .strokeBorder(.gray, lineWidth: 6)
-                    
-            )
+            .background {
+                Image("gearslot-empty")
+                    .resizable()
+                    .scaledToFit()
+            }
         } else {
             VStack {
-                Text(gear?.title ?? "???").bold()
+                Text(gear?.title ?? "???").bold().font(.footnote)
             }
             .frame(width:96, height: 96)
-            .background(
-                RoundedRectangle(cornerRadius: 6)
-                    .fill(.gray)
-                    .strokeBorder(.black, lineWidth: 6)
-            )
+            .background {
+                    switch gear!.rarity {
+                    case .common:
+                        Image("gearslot-common")
+                            .resizable()
+                            .scaledToFit()
+                    case .uncommon:
+                        Image("gearslot-uncommon")
+                            .resizable()
+                            .scaledToFit()
+                    case .rare:
+                        Image("gearslot-rare")
+                            .resizable()
+                            .scaledToFit()
+                    case .veryrare:
+                        Image("gearslot-veryrare")
+                            .resizable()
+                            .scaledToFit()
+                    case .legendary:
+                        Image("gearslot-legendary")
+                            .resizable()
+                            .scaledToFit()
+                    case .mythical:
+                        Image("gearslot-mythical")
+                            .resizable()
+                            .scaledToFit()
+                    }
+                }
         }
     }
 }

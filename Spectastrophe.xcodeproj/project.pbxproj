@@ -39,6 +39,7 @@
 		F8575B802B473A9E00F71F92 /* SpectastropheUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8575B7F2B473A9E00F71F92 /* SpectastropheUITests.swift */; };
 		F8575B822B473A9E00F71F92 /* SpectastropheUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8575B812B473A9E00F71F92 /* SpectastropheUITestsLaunchTests.swift */; };
 		F8C2FB312B76A9290096825C /* TileTappableArea.shape.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C2FB302B76A9290096825C /* TileTappableArea.shape.swift */; };
+		F8C2FB332B770F8E0096825C /* Rarity.model.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C2FB322B770F8E0096825C /* Rarity.model.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -95,6 +96,7 @@
 		F8575B7F2B473A9E00F71F92 /* SpectastropheUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpectastropheUITests.swift; sourceTree = "<group>"; };
 		F8575B812B473A9E00F71F92 /* SpectastropheUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpectastropheUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		F8C2FB302B76A9290096825C /* TileTappableArea.shape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TileTappableArea.shape.swift; sourceTree = "<group>"; };
+		F8C2FB322B770F8E0096825C /* Rarity.model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rarity.model.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -156,11 +158,11 @@
 				F83CF3C02B54A2AE00A8F1F9 /* Board.view.swift */,
 				F83CF3B22B54A04B00A8F1F9 /* Card.protocol.swift */,
 				F83CF3C62B54A38D00A8F1F9 /* Card.view.swift */,
-				F8575B652B473A9B00F71F92 /* Game.view.swift */,
 				F83CF3BA2B54A13A00A8F1F9 /* Coords.model.swift */,
 				F83CF3B02B549F8600A8F1F9 /* Deck.model.swift */,
 				F83CF3BE2B54A21D00A8F1F9 /* Die.model.swift */,
 				F83CF3B42B54A09900A8F1F9 /* Encounter.model.swift */,
+				F8575B652B473A9B00F71F92 /* Game.view.swift */,
 				F83CF3AC2B549DAC00A8F1F9 /* GameState.model.swift */,
 				F8142D272B6E8C47002BCCAD /* GearCard.model.swift */,
 				F8142D682B727546002BCCAD /* GearSlot.view.swift */,
@@ -171,6 +173,7 @@
 				F8142D6C2B741EFA002BCCAD /* MainMenu.view.swift */,
 				F83CF3AE2B549F3A00A8F1F9 /* Pawn.model.swift */,
 				F83CF3C42B54A34C00A8F1F9 /* Pawn.view.swift */,
+				F8C2FB322B770F8E0096825C /* Rarity.model.swift */,
 				F8142D292B6E8D9D002BCCAD /* Targettable.protocol.swift */,
 				F83CF3B82B54A10B00A8F1F9 /* Tile.model.swift */,
 				F83CF3C22B54A32900A8F1F9 /* Tile.view.swift */,
@@ -345,6 +348,7 @@
 				F83CF3C12B54A2AE00A8F1F9 /* Board.view.swift in Sources */,
 				F83CF3BD2B54A1CC00A8F1F9 /* Action.model.swift in Sources */,
 				F8142D282B6E8C47002BCCAD /* GearCard.model.swift in Sources */,
+				F8C2FB332B770F8E0096825C /* Rarity.model.swift in Sources */,
 				F8575B662B473A9B00F71F92 /* Game.view.swift in Sources */,
 				F83CF3B32B54A04B00A8F1F9 /* Card.protocol.swift in Sources */,
 				F83CF3AD2B549DAC00A8F1F9 /* GameState.model.swift in Sources */,

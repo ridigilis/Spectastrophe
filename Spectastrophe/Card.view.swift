@@ -32,13 +32,38 @@ struct CardView: View {
         }
         .frame(width: 180, height: 240)
         .background {
-            RoundedRectangle(cornerRadius: 20).fill(fill)
-            Image("parchment-light")
-                .resizable()
-                .clipShape(
-                    RoundedRectangle(cornerRadius: 12)
-                )
-                .padding(8)
+            if card is GearCard {
+                switch card.rarity {
+                case .common:
+                    Image("cardback-common")
+                        .resizable()
+                        .scaledToFit()
+                case .uncommon:
+                    Image("cardback-uncommon")
+                        .resizable()
+                        .scaledToFit()
+                case .rare:
+                    Image("cardback-rare")
+                        .resizable()
+                        .scaledToFit()
+                case .veryrare:
+                    Image("cardback-veryrare")
+                        .resizable()
+                        .scaledToFit()
+                case .legendary:
+                    Image("cardback-legendary")
+                        .resizable()
+                        .scaledToFit()
+                case .mythical:
+                    Image("cardback-mythical")
+                        .resizable()
+                        .scaledToFit()
+                }
+            } else {
+                Image("cardback-generic")
+                    .resizable()
+                    .scaledToFit()
+            }
         }
         .shadow(radius: 12)
         .offset(dragAmount)

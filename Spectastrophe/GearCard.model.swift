@@ -13,15 +13,17 @@ struct GearCard: Card {
     let action: Action
     let title: String
     let description: String
-
+    
+    let rarity: Rarity
     let slot: Deck.GearSlot
     let cards: [any Card]
 
-    init(slot: Deck.GearSlot, title: String, description: String, cards: [any Card]) {
+    init(slot: Deck.GearSlot, rarity: Rarity = .common, title: String, description: String, cards: [any Card]) {
         let id = UUID()
 
         self.id = id
         self.slot = slot
+        self.rarity = rarity
         self.title = title
         self.description = description
 
