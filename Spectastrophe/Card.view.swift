@@ -32,7 +32,6 @@ struct CardView: View {
         }
         .frame(width: 180, height: 240)
         .background {
-            if card is GearCard {
                 switch card.rarity {
                 case .common:
                     Image("cardback-common")
@@ -58,8 +57,7 @@ struct CardView: View {
                     Image("cardback-mythical")
                         .resizable()
                         .scaledToFit()
-                }
-            } else {
+                default:
                 Image("cardback-generic")
                     .resizable()
                     .scaledToFit()
