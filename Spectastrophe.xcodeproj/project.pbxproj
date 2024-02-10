@@ -40,6 +40,7 @@
 		F8575B822B473A9E00F71F92 /* SpectastropheUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8575B812B473A9E00F71F92 /* SpectastropheUITestsLaunchTests.swift */; };
 		F8C2FB312B76A9290096825C /* TileTappableArea.shape.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C2FB302B76A9290096825C /* TileTappableArea.shape.swift */; };
 		F8C2FB332B770F8E0096825C /* Rarity.model.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C2FB322B770F8E0096825C /* Rarity.model.swift */; };
+		F8C2FB352B7803820096825C /* Weight.model.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C2FB342B7803820096825C /* Weight.model.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -97,6 +98,7 @@
 		F8575B812B473A9E00F71F92 /* SpectastropheUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpectastropheUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		F8C2FB302B76A9290096825C /* TileTappableArea.shape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TileTappableArea.shape.swift; sourceTree = "<group>"; };
 		F8C2FB322B770F8E0096825C /* Rarity.model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rarity.model.swift; sourceTree = "<group>"; };
+		F8C2FB342B7803820096825C /* Weight.model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weight.model.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -178,6 +180,7 @@
 				F83CF3B82B54A10B00A8F1F9 /* Tile.model.swift */,
 				F83CF3C22B54A32900A8F1F9 /* Tile.view.swift */,
 				F8C2FB302B76A9290096825C /* TileTappableArea.shape.swift */,
+				F8C2FB342B7803820096825C /* Weight.model.swift */,
 			);
 			path = Spectastrophe;
 			sourceTree = "<group>";
@@ -345,6 +348,7 @@
 				F8142D242B6E89F8002BCCAD /* ActionCard.model.swift in Sources */,
 				F83CF3C52B54A34C00A8F1F9 /* Pawn.view.swift in Sources */,
 				F8142D6D2B741EFA002BCCAD /* MainMenu.view.swift in Sources */,
+				F8C2FB352B7803820096825C /* Weight.model.swift in Sources */,
 				F83CF3C12B54A2AE00A8F1F9 /* Board.view.swift in Sources */,
 				F83CF3BD2B54A1CC00A8F1F9 /* Action.model.swift in Sources */,
 				F8142D282B6E8C47002BCCAD /* GearCard.model.swift in Sources */,

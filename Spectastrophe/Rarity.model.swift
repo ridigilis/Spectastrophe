@@ -7,6 +7,12 @@
 
 import Foundation
 
-enum Rarity {
-    case common, uncommon, rare, veryrare, legendary, mythical
+enum Rarity: String {
+    case none
+    case common
+    case uncommon
+    case rare
+    case veryrare = "Very Rare"
+    case legendary
+    case mythical
 }

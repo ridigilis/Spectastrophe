@@ -15,19 +15,22 @@ struct GearCard: Card {
     let description: String
     
     let rarity: Rarity
+    let weight: Weight
     let slot: Deck.GearSlot
     let cards: [any Card]
 
-    init(slot: Deck.GearSlot, rarity: Rarity = .common, title: String, description: String, cards: [any Card]) {
+    init(slot: Deck.GearSlot, rarity: Rarity = .common, weight: Weight = .none, title: String, description: String, cards: [any Card]) {
         let id = UUID()
 
         self.id = id
         self.slot = slot
+        self.action = .equip(to: self.slot)
+        
         self.rarity = rarity
+        self.weight = weight
+        
         self.title = title
         self.description = description
-
-        self.action = .equip(to: self.slot)
 
         self.cards = cards.map { card in
             ActionCard(parentId: id, title: card.title, description: card.description, action: card.action)
