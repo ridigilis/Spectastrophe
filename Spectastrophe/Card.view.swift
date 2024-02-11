@@ -108,7 +108,7 @@ struct CardView: View {
 }
 
 #Preview {
-    let card = ActionCard(action: .attack(.physical(.bludgeon), for: .constant(1)))
+    let card = ActionCard(action: .attack(.physical(.bludgeon), for: .constant(1), from: [.melee]))
     let player = Pawn(.player)
     
     return CardView(card: card, player: player)

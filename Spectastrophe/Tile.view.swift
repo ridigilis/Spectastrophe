@@ -19,7 +19,32 @@ struct TileView: View {
     @ViewBuilder var SelectableTile: some View {
         Image("grassytile-can-select").resizable().scaledToFit().contentShape(TileTappableArea())
     }
-
+    
+    func isTargettable(from coords: Coords, range: [Action.Range]) -> Bool {
+        range.map {
+            switch $0 {
+            case .melee: coords.getBoundaryCoords(at: 1)
+            case .reach: coords.getBoundaryCoords(at: 2)
+            case let .ranged(distance):
+                switch distance {
+                case .short:
+                    coords.getBoundaryCoords(at: 2) + coords.getBoundaryCoords(at: 3)
+                    + coords.getBoundaryCoords(at: 4)
+                case .medium:
+                    coords.getBoundaryCoords(at: 4) + coords.getBoundaryCoords(at: 5)
+                    + coords.getBoundaryCoords(at: 6)
+                case .long:
+                    coords.getBoundaryCoords(at: 6) + coords.getBoundaryCoords(at: 7)
+                    + coords.getBoundaryCoords(at: 8)
+                case .infinite:
+                    [self.tile.id]
+                }
+            }
+        }
+        .reduce([Coords]()) { $0 + $1 }
+        .contains(where: { $0 == self.tile.id })
+    }
+    
     var body: some View {
         Tile
             .overlay {
@@ -33,9 +58,9 @@ struct TileView: View {
                             }
                     }
                     
-                    if player.isAttackingWith != nil && player.tile!.isAdjacent(to: tile.id) {
+                    if player.isAttackingWith != nil {
                         ForEach(enemies) { enemy in
-                            if enemy.tile == tile.id {
+                            if enemy.tile == tile.id && isTargettable(from: player.tile!, range: player.isAttackingWith!.range ?? []) {
                                 SelectableTile
                                     .onTapGesture {
                                         if let action = player.isAttackingWith?.action {

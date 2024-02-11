@@ -8,7 +8,7 @@
 import Foundation
 
 enum Action: Actionable {
-    case attack(Attack, for: Quantity)
+    case attack(Attack, for: Quantity, from: [Range])
     case bolster(for: Quantity)
     case heal(for: Quantity)
     case buff(Buff)
@@ -18,7 +18,7 @@ enum Action: Actionable {
 
     func perform(by source: Pawn, on targets: [Pawn]? = [], using card: GearCard? = nil) {
         switch self {
-            case let .attack(_, quantity):
+            case let .attack(_, quantity, _):
                 let amt = switch quantity {
                 case let .constant(num): num
                 case let .random(dice): dice.map { $0.roll().reduce(0, +) }.reduce(0, +)

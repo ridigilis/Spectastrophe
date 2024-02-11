@@ -19,7 +19,7 @@ struct LootMachine {
         
         var cards: [ActionCard] = []
         for _ in 0...gear!.value.4 {
-            cards.append(ActionCard(rarity: .none, title: "Attack", description: "Deal \(gear!.value.3.count)\(gear!.value.3[0])", action: .attack(gear!.value.1[0], for: .random(gear!.value.3))))
+            cards.append(ActionCard(rarity: .none, title: "Attack", description: "Deal \(gear!.value.3.count)\(gear!.value.3[0])", action: .attack(gear!.value.1[0], for: .random(gear!.value.3), from: gear!.value.2), range: gear!.value.2))
         }
         
         return GearCard(

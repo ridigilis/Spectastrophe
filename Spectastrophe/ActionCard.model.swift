@@ -12,13 +12,15 @@ struct ActionCard: Card {
     let parentId: UUID?
     let rarity: Rarity
     let action: Action
+    let range: [Action.Range]?
     let title: String
     let description: String
 
-    init(parentId: UUID? = nil, rarity: Rarity = .common, title: String = "What does this card do?", description: String = "Nobody knows...", action: Action) {
+    init(parentId: UUID? = nil, rarity: Rarity = .common, title: String = "What does this card do?", description: String = "Nobody knows...", action: Action, range: [Action.Range]? = nil) {
         self.parentId = parentId
         self.rarity = rarity
         self.action = action
+        self.range = range
         self.title = title
         self.description = description
     }
