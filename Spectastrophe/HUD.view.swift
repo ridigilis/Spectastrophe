@@ -44,9 +44,7 @@ struct HUDView: View {
                     .background(.red)
                     .foregroundColor(.white.opacity(0.8))
                     .clipShape(RoundedRectangle(cornerRadius: 5))
-                }
-                
-                if player.isAttackingWith != nil {
+                } else if player.isAttackingWith != nil {
                     Button("Cancel Action") {
                         withAnimation {
                             player.cancelAttackAction()
@@ -57,19 +55,19 @@ struct HUDView: View {
                     .background(.red)
                     .foregroundColor(.white.opacity(0.8))
                     .clipShape(RoundedRectangle(cornerRadius: 5))
-                }
-                
-                Button("End Turn") {
-                    withAnimation {
-                        encounter.onExitPlayPhase()
+                } else {
+                    Button("End Turn") {
+                        withAnimation {
+                            encounter.onExitPlayPhase()
+                        }
                     }
+                    .bold()
+                    .padding()
+                    .background(.green)
+                    .foregroundColor(.white.opacity(0.8))
+                    .clipShape(RoundedRectangle(cornerRadius: 5))
+                    .disabled(!player.turnToPlay)
                 }
-                .bold()
-                .padding()
-                .background(.green)
-                .foregroundColor(.white.opacity(0.8))
-                .clipShape(RoundedRectangle(cornerRadius: 5))
-                .disabled(!player.turnToPlay)
             }
         }
         .padding(24)

@@ -77,8 +77,10 @@ final class Encounter: Identifiable, ObservableObject {
 
                         for tile in path {
                             if let card = enemy.deck.hand.first(where: { $0.title == "Move"}) {
-                                enemy.deck.playFromHand(card)
-                                enemy.tile = tile.id
+                                if !self.player.tile!.isAdjacent(to: enemy.tile!) {
+                                    enemy.deck.playFromHand(card)
+                                    enemy.tile = tile.id
+                                }
                             } else {
                                 break
                             }
@@ -87,9 +89,12 @@ final class Encounter: Identifiable, ObservableObject {
 
                     if self.player.tile!.isAdjacent(to: enemy.tile!) {
                         enemy.deck.hand.forEach { card in
-                            if card.title == "Pierce" {
+                            switch card.action {
+                            case .attack:
                                 enemy.deck.playFromHand(card)
                                 card.action.perform(by: enemy, on: [self.player])
+                            default:
+                                return
                             }
                         }
                     }
