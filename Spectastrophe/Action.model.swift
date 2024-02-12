@@ -22,34 +22,64 @@ enum Action: Actionable {
                 let amt = switch quantity {
                 case let .constant(num): num
                 case let .random(dice): dice.map { $0.roll().reduce(0, +) }.reduce(0, +)
+                case let .randomAndConstant(dice, num): dice.map { $0.roll().reduce(0, +) }.reduce(0, +) + num
                 }
 
-                targets?.forEach { $0.hp -= Int(amt) }
+                targets?.forEach {
+                    if $0.bolsteredBy > 0 {
+                        if amt >= $0.bolsteredBy {
+                            $0.hp -= (Int(amt) - Int($0.bolsteredBy))
+                            $0.bolsteredBy = 0
+                        } else {
+                            $0.bolsteredBy -= amt
+                        }
+                    } else {
+                        $0.hp -= Int(amt)
+                    }
+                }
+            
+            case let .bolster(quantity):
+                let amt = switch quantity {
+                case let .constant(num): num
+                case let .random(dice): dice.map { $0.roll().reduce(0, +) }.reduce(0, +)
+                case let .randomAndConstant(dice, num): dice.map { $0.roll().reduce(0, +) }.reduce(0, +) + num
+                }
+                
+                targets?.forEach { $0.bolsteredBy += amt }
 
             case let .movement(quantity):
                 let amt = switch quantity {
                 case let .constant(num): num
                 case let .random(dice): dice.map { $0.roll().reduce(0, +) }.reduce(0, +)
+                case let .randomAndConstant(dice, num): dice.map { $0.roll().reduce(0, +) }.reduce(0, +) + num
                 case .none: UInt(1)
                 }
 
             case let .equip(to):
                 if card == nil { return }
                 switch to {
-                    case .head:
-                    source.deck.unequipGearCard(.head)
+                case .head:
+                    if source.deck.equipment.head != nil { source.deck.unequipGearCard(.head) }
+                    source.deck.equipGearCard(card!)
+                
+                case .torso:
+                    if source.deck.equipment.torso != nil { source.deck.unequipGearCard(.torso) }
+                    source.deck.equipGearCard(card!)
+                
+                case .feet:
+                    if source.deck.equipment.feet != nil { source.deck.unequipGearCard(.feet) }
+                    source.deck.equipGearCard(card!)
+                
+                case .hands:
+                    if source.deck.equipment.hands != nil { source.deck.unequipGearCard(.hands) }
+                    source.deck.equipGearCard(card!)
+                
+                case .mainhand:
+                    if source.deck.equipment.mainhand != nil { source.deck.unequipGearCard(.mainhand) }
                     source.deck.equipGearCard(card!)
                     
-                    case .torso:
-                    source.deck.unequipGearCard(.torso)
-                    source.deck.equipGearCard(card!)
-                    
-                    case .feet:
-                    source.deck.unequipGearCard(.feet)
-                    source.deck.equipGearCard(card!)
-                    
-                    case .hands:
-                    source.deck.unequipGearCard(.hands)
+                case .offhand:
+                    if source.deck.equipment.offhand != nil { source.deck.unequipGearCard(.offhand) }
                     source.deck.equipGearCard(card!)
                 }
             default:
@@ -60,6 +90,7 @@ enum Action: Actionable {
     enum Quantity {
         case constant(UInt)
         case random([Die])
+        case randomAndConstant([Die], UInt)
     }
 
     // attack

@@ -31,6 +31,10 @@ final class Encounter: Identifiable, ObservableObject {
 
     private func onEnterTurnStart() {
         //do something
+        
+        if self.turn == .player {
+            self.player.bolsteredBy = 0
+        }
         self.onExitTurnStart()
     }
 
@@ -45,9 +49,11 @@ final class Encounter: Identifiable, ObservableObject {
 
         switch self.turn {
                 // arbitrary amount for now
-            case .player: self.player.deck.draw(3)
+            case .player: self.player.deck.draw(determineDrawAmount(pawn: self.player))
 
-            case .enemy: self.enemies.filter { $0.hp > 0 }.forEach { $0.deck.draw(3) }
+            case .enemy: self.enemies.filter { $0.hp > 0 }.forEach {
+                $0.deck.draw(determineDrawAmount(pawn: $0))
+            }
         }
 
         self.onExitDrawPhase()
@@ -93,6 +99,39 @@ final class Encounter: Identifiable, ObservableObject {
                             case .attack:
                                 enemy.deck.playFromHand(card)
                                 card.action.perform(by: enemy, on: [self.player])
+                            case .bolster:
+                                enemy.deck.playFromHand(card)
+                                card.action.perform(by: enemy, on: [enemy])
+                            case .equip:
+                                let gear = card as? GearCard
+                                enemy.deck.playFromHand(card)
+                                switch gear!.slot {
+                                case .head:
+                                    if enemy.deck.equipment.head == nil {
+                                        enemy.deck.equipment.head = gear
+                                    }
+                                case .torso:
+                                    if enemy.deck.equipment.torso == nil {
+                                        enemy.deck.equipment.torso = gear
+                                    }
+                                case .feet:
+                                    if enemy.deck.equipment.feet == nil {
+                                        enemy.deck.equipment.feet = gear
+                                    }
+                                case .hands:
+                                    if enemy.deck.equipment.hands == nil {
+                                        enemy.deck.equipment.hands = gear
+                                    }
+                                case .mainhand:
+                                    if enemy.deck.equipment.mainhand == nil {
+                                        enemy.deck.equipment.mainhand = gear
+                                    }
+                                case .offhand:
+                                    if enemy.deck.equipment.offhand == nil {
+                                        enemy.deck.equipment.offhand = gear
+                                    }
+                                }
+                                
                             default:
                                 return
                             }
@@ -134,6 +173,32 @@ final class Encounter: Identifiable, ObservableObject {
         self.phase = self.phase.next()
         self.turn = self.turn.next()
         self.onEnterTurnStart()
+    }
+    
+    func determineDrawAmount(pawn: Pawn) -> UInt {
+        let total = [
+            pawn.deck.equipment.head,
+            pawn.deck.equipment.torso,
+            pawn.deck.equipment.hands,
+            pawn.deck.equipment.feet,
+        ]
+            .compactMap { gear in gear }
+            .map { gear in
+                let score = switch gear.weight {
+                case .none: UInt(0)
+                case .light: UInt(1)
+                case .medium: UInt(2)
+                case .heavy: UInt(3)
+                }
+                
+                return gear.slot == .torso ? score * 2 : score
+            }
+            .reduce(0, +)
+        
+        if total > 10 { return 2 }
+        if total > 5 { return 3 }
+        if total > 0 { return 4 }
+        return 5
     }
 
     enum TurnState {

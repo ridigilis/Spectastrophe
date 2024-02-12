@@ -88,6 +88,7 @@ struct CardView: View {
                         if dragAmount.height < -200 {
                             switch card.action {
                                 case .attack: player.isAttackingWith = card as? ActionCard
+                                case .bolster: card.action.perform(by: player, on: [player])
                                 case .movement: player.isMovingWith = card as? ActionCard
                                 case .equip: card.action.perform(by: player, on: [player], using: card as? GearCard)
                                 default: return

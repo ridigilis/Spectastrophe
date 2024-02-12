@@ -9,27 +9,68 @@ import Foundation
 
 struct LootMachine {
     func gimme(
+        slot specifiedSlot: Deck.GearSlot? = nil,
         rarity specifiedRarity: Rarity? = nil,
         rarityModifier: UInt = 0,
         weight specifiedWeight: Weight? = nil
     ) -> GearCard {
+        let slot: Deck.GearSlot = specifiedSlot ?? rollSlot()
         let rarity: Rarity = specifiedRarity ?? rollRarity()
         let weight: Weight = specifiedWeight ?? rollWeight()
-        let gear = self.weapons.randomElement()
         
-        var cards: [ActionCard] = []
-        for _ in 0...gear!.value.4 {
-            cards.append(ActionCard(rarity: .none, title: "Attack", description: "Deal \(gear!.value.3.count)\(gear!.value.3[0])", action: .attack(gear!.value.1[0], for: .random(gear!.value.3), from: gear!.value.2), range: gear!.value.2))
+        switch slot {
+        case .head, .torso, .hands, .feet:
+            let gear = self.armor.filter({ $0.value.0 == weight && $0.value.4 == slot }).randomElement()
+            var cards: [ActionCard] = []
+            if weight != .none {
+                for _ in 0...gear!.value.3 {
+                    cards.append(
+                        ActionCard(
+                            rarity: .none,
+                            title: "Bolster",
+                            description: "Offset damage taken on your next turn by  \(gear!.value.1.count)\(gear!.value.1[0])",
+                            action: .bolster(for: .randomAndConstant(gear!.value.1, gear!.value.addedToRoll))
+                        )
+                    )
+                }
+            }
+            
+            return GearCard(
+                slot: slot,
+                rarity: rarity,
+                weight: weight,
+                title: gear!.key,
+                description: weight == .none 
+                    ? "Provides very minimal protection"
+                    : "Adds \(gear!.value.3) bolster cards to your deck that each offset damage by \(gear!.value.1.count)\(gear!.value.1[0])",
+                cards: cards
+            )
+            
+        case .mainhand, .offhand:
+            let gear = self.weapons.filter({ $0.value.0 == weight }).randomElement()
+            var cards: [ActionCard] = []
+            for _ in 0...gear!.value.4 {
+                cards.append(ActionCard(rarity: .none, title: "Attack", description: "Deal \(gear!.value.3.count)\(gear!.value.3[0])", action: .attack(gear!.value.1[0], for: .random(gear!.value.3), from: gear!.value.2), range: gear!.value.2))
+            }
+            
+            return GearCard(
+                slot: slot,
+                rarity: rarity,
+                weight: weight,
+                title: gear!.key,
+                description: "Adds \(gear!.value.4) attacks to your deck that each deal \(gear!.value.3.count)\(gear!.value.3[0])",
+                cards: cards
+            )
         }
         
-        return GearCard(
-            slot: .hands,
-            rarity: rarity,
-            weight: weight,
-            title: gear!.key,
-            description: "Adds \(gear!.value.4) attacks to your deck that each deal \(gear!.value.3.count)\(gear!.value.3[0])",
-            cards: cards
-        )
+
+        
+
+    }
+    
+    func rollSlot() -> Deck.GearSlot {
+        let slots: [Deck.GearSlot] = [.head, .torso, .feet, .hands, .mainhand, .offhand]
+        return slots.randomElement()!
     }
     
     func rollRarity(with modifier: UInt = 0) -> Rarity {
@@ -45,13 +86,35 @@ struct LootMachine {
     }
     
     func rollWeight() -> Weight {
-        let weights: [Weight] = [.light, .medium, .heavy]
+        let weights: [Weight] = [.none, .light, .medium, .heavy]
         return weights.randomElement()!
     }
     
+    let armor: [String: (Weight, [Die], addedToRoll: UInt, actionQuantity: UInt, Deck.GearSlot)] = [
+        "Hood": (.none, [], 0, 0, .head),
+        "Tunic": (.none, [], 0, 0, .torso),
+        "Handwraps": (.none, [], 0, 0, .hands),
+        "Shoes": (.none, [], 0, 0, .feet),
+        
+        "Light Helm": (.light, [.d2], 1, 1, .head),
+        "Light Chest Armor": (.light, [.d2, .d2], 1, 1, .torso),
+        "Light Gloves": (.light, [.d2], 1, 1, .hands),
+        "Light Boots": (.light, [.d2], 1, 1, .feet),
+        
+        "Medium Helm": (.medium, [.d4], 2, 2, .head),
+        "Medium Chest Armor": (.medium, [.d4, .d4], 2, 2, .torso),
+        "Medium Gloves": (.medium, [.d4], 2, 2, .hands),
+        "Medium Boots": (.medium, [.d4], 2, 2, .feet),
+        
+        "Heavy Helm": (.heavy, [.d6], 3, 3, .head),
+        "Heavy Chest Armor": (.heavy, [.d6, .d6], 3, 3, .torso),
+        "Heavy Gloves": (.heavy, [.d6], 3, 3, .hands),
+        "Heavy Boots": (.heavy, [.d6], 3, 3, .feet),
+    ]
+    
     let weapons: [String: (Weight, [Action.Attack], [Action.Range], [Die], actionQuantity: UInt)] = [
-        "Dagger": (.light, [.physical(.pierce)], [.melee], [.d4], 2),
-        "Throwing Stars": (.light, [.physical(.pierce)], [.ranged(.short)], [.d4], 2),
+        "Dagger": (.none, [.physical(.pierce)], [.melee], [.d4], 2),
+        "Throwing Stars": (.none, [.physical(.pierce)], [.ranged(.short)], [.d4], 2),
         "Shortbow": (.light, [.physical(.pierce)], [.ranged(.short)], [.d4], 2),
         "Handaxe": (.light, [.physical(.slash)], [.melee], [.d6], 4),
         "Spear": (.light, [.physical(.pierce)], [.melee], [.d6], 4),

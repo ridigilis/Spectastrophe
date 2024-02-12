@@ -17,6 +17,8 @@ struct GearSlotView: View {
         case .torso: equipment.torso
         case .feet: equipment.feet
         case .hands: equipment.hands
+        case .mainhand: equipment.mainhand
+        case .offhand: equipment.offhand
         }
         
         if gear == nil {

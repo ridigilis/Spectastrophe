@@ -29,9 +29,10 @@ final class Deck: ObservableObject {
         let cardsFromTorsoSlot = equipment.torso?.cards ?? []
         let cardsFromFeetSlot = equipment.feet?.cards ?? []
         let cardsFromHandsSlot = equipment.hands?.cards ?? []
+        let cardsFromMainHandSlot = equipment.mainhand?.cards ?? []
+        let cardsFromOffHandSlot = equipment.offhand?.cards ?? []
 
-        let initialDrawPile = drawPile + cardsFromHeadSlot + cardsFromTorsoSlot + cardsFromFeetSlot + cardsFromHandsSlot
-
+        let initialDrawPile = drawPile + cardsFromHeadSlot + cardsFromTorsoSlot + cardsFromFeetSlot + cardsFromHandsSlot + cardsFromMainHandSlot + cardsFromOffHandSlot
 
         self.drawPile = initialDrawPile.shuffled()
         self.hand = hand
@@ -110,6 +111,8 @@ final class Deck: ObservableObject {
         case .torso: self.equipment.torso = card
         case .hands: self.equipment.hands = card
         case .feet: self.equipment.feet = card
+        case .mainhand: self.equipment.mainhand = card
+        case .offhand: self.equipment.offhand = card
         }
     }
     
@@ -119,6 +122,8 @@ final class Deck: ObservableObject {
         case .torso: self.equipment.torso
         case .hands: self.equipment.hands
         case .feet: self.equipment.feet
+        case .mainhand: self.equipment.mainhand
+        case .offhand: self.equipment.offhand
         }
         
         self.drawPile = self.drawPile.filter { $0.parentId != card?.id }
@@ -135,6 +140,8 @@ final class Deck: ObservableObject {
         case torso
         case feet
         case hands
+        case mainhand
+        case offhand
     }
 
     final class Equipment: ObservableObject {
@@ -142,22 +149,23 @@ final class Deck: ObservableObject {
         @Published var torso: GearCard?
         @Published var feet: GearCard?
         @Published var hands: GearCard?
+        @Published var mainhand: GearCard?
+        @Published var offhand: GearCard?
 
         init(
             head: GearCard? = nil,
             torso: GearCard? = nil,
-            feet: GearCard? = GearCard(slot: .feet, rarity: .common, title: "Boots", description: "Adds 2 Move to deck", cards: [
-                ActionCard(title: "Move", description: "Move to an adjacent space", action: .movement(for: .constant(1))),
-                ActionCard(title: "Move", description: "Move to an adjacent space", action: .movement(for: .constant(1))),
-            ]),
-            hands: GearCard? = LootMachine().gimme()
+            feet: GearCard? = nil,
+            hands: GearCard? = nil,
+            mainhand: GearCard? = LootMachine().gimme(slot: .mainhand),
+            offhand: GearCard? = nil
         ) {
             self.head = head
             self.torso = torso
             self.feet = feet
             self.hands = hands
+            self.mainhand = mainhand
+            self.offhand = offhand
         }
     }
 }
-
-

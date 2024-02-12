@@ -17,6 +17,10 @@ struct HUDView: View {
                 Spacer()
                 Grid {
                     GridRow {
+                        GearSlotView(gearSlot: .mainhand, equipment: player.deck.equipment)
+                        GearSlotView(gearSlot: .offhand, equipment: player.deck.equipment)
+                    }
+                    GridRow {
                         GearSlotView(gearSlot: .head, equipment: player.deck.equipment)
                     }
                     GridRow {
