@@ -21,9 +21,10 @@ struct TileView: View {
     }
     
     var body: some View {
-        Tile
-            .overlay {
-                    if player.isMovingWith != nil && player.tile!.isAdjacent(to: tile.id) {
+        if tile.isTraversable {
+            Tile
+                .overlay {
+                    if player.isMovingWith != nil && player.tile!.isAdjacent(to: tile.id) && !enemies.contains(where: {$0.tile == tile.id}){
                         SelectableTile
                             .onTapGesture {
                                 withAnimation {
@@ -48,12 +49,15 @@ struct TileView: View {
                             }
                         }
                     }
-            }
+                }
+        } else {
+            Tile.hidden()
+        }
     }
 }
 
 #Preview {
-    let tile = Tile(id: Coords(0,0))
+    let tile = Tile(id: Coords(0,0), isTraversable: true)
     let player = Pawn(.player)
     let enemies = [Pawn(.enemy)]
 

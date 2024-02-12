@@ -41,7 +41,23 @@ struct GameView: View {
         }
         .ignoresSafeArea()
         .overlay {
-            HUDView(encounter: encounter, player: player)
+            if player.hp <= 0 {
+                Color(.black)
+                    .opacity(0.25)
+                    .ignoresSafeArea()
+                    .overlay {
+                        VStack {
+                            Text("Game Over")
+                                .font(.largeTitle)
+                                .bold()
+                            Button("New Game") {
+                                // TODO: start a new game
+                            }
+                        }
+                    }
+            } else {
+                HUDView(encounter: encounter, player: player)
+            }
         }
     }
 }

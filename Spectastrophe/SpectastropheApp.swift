@@ -11,7 +11,7 @@ import SwiftUI
 struct SpectastropheApp: App {
     @State private var isPlaying = false
     @StateObject var game: GameState = GameState(
-        player: Pawn(.player, maxHp: 120, tile: Coords(0,0), deck: Deck(drawPile: [
+        player: Pawn(.player, maxHp: 60, tile: Coords(0,0), deck: Deck(drawPile: [
             LootMachine().gimme(),
             LootMachine().gimme(),
             LootMachine().gimme()
@@ -25,7 +25,11 @@ struct SpectastropheApp: App {
             if !isPlaying {
                 MainMenuView(isPlaying: $isPlaying)
             } else {
-                GameView(encounter: Encounter(game.location, enemies: [Pawn(.enemy, maxHp: 60, tile: Coords(-3, 6))], player: game.player), player: game.player)
+                GameView(encounter: Encounter(game.location, enemies: [
+                    Pawn(.enemy, maxHp: 24, tile: Coords(-3, 6)),
+                    Pawn(.enemy, maxHp: 24, tile: Coords(2, 4)),
+                    Pawn(.enemy, maxHp: 24, tile: Coords(0, -4)),
+                ], player: game.player), player: game.player)
             }
         }
     }

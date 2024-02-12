@@ -11,15 +11,15 @@ struct Board {
     let tiles: [Coords: Tile]
     let byRow: [[Tile]]
 
-    // creates a contrived hexagonal shaped board
-    // I want this to be procedural in the future
     init() {
         var tiles: [Coords: Tile] = [:]
         var byRow: [Int: [Tile]] = [:]
-        for row in -6...6 {
-            for col in -6...6 {
+        for row in -12...12 {
+            let colCount = row.isMultiple(of: 2) ? 24 : 23
+            let colStart = Double((-12 - row) / 2).rounded(.down)
+            for col in Int(colStart)...(colCount + Int(colStart)) {
                 let coords = Coords(col, row)
-                let tile = Tile(id: coords)
+                let tile = Tile(id: coords, isTraversable: Die.d100.roll()[0] >= 10)
 
                 tiles[coords] = tile
                 if byRow[row] == nil {
@@ -31,14 +31,10 @@ struct Board {
             }
         }
         self.tiles = tiles
-        self.byRow = byRow.sorted { $0.key < $1.key }.map { row in
-            row.value.filter {
-                if $0.id.y > 0 {
-                    return $0.id.x <= 6 - $0.id.y
-                } else {
-                    return $0.id.x >= -6 - $0.id.y
-                }
-            } }.reversed()
+        self.byRow = byRow
+            .sorted { a, b in a.key < b.key }
+            .map { row in row.value }
+            .reversed()
     }
 
     // TODO: this seems to be working, but might need some love later
@@ -58,24 +54,24 @@ struct Board {
         let adjacentCoords = currentTile.id.allAdjacentCoords
 
         let scored: [(Coords, UInt)] = adjacentCoords
+            .filter { self.tiles[$0]?.isTraversable ?? false }
             .filter { closed[$0] == true ? false : true }
-            .map { coords in
-                print("to, cur", to.id, currentTile.id)
+            .compactMap { coords in
                 return (coords, UInt(abs(to.id.x - coords.x) + abs(to.id.y - coords.y)))
             }
 
-        let best = scored.min { a, b in a.1 < b.1 }
-
-        var newClosed = closed
-        adjacentCoords.forEach { coords in
-            newClosed[coords] = true
+        if let best = scored.min(by: { a, b in a.1 < b.1 }) {
+            var newClosed = closed
+            adjacentCoords.forEach { coords in
+                newClosed[coords] = true
+            }
+            
+            if self.tiles[best.0] != nil {
+                return shortestPath(from: from, to: to, newClosed, path + [tiles[best.0]!])
+            } else {
+                return []
+            }
         }
-
-        if self.tiles[best!.0] != nil {
-            return shortestPath(from: from, to: to, newClosed, path + [tiles[best!.0]!])
-        } else {
-            return []
-        }
-
+        return []
     }
 }

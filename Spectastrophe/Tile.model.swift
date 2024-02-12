@@ -8,8 +8,9 @@
 import Foundation
 
 struct Tile: Identifiable, Hashable, Equatable {
-    var id: Coords
-
+    let id: Coords
+    let isTraversable: Bool
+    
     static func ==(lhs: Tile, rhs: Tile) -> Bool {
         lhs.id == rhs.id
     }
