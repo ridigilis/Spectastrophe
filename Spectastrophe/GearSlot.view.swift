@@ -23,50 +23,48 @@ struct GearSlotView: View {
         
         if gear == nil {
             VStack {
-                Text("\(gearSlot.rawValue) (empty)").foregroundStyle(Color.gray).font(.footnote)
-            }
-            .frame(width:96, height: 96)
-            .background {
-                Image("gearslot-empty")
+                Image("label-mid-generic")
                     .resizable()
                     .scaledToFit()
             }
+            .overlay {
+                Text("\(gearSlot.rawValue) (empty)").font(.custom("Trattatello", size: 16))
+            }
         } else {
             VStack {
-                Text(gear?.title ?? "???").bold().font(.footnote)
-            }
-            .frame(width:96, height: 96)
-            .background {
                 switch gear!.rarity {
                 case .common:
-                    Image("gearslot-common")
+                    Image("label-mid-common")
                         .resizable()
                         .scaledToFit()
                 case .uncommon:
-                    Image("gearslot-uncommon")
+                    Image("label-mid-uncommon")
                         .resizable()
                         .scaledToFit()
                 case .rare:
-                    Image("gearslot-rare")
+                    Image("label-mid-rare")
                         .resizable()
                         .scaledToFit()
                 case .veryrare:
-                    Image("gearslot-veryrare")
+                    Image("label-mid-veryrare")
                         .resizable()
                         .scaledToFit()
                 case .legendary:
-                    Image("gearslot-legendary")
+                    Image("label-mid-legendary")
                         .resizable()
                         .scaledToFit()
                 case .mythical:
-                    Image("gearslot-mythical")
+                    Image("label-mid-mythical")
                         .resizable()
                         .scaledToFit()
                 default:
-                    Image("gearslot-empty")
+                    Image("label-mid-generic")
                         .resizable()
                         .scaledToFit()
                 }
+            }
+            .overlay {
+                Text(gear?.title ?? "???").bold().font(.custom("Trattatello", size: 16)).textCase(.uppercase)
             }
         }
     }

@@ -12,12 +12,13 @@ struct MainMenuView: View {
     
     var body: some View {
         VStack {
-            Text("Spectastrophe")
-                .font(.largeTitle)
+            Text("Spectastrophe.")
+                .font(.custom("Trattatello", size: 120))
                 .padding(.bottom, 60)
-            Button("New Game") {
+            Button("START NEW PLAYTEST") {
                 isPlaying.toggle()
             }
+            .font(.custom("Trattatello", size: 24))
         }
     }
 }

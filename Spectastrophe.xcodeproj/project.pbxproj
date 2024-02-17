@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F80DCB0E2B7D63C900DDC149 /* Trattatello.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F80DCB0D2B7D63C900DDC149 /* Trattatello.ttf */; };
 		F8142D222B6E87DC002BCCAD /* Actionable.protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8142D212B6E87DC002BCCAD /* Actionable.protocol.swift */; };
 		F8142D242B6E89F8002BCCAD /* ActionCard.model.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8142D232B6E89F8002BCCAD /* ActionCard.model.swift */; };
 		F8142D282B6E8C47002BCCAD /* GearCard.model.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8142D272B6E8C47002BCCAD /* GearCard.model.swift */; };
@@ -61,6 +62,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		F80DCB0C2B7D56CB00DDC149 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		F80DCB0D2B7D63C900DDC149 /* Trattatello.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Trattatello.ttf; sourceTree = "<group>"; };
 		F8142D212B6E87DC002BCCAD /* Actionable.protocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Actionable.protocol.swift; sourceTree = "<group>"; };
 		F8142D232B6E89F8002BCCAD /* ActionCard.model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionCard.model.swift; sourceTree = "<group>"; };
 		F8142D272B6E8C47002BCCAD /* GearCard.model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GearCard.model.swift; sourceTree = "<group>"; };
@@ -149,8 +152,10 @@
 		F8575B622B473A9B00F71F92 /* Spectastrophe */ = {
 			isa = PBXGroup;
 			children = (
+				F80DCB0C2B7D56CB00DDC149 /* Info.plist */,
 				F8575B6A2B473A9D00F71F92 /* Preview Content */,
 				F8575B672B473A9D00F71F92 /* Assets.xcassets */,
+				F80DCB0D2B7D63C900DDC149 /* Trattatello.ttf */,
 				F8575B692B473A9D00F71F92 /* Spectastrophe.entitlements */,
 				F8575B632B473A9B00F71F92 /* SpectastropheApp.swift */,
 				F83CF3BC2B54A1CC00A8F1F9 /* Action.model.swift */,
@@ -316,6 +321,7 @@
 			files = (
 				F8575B6C2B473A9D00F71F92 /* Preview Assets.xcassets in Resources */,
 				F8575B682B473A9D00F71F92 /* Assets.xcassets in Resources */,
+				F80DCB0E2B7D63C900DDC149 /* Trattatello.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -535,6 +541,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Spectastrophe/Info.plist;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -574,6 +581,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Spectastrophe/Info.plist;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;

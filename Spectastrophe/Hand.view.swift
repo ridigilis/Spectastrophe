@@ -12,11 +12,17 @@ struct HandView: View {
     @ObservedObject var player: Pawn
 
     var body: some View {
-        HStack {
-            ForEach(deck.hand, id: \.self.id) { card in
-                CardView(card: card, player: player)
-            }
+        GeometryReader { geometry in
+            VStack {
+                HStack(spacing: -(geometry.size.width * 0.025 * CGFloat(deck.hand.count))) {
+                    ForEach(deck.hand, id: \.self.id) { card in
+                        CardView(card: card, player: player)
+                    }
+                }
+                .frame(maxWidth: geometry.size.width)
+            }.frame(height: geometry.size.height, alignment: .bottom)
         }
+
     }
 }
 

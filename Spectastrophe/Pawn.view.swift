@@ -14,7 +14,7 @@ struct PawnView: View {
     
     @ViewBuilder var Avatar: some View {
         VStack {
-            if pawn.hp > 0 {
+            if pawn.type == .enemy && pawn.hp > 0 {
                 ProgressView(value: Float(pawn.hp), total: Float(pawn.maxHp))
                     .tint(.red)
                     .border(Color.black)
@@ -22,8 +22,8 @@ struct PawnView: View {
                     .scaleEffect(y: 2)
             }
             switch pawn.type {
-            case .player: Image("playerpawn").resizable().scaledToFit()
-            case .enemy: Image("enemypawn").resizable().scaledToFit()
+            case .player: Image("pawn-player").resizable().scaledToFit()
+            case .enemy: Image("pawn-enemy").resizable().scaledToFit()
             }
         }
         .offset(y: -40)

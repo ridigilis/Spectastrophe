@@ -12,8 +12,12 @@ struct TileView: View {
     @ObservedObject var player: Pawn
     var enemies: [Pawn]
     
-    @ViewBuilder var Tile: some View {
-        Image("grassytile").resizable().scaledToFit().contentShape(TileTappableArea())
+    @ViewBuilder var GrassyTile: some View {
+        Image("tile-grassy").resizable().scaledToFit().contentShape(TileTappableArea())
+    }
+    
+    @ViewBuilder var WaterTile: some View {
+        Image("tile-water").resizable().scaledToFit().contentShape(TileTappableArea())
     }
     
     @ViewBuilder var SelectableTile: some View {
@@ -22,7 +26,7 @@ struct TileView: View {
     
     var body: some View {
         if tile.isTraversable {
-            Tile
+            GrassyTile
                 .overlay {
                     if player.isMovingWith != nil && player.tile!.isAdjacent(to: tile.id) && !enemies.contains(where: {$0.tile == tile.id}){
                         SelectableTile
@@ -51,7 +55,7 @@ struct TileView: View {
                     }
                 }
         } else {
-            Tile.hidden()
+            WaterTile
         }
     }
 }
@@ -61,19 +65,19 @@ struct TileView: View {
     let player = Pawn(.player)
     let enemies = [Pawn(.enemy)]
 
-//    return TileView(tile: tile, player: player, enemies: enemies)
+    return TileView(tile: tile, player: player, enemies: enemies)
     
     
-    struct SelectableTile: View {
-        var body: some View {
-            Image("grassytile-can-select").resizable().scaledToFit()
-        }
-    }
-    
-    return SelectableTile()
-        .frame(width: 600, height: 600)
-        .contentShape(TileTappableArea())
-        .overlay {
-            TileTappableArea()
-    }
+//    struct SelectableTile: View {
+//        var body: some View {
+//            Image("grassytile-can-select").resizable().scaledToFit()
+//        }
+//    }
+//    
+//    return SelectableTile()
+//        .frame(width: 600, height: 600)
+//        .contentShape(TileTappableArea())
+//        .overlay {
+//            TileTappableArea()
+//    }
 }

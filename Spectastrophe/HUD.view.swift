@@ -15,24 +15,6 @@ struct HUDView: View {
         HStack {
             VStack {
                 Spacer()
-                Grid {
-                    GridRow {
-                        GearSlotView(gearSlot: .mainhand, equipment: player.deck.equipment)
-                        GearSlotView(gearSlot: .offhand, equipment: player.deck.equipment)
-                    }
-                    GridRow {
-                        GearSlotView(gearSlot: .head, equipment: player.deck.equipment)
-                    }
-                    GridRow {
-                        GearSlotView(gearSlot: .torso, equipment: player.deck.equipment)
-                    }
-                    GridRow {
-                        GearSlotView(gearSlot: .hands, equipment: player.deck.equipment)
-                    }
-                    GridRow {
-                        GearSlotView(gearSlot: .feet, equipment: player.deck.equipment)
-                    }
-                }
             }
             Spacer()
             VStack {

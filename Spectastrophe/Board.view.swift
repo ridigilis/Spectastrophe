@@ -14,12 +14,12 @@ struct BoardView: View {
     @Namespace private var animation
 
     var body: some View {
-        VStack(spacing: -40) {
+        VStack(spacing: -44) {
             ForEach(encounter.board.byRow, id: \.self) { row in
-                HStack(spacing: -1) {
+                HStack(spacing: -19) {
                     ForEach(row) { tile in
                         TileView(tile: tile, player: player, enemies: encounter.enemies)
-                            .frame(width: 96, height: 96)
+                                .frame(width: 96, height: 96)
                             .overlay(alignment: .bottom) {
                                 if player.tile == tile.id {
                                     PawnView(pawn: player)

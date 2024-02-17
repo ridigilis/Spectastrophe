@@ -70,6 +70,9 @@ struct SpectastropheApp: App {
                         LootMachine().gimme(),
                     ])),
                 ], player: game.player), player: game.player)
+                .background {
+                    Image("tabletop").resizable().scaledToFill().ignoresSafeArea()
+                }
             }
         }
     }
