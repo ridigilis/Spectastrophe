@@ -24,7 +24,7 @@ struct GameView: View {
                         .overlay(alignment: .trailing) {
                             Rectangle()
                                 .frame(width: geo.size.width * 0.65 * (1 - (CGFloat(player.hp > 0 ? player.hp : 0) / CGFloat(player.maxHp))), height: geo.size.height * 0.015, alignment: .trailing)
-                            .foregroundStyle(Color.black)
+                                .foregroundStyle(Color.black.opacity(0.35))
                             .offset(x: -8,
                                     y: -5)
                         }

@@ -33,9 +33,6 @@ struct BoardView: View {
                                     }
                                 }
                             }
-                            .overlay {
-                                Text("\(tile.id.x), \(tile.id.y)")
-                            }
                     }
                 }
             }

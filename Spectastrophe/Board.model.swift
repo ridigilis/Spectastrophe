@@ -16,7 +16,7 @@ struct Board {
         var byRow: [Int: [Tile]] = [:]
         
         for n in 0...100 {
-            var coordsToAppend: [Coords] = Coords(0,0).getBoundaryCoords(at: UInt(n))
+            let coordsToAppend: [Coords] = Coords(0,0).getBoundaryCoords(at: UInt(n))
             coordsToAppend.forEach { coords in
                 tiles[coords] = Tile(id: coords, isTraversable: Die.d100.roll()[0] >= 10)
             }
