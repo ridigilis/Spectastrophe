@@ -14,19 +14,28 @@ struct Board {
     init() {
         var tiles: [Coords: Tile] = [:]
         var byRow: [Int: [Tile]] = [:]
-        for row in -12...12 {
-            let colCount = row.isMultiple(of: 2) ? 24 : 23
-            let colStart = Double((-12 - row) / 2).rounded(.down)
+        
+        for n in 0...100 {
+            var coordsToAppend: [Coords] = Coords(0,0).getBoundaryCoords(at: UInt(n))
+            coordsToAppend.forEach { coords in
+                tiles[coords] = Tile(id: coords, isTraversable: Die.d100.roll()[0] >= 10)
+            }
+        }
+        
+        for row in -100...100 {
+            let colCount = row.isMultiple(of: 2) ? 200 : 199
+            let colStart = Double((-100 - row) / 2).rounded(.down)
             for col in Int(colStart)...(colCount + Int(colStart)) {
                 let coords = Coords(col, row)
-                let tile = Tile(id: coords, isTraversable: Die.d100.roll()[0] >= 10)
 
-                tiles[coords] = tile
+                if tiles[coords] == nil {
+                    tiles[coords] = Tile(id: coords, isTraversable: false)
+                }
                 if byRow[row] == nil {
                     byRow[row] = []
                 }
                 var byRowAtRow = byRow[row]
-                byRowAtRow!.append(tile)
+                byRowAtRow!.append(tiles[coords]!)
                 byRow[row] = byRowAtRow
             }
         }

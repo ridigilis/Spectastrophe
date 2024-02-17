@@ -14,9 +14,9 @@ struct BoardView: View {
     @Namespace private var animation
 
     var body: some View {
-        VStack(spacing: -44) {
+        LazyVStack(spacing: -44) {
             ForEach(encounter.board.byRow, id: \.self) { row in
-                HStack(spacing: -19) {
+                LazyHStack(spacing: -19) {
                     ForEach(row) { tile in
                         TileView(tile: tile, player: player, enemies: encounter.enemies)
                                 .frame(width: 96, height: 96)
@@ -32,6 +32,9 @@ struct BoardView: View {
                                             .matchedGeometryEffect(id: enemy.id, in: animation)
                                     }
                                 }
+                            }
+                            .overlay {
+                                Text("\(tile.id.x), \(tile.id.y)")
                             }
                     }
                 }
