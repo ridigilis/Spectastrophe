@@ -21,7 +21,9 @@ struct TileView: View {
     }
     
     @ViewBuilder var SelectableTile: some View {
-        Image("grassytile-can-select").resizable().scaledToFit().contentShape(TileTappableArea())
+        TileTappableArea()
+            .fill(Color.white.opacity(0.1)) // if I make this Color.clear, it won't register hits correctly. TODO: fascinating, investigate this later
+            .stroke(Color.black, style: StrokeStyle(lineWidth: 3, dash: [10, 5]))
     }
     
     var body: some View {
