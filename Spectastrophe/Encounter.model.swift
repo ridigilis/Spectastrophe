@@ -83,7 +83,9 @@ final class Encounter: Identifiable, ObservableObject {
 
                         for tile in path {
                             if let card = enemy.deck.hand.first(where: { $0.title == "Move"}) {
-                                if !self.player.tile!.isAdjacent(to: enemy.tile!) {
+                                if self.player.tile! != tile.id &&
+                                    !self.player.tile!.isAdjacent(to: enemy.tile!) &&
+                                    self.enemies.allSatisfy({ otherEnemy in otherEnemy.tile! != tile.id }) {
                                     enemy.deck.playFromHand(card)
                                     enemy.tile = tile.id
                                 }
