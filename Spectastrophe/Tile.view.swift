@@ -45,7 +45,7 @@ struct TileView: View {
                             if enemy.tile == tile.id && tile.isInRangeOfAction(from: player.tile!, range: player.isAttackingWith!.range ?? []) {
                                 SelectableTile
                                     .onTapGesture {
-                                        if let action = player.isAttackingWith?.action {
+                                        if let action = player.isAttackingWith?.primaryAction {
                                             withAnimation {
                                                 action.perform(by: player, on: [enemy])
                                                 player.isAttackingWith = nil

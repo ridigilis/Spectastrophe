@@ -25,14 +25,20 @@ final class Deck: ObservableObject {
     ) {
         self.equipment = equipment
 
-        let cardsFromHeadSlot = equipment.head?.cards ?? []
-        let cardsFromTorsoSlot = equipment.torso?.cards ?? []
-        let cardsFromFeetSlot = equipment.feet?.cards ?? []
-        let cardsFromHandsSlot = equipment.hands?.cards ?? []
-        let cardsFromMainHandSlot = equipment.mainhand?.cards ?? []
-        let cardsFromOffHandSlot = equipment.offhand?.cards ?? []
+        let cardsFromHeadSlot: [ActionCard] = equipment.head?.cards ?? []
+        let cardsFromTorsoSlot: [ActionCard] = equipment.torso?.cards ?? []
+        let cardsFromFeetSlot: [ActionCard] = equipment.feet?.cards ?? []
+        let cardsFromHandsSlot: [ActionCard] = equipment.hands?.cards ?? []
+        let cardsFromMainHandSlot: [ActionCard] = equipment.mainhand?.cards ?? []
+        let cardsFromOffHandSlot: [ActionCard] = equipment.offhand?.cards ?? []
 
-        let initialDrawPile = drawPile + cardsFromHeadSlot + cardsFromTorsoSlot + cardsFromFeetSlot + cardsFromHandsSlot + cardsFromMainHandSlot + cardsFromOffHandSlot
+        var initialDrawPile: [any Card] = drawPile
+        initialDrawPile += cardsFromHeadSlot
+        initialDrawPile += cardsFromTorsoSlot
+        initialDrawPile += cardsFromFeetSlot
+        initialDrawPile += cardsFromHandsSlot
+        initialDrawPile += cardsFromMainHandSlot
+        initialDrawPile += cardsFromOffHandSlot
 
         self.drawPile = initialDrawPile.shuffled()
         self.hand = hand
@@ -49,7 +55,7 @@ final class Deck: ObservableObject {
         self.hand = self.hand + [card].compactMap { $0 }
     }
 
-    func draw(_ amt: UInt = 1) {
+    func draw(_ amt: Int = 1) {
         for _ in 1...amt {
             if self.drawPile.count == 0 {
                 self.shuffleDiscardPileIntoDrawPile()
@@ -106,24 +112,24 @@ final class Deck: ObservableObject {
         self.discardPile = self.discardPile + card.cards
         self.playArea = self.playArea.filter { $0.id != card.id }
         
-        switch card.slot {
-        case .head: self.equipment.head = card
-        case .torso: self.equipment.torso = card
-        case .hands: self.equipment.hands = card
-        case .feet: self.equipment.feet = card
-        case .mainhand: self.equipment.mainhand = card
-        case .offhand: self.equipment.offhand = card
+        switch card.gear.slot {
+        case .wearable(.head): self.equipment.head = card
+        case .wearable(.torso): self.equipment.torso = card
+        case .wearable(.hands): self.equipment.hands = card
+        case .wearable(.feet): self.equipment.feet = card
+        case .armament(.mainhand): self.equipment.mainhand = card
+        case .armament(.offhand): self.equipment.offhand = card
         }
     }
     
     func unequipGearCard(_ slot: GearSlot) {
         let card: GearCard? = switch slot {
-        case .head: self.equipment.head
-        case .torso: self.equipment.torso
-        case .hands: self.equipment.hands
-        case .feet: self.equipment.feet
-        case .mainhand: self.equipment.mainhand
-        case .offhand: self.equipment.offhand
+        case .wearable(.head): self.equipment.head
+        case .wearable(.torso): self.equipment.torso
+        case .wearable(.hands): self.equipment.hands
+        case .wearable(.feet): self.equipment.feet
+        case .armament(.mainhand): self.equipment.mainhand
+        case .armament(.offhand): self.equipment.offhand
         }
         
         self.drawPile = self.drawPile.filter { $0.parentId != card?.id }
@@ -135,14 +141,16 @@ final class Deck: ObservableObject {
         self.discardPile = self.discardPile + [card ?? nil].compactMap { $0 }
     }
 
-    enum GearSlot: String {
-        case head
-        case torso
-        case feet
-        case hands
-        case mainhand
-        case offhand
-    }
+//    enum GearSlot: String {
+//        case head
+//        case torso
+//        case feet
+//        case hands
+//        case mainhand
+//        case offhand
+//    }
+    
+    typealias GearSlot = Slot
 
     final class Equipment: ObservableObject {
         @Published var head: GearCard?
@@ -153,11 +161,11 @@ final class Deck: ObservableObject {
         @Published var offhand: GearCard?
 
         init(
-            head: GearCard? = nil,
-            torso: GearCard? = nil,
-            feet: GearCard? = nil,
-            hands: GearCard? = nil,
-            mainhand: GearCard? = LootMachine().gimme(slot: .mainhand),
+            head: GearCard? = GearCard(gear: Gear(slot: .wearable(.head))),
+            torso: GearCard? = GearCard(gear: Gear(slot: .wearable(.torso))),
+            feet: GearCard? = GearCard(gear: Gear(slot: .wearable(.feet))),
+            hands: GearCard? = GearCard(gear: Gear(slot: .wearable(.hands))),
+            mainhand: GearCard? = GearCard(gear: Gear(slot: .armament(.mainhand))),
             offhand: GearCard? = nil
         ) {
             self.head = head

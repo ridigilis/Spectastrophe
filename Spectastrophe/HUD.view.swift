@@ -19,41 +19,7 @@ struct HUDView: View {
             Spacer()
             VStack {
                 Spacer()
-                if player.isMovingWith != nil {
-                    Button("Cancel Action") {
-                        withAnimation {
-                            player.cancelMovementAction()
-                        }
-                    }
-                    .bold()
-                    .padding()
-                    .background(.red)
-                    .foregroundColor(.white.opacity(0.8))
-                    .clipShape(RoundedRectangle(cornerRadius: 5))
-                } else if player.isAttackingWith != nil {
-                    Button("Cancel Action") {
-                        withAnimation {
-                            player.cancelAttackAction()
-                        }
-                    }
-                    .bold()
-                    .padding()
-                    .background(.red)
-                    .foregroundColor(.white.opacity(0.8))
-                    .clipShape(RoundedRectangle(cornerRadius: 5))
-                } else {
-                    Button("End Turn") {
-                        withAnimation {
-                            encounter.onExitPlayPhase()
-                        }
-                    }
-                    .bold()
-                    .padding()
-                    .background(.green)
-                    .foregroundColor(.white.opacity(0.8))
-                    .clipShape(RoundedRectangle(cornerRadius: 5))
-                    .disabled(!player.turnToPlay)
-                }
+
             }
         }
         .padding(24)

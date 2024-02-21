@@ -8,11 +8,23 @@
 import Foundation
 
 enum Rarity: String {
-    case none
-    case common
-    case uncommon
-    case rare
+    case common = "Common"
+    case uncommon = "Uncommon"
+    case rare = "Rare"
     case veryrare = "Very Rare"
-    case legendary
-    case mythical
+    case legendary = "Legendary"
+    case mythical = "Mythical"
+    
+    static func roll(with adjustment: Int = 0) -> Self {
+        let roll = Die.d20.sumRoll(6) + adjustment
+        
+        switch roll {
+        case 110...: return .mythical
+        case 100...109:  return .legendary
+        case 90...99: return .veryrare
+        case 80...89: return .rare
+        case 70...79: return .uncommon
+        default: return .common
+        }
+    }
 }

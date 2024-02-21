@@ -10,11 +10,8 @@ import SwiftUI
 struct CardView: View {
     var card: any Card
     @ObservedObject var player: Pawn
-
     @State private var shadowFill = Color(.sRGBLinear, white: 0, opacity: 0.33)
-
     @State private var cardDragAmount = CGSize.zero
-    
     @State private var z: Double = 1
 
     var body: some View {
@@ -60,7 +57,7 @@ struct CardView: View {
                             .frame(width: geometry.size.width, height: geometry.size.height * 0.18, alignment: .center)
                             .textCase(.uppercase)
                             .lineLimit(1)
-                    Text(card.rarity == .none ? "" : card.rarity.rawValue)
+                    Text(card.rarity == nil ? "" : card.rarity!.rawValue)
                             .font(.custom("Trattatello", size: geometry.size.width * 0.065))
                             .frame(width: geometry.size.width, height: geometry.size.height * 0.55, alignment: .center)
                             .textCase(/*@START_MENU_TOKEN@*/.uppercase/*@END_MENU_TOKEN@*/)
@@ -68,6 +65,16 @@ struct CardView: View {
                         .font(.custom("Trattatello", size: geometry.size.width * 0.07))
                         .frame(width: geometry.size.width * 0.8, height: geometry.size.height)
                         .padding(.leading, geometry.size.width * 0.1)
+//                if let gearcard = card as! GearCard {
+//                    ForEach(gearcard.gear.perks) { perk in
+//                        Text(perk)
+//                            .font(.custom("Trattatello", size: geometry.size.width * 0.07))
+//                            .frame(width: geometry.size.width * 0.8, height: geometry.size.height)
+//                            .padding(.leading, geometry.size.width * 0.1)
+//                            .task{print(perk.name)}
+//                    }
+//
+//                }
 
             }
             .frame(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
@@ -94,11 +101,11 @@ struct CardView: View {
                     z = 1
                     if player.turnToPlay && player.isMovingWith == nil && player.isAttackingWith == nil {
                         if cardDragAmount.height == -200 {
-                            switch card.action {
+                            switch card.primaryAction {
                                 case .attack: player.isAttackingWith = card as? ActionCard
-                                case .bolster: card.action.perform(by: player, on: [player])
+                                case .bolster: card.primaryAction!.perform(by: player, on: [player])
                                 case .movement: player.isMovingWith = card as? ActionCard
-                                case .equip: card.action.perform(by: player, on: [player], using: card as? GearCard)
+                                case .equip: card.primaryAction!.perform(by: player, on: [player], using: card as? GearCard)
                                 default: return
                             }
                             withAnimation {
@@ -122,10 +129,10 @@ struct CardView: View {
     }
 }
 
-#Preview {
-    let card = ActionCard(action: .attack(.physical(.bludgeon), for: .constant(1), from: [.melee]))
-    let player = Pawn(.player)
-    
-    return CardView(card: card, player: player)
-}
+//#Preview {
+//    let card = ActionCard(action: .attack(.physical(.bludgeon), for: .constant(1), from: [.melee]))
+//    let player = Pawn(.player)
+//    
+//    return CardView(card: card, player: player)
+//}
     

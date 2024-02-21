@@ -13,7 +13,7 @@ final class Pawn: Targettable, HasDeck, ObservableObject {
 
     @Published var hp: Int
     @Published var maxHp: Int
-    @Published var bolsteredBy: UInt
+    @Published var bolsteredBy: Int
     @Published var tile: Coords?
 
     @Published var deck: Deck

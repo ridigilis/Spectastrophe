@@ -10,9 +10,9 @@ import Foundation
 protocol Card: Identifiable {
     var id: UUID { get }
     var parentId: UUID? { get }
-    var rarity: Rarity { get }
-
-    var action: Action { get }
+    var rarity: Rarity? { get }
+    
+    var primaryAction: Action? { get }
 
     var title: String { get }
     var description: String { get }

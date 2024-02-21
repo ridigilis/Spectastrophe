@@ -13,12 +13,17 @@ struct GearSlotView: View {
     
     var body: some View {
         let gear: GearCard? = switch gearSlot {
-        case .head: equipment.head
-        case .torso: equipment.torso
-        case .feet: equipment.feet
-        case .hands: equipment.hands
-        case .mainhand: equipment.mainhand
-        case .offhand: equipment.offhand
+        case .wearable(.head): equipment.head
+        case .wearable(.torso): equipment.torso
+        case .wearable(.feet): equipment.feet
+        case .wearable(.hands): equipment.hands
+        case .armament(.mainhand): equipment.mainhand
+        case .armament(.offhand): equipment.offhand
+        }
+        
+        let label = switch gearSlot {
+        case let .wearable(slot): slot.rawValue
+        case let .armament(slot): slot.rawValue
         }
         
         if gear == nil {
@@ -28,7 +33,7 @@ struct GearSlotView: View {
                     .scaledToFit()
             }
             .overlay {
-                Text("\(gearSlot.rawValue) (empty)").font(.custom("Trattatello", size: 16))
+                Text("\(label) (empty)").font(.custom("Trattatello", size: 16))
             }
         } else {
             VStack {
@@ -73,5 +78,5 @@ struct GearSlotView: View {
 #Preview {
     let player = Pawn(.player)
     
-    return GearSlotView(gearSlot: .head, equipment: player.deck.equipment)
+    return GearSlotView(gearSlot: .wearable(.head), equipment: player.deck.equipment)
 }

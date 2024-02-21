@@ -68,81 +68,82 @@ final class Encounter: Identifiable, ObservableObject {
     private func onEnterPlayPhase() {
         //do something
         switch self.turn {
-            case .player:
-                self.player.turnToPlay.toggle()
-                //but dont exit until the player decides to exit
-                //or maybe automatically if no other moves can be made?
-            case .enemy:
-                self.enemies.filter { $0.hp > 0 }.forEach { enemy in
-                    if !self.player.tile!.isAdjacent(to: enemy.tile!) {
-                        let path = self.board.shortestPath(from: self.board.tiles[enemy.tile!]!, to: self.board.tiles[self.player.tile!]!)
-
-                        if path.isEmpty {
-                            return
-                        }
-
-                        for tile in path {
-                            if let card = enemy.deck.hand.first(where: { $0.title == "Move"}) {
-                                if self.player.tile! != tile.id &&
-                                    !self.player.tile!.isAdjacent(to: enemy.tile!) &&
-                                    self.enemies.allSatisfy({ otherEnemy in otherEnemy.tile! != tile.id }) {
-                                    enemy.deck.playFromHand(card)
-                                    enemy.tile = tile.id
-                                }
-                            } else {
-                                break
-                            }
-                        }
+        case .player:
+            self.player.turnToPlay.toggle()
+            //but dont exit until the player decides to exit
+            //or maybe automatically if no other moves can be made?
+        case .enemy:
+            self.enemies.filter { $0.hp > 0 }.forEach { enemy in
+                if !self.player.tile!.isAdjacent(to: enemy.tile!) {
+                    let path = self.board.shortestPath(from: self.board.tiles[enemy.tile!]!, to: self.board.tiles[self.player.tile!]!)
+                    
+                    if path.isEmpty {
+                        return
                     }
-
-                    if self.player.tile!.isAdjacent(to: enemy.tile!) {
-                        enemy.deck.hand.forEach { card in
-                            switch card.action {
-                            case .attack:
+                    
+                    for tile in path {
+                        if let card = enemy.deck.hand.first(where: { $0.title == "Move"}) {
+                            if self.player.tile! != tile.id &&
+                                !self.player.tile!.isAdjacent(to: enemy.tile!) &&
+                                self.enemies.allSatisfy({ otherEnemy in otherEnemy.tile! != tile.id }) {
                                 enemy.deck.playFromHand(card)
-                                card.action.perform(by: enemy, on: [self.player])
-                            case .bolster:
-                                enemy.deck.playFromHand(card)
-                                card.action.perform(by: enemy, on: [enemy])
-                            case .equip:
-                                let gear = card as? GearCard
-                                enemy.deck.playFromHand(card)
-                                switch gear!.slot {
-                                case .head:
-                                    if enemy.deck.equipment.head == nil {
-                                        enemy.deck.equipment.head = gear
-                                    }
-                                case .torso:
-                                    if enemy.deck.equipment.torso == nil {
-                                        enemy.deck.equipment.torso = gear
-                                    }
-                                case .feet:
-                                    if enemy.deck.equipment.feet == nil {
-                                        enemy.deck.equipment.feet = gear
-                                    }
-                                case .hands:
-                                    if enemy.deck.equipment.hands == nil {
-                                        enemy.deck.equipment.hands = gear
-                                    }
-                                case .mainhand:
-                                    if enemy.deck.equipment.mainhand == nil {
-                                        enemy.deck.equipment.mainhand = gear
-                                    }
-                                case .offhand:
-                                    if enemy.deck.equipment.offhand == nil {
-                                        enemy.deck.equipment.offhand = gear
-                                    }
-                                }
-                                
-                            default:
-                                return
+                                enemy.tile = tile.id
                             }
+                        } else {
+                            break
                         }
                     }
                 }
-
-                self.phase = self.phase.next()
-                self.onExitPlayPhase()
+                
+//                if self.player.tile!.isAdjacent(to: enemy.tile!) {
+                    enemy.deck.hand.forEach { card in
+                        print(card.title, card.primaryAction)
+                        switch card.primaryAction {
+                        case .attack:
+                            enemy.deck.playFromHand(card)
+                            card.primaryAction?.perform(by: enemy, on: [self.player])
+                        case .bolster:
+                            enemy.deck.playFromHand(card)
+                            card.primaryAction?.perform(by: enemy, on: [enemy])
+                        case .equip:
+                            let gearcard = card as? GearCard
+                            enemy.deck.playFromHand(card)
+                            switch gearcard!.gear.slot {
+                            case .wearable(.head):
+                                if enemy.deck.equipment.head == nil {
+                                    enemy.deck.equipment.head = gearcard
+                                }
+                            case .wearable(.torso):
+                                if enemy.deck.equipment.torso == nil {
+                                    enemy.deck.equipment.torso = gearcard
+                                }
+                            case .wearable(.feet):
+                                if enemy.deck.equipment.feet == nil {
+                                    enemy.deck.equipment.feet = gearcard
+                                }
+                            case .wearable(.hands):
+                                if enemy.deck.equipment.hands == nil {
+                                    enemy.deck.equipment.hands = gearcard
+                                }
+                            case .armament(.mainhand):
+                                print("enemy equipped a weapon", gearcard)
+                                if enemy.deck.equipment.mainhand == nil {
+                                    enemy.deck.equipment.mainhand = gearcard
+                                }
+                            case .armament(.offhand):
+                                if enemy.deck.equipment.offhand == nil {
+                                    enemy.deck.equipment.offhand = gearcard
+                                }
+                            }
+                        default:
+                            return
+                        }
+//                    }
+                }
+            }
+            
+            self.phase = self.phase.next()
+            self.onExitPlayPhase()
         }
     }
 
@@ -177,25 +178,12 @@ final class Encounter: Identifiable, ObservableObject {
         self.onEnterTurnStart()
     }
     
-    func determineDrawAmount(pawn: Pawn) -> UInt {
-        let total = [
-            pawn.deck.equipment.head,
-            pawn.deck.equipment.torso,
-            pawn.deck.equipment.hands,
-            pawn.deck.equipment.feet,
-        ]
-            .compactMap { gear in gear }
-            .map { gear in
-                let score = switch gear.weight {
-                case .none: UInt(0)
-                case .light: UInt(1)
-                case .medium: UInt(2)
-                case .heavy: UInt(3)
-                }
-                
-                return gear.slot == .torso ? score * 2 : score
-            }
-            .reduce(0, +)
+    func determineDrawAmount(pawn: Pawn) -> Int {
+        var total: Int = 0
+        total += pawn.deck.equipment.head?.gear.weight.rawValue ?? 0
+        total += (pawn.deck.equipment.torso?.gear.weight.rawValue ?? 0) * 2
+        total += pawn.deck.equipment.hands?.gear.weight.rawValue ?? 0
+        total += pawn.deck.equipment.feet?.gear.weight.rawValue ?? 0
         
         if total > 10 { return 2 }
         if total > 5 { return 3 }
@@ -221,7 +209,7 @@ final class Encounter: Identifiable, ObservableObject {
         }
     }
 
-    enum PhaseState: UInt {
+    enum PhaseState: Int {
         case turnStart, draw, play, turnEnd
 
         func next() -> PhaseState {

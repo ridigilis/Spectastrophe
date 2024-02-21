@@ -10,30 +10,60 @@ import Foundation
 struct GearCard: Card {
     let id: UUID
     let parentId: UUID? = nil
-    let action: Action
+    
     let title: String
     let description: String
-    
-    let rarity: Rarity
-    let weight: Weight
-    let slot: Deck.GearSlot
-    let cards: [any Card]
+    let rarity: Rarity?
+    let primaryAction: Action?
 
-    init(slot: Deck.GearSlot, rarity: Rarity = .common, weight: Weight = .none, title: String, description: String, cards: [ActionCard]) {
+    let gear: Gear
+    let cards: [ActionCard]
+
+    init(gear: Gear) {
         let id = UUID()
-
         self.id = id
-        self.slot = slot
-        self.action = .equip(to: self.slot)
+        self.gear = gear
+        self.title = gear.name
+        self.description = gear.description
+        self.rarity = gear.rarity
+        self.primaryAction = .equip(to: gear.slot)
         
-        self.rarity = rarity
-        self.weight = weight
-        
-        self.title = title
-        self.description = description
-
-        self.cards = cards.map { card in
-            ActionCard(parentId: id, rarity: card.rarity, title: card.title, description: card.description, action: card.action, range: card.range)
+        var cards: [ActionCard] = []
+        if gear.primaryAction != nil {
+            for _ in 1..<gear.primaryAction!.1 {
+                let title: String = switch gear.primaryAction!.0 {
+                case.attack: "Attack"
+                case.bolster: "Bolster"
+                case.movement: "Move"
+                default: ""
+                }
+                
+                let description: String = switch gear.primaryAction!.0 {
+                case .attack: "Attack"
+                case .bolster: "Bolster"
+                case .movement: "Move"
+                default: ""
+                }
+                
+                let range: [Action.Range]? = switch gear.primaryAction!.0 {
+                case let .attack(_,_,range): range
+                default: nil
+                }
+                
+                
+                cards += [
+                    ActionCard(
+                        parentId: id,
+                        
+                        title: title,
+                        description: description,
+                        
+                        primaryAction: gear.primaryAction!.0,
+                        range: range
+                    )
+                ]
+            }
         }
+        self.cards = cards
     }
 }
