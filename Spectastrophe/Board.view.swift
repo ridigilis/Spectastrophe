@@ -32,6 +32,36 @@ struct BoardView: View {
                                             .matchedGeometryEffect(id: enemy.id, in: animation)
                                     }
                                 }
+                                
+                                ForEach(encounter.cards) { card in
+                                    let image: String = switch card.card.rarity {
+                                    case .mythical: "cardback-mythical"
+                                    case .legendary: "cardback-legendary"
+                                    case .veryrare: "cardback-veryrare"
+                                    case .rare: "cardback-rare"
+                                    case .uncommon: "cardback-uncommon"
+                                    case .common: "cardback-generic"
+                                    default: "cardback-common"
+                                    }
+                                    if card.coords == tile.id {
+                                        Image(image)
+                                            .resizable()
+                                            .scaledToFit()
+                                            .padding(24)
+                                            .offset(y: -24)
+                                            .shadow(radius: 12, y: 24)
+                                            .onTapGesture {
+                                                if player.tile == card.coords && player.op >= 1 {
+                                                    withAnimation {
+                                                        player.deck.hand += [card.card]
+                                                        player.op -= 1
+                                                        encounter.cards = encounter.cards.filter { $0.id != card.id }
+                                                    }
+                                                }
+                                                    
+                                            }
+                                    }
+                                }
                             }
                     }
                 }

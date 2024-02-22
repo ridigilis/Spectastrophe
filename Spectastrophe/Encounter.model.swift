@@ -11,13 +11,22 @@ final class Encounter: Identifiable, ObservableObject {
     let id: Coords
     @Published var board: Board
     @Published var enemies: [Pawn]
+    @Published var cards: [LootableCard]
 
     @Published var turn: TurnState
     @Published var phase: PhaseState
 
     private let player: Pawn
 
-    init(_ id: Coords, board: Board = Board(), enemies: [Pawn] = [], turn: TurnState = .player, phase: PhaseState = .turnStart, player: Pawn) {
+    init(
+        _ id: Coords,
+        board: Board = Board(),
+        enemies: [Pawn] = [],
+        turn: TurnState = .player,
+        phase: PhaseState = .turnStart,
+        player: Pawn,
+        cards: [LootableCard] = []
+    ) {
         self.id = id
         self.board = board
         self.enemies = enemies
@@ -25,6 +34,7 @@ final class Encounter: Identifiable, ObservableObject {
         self.phase = phase
 
         self.player = player
+        self.cards = cards
 
         self.onEnterTurnStart()
     }
@@ -252,4 +262,10 @@ final class Encounter: Identifiable, ObservableObject {
             }
         }
     }
+}
+
+struct LootableCard: Identifiable {
+    let id = UUID()
+    let card: GearCard
+    let coords: Coords
 }

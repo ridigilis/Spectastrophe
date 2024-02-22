@@ -55,9 +55,35 @@ struct SpectastropheApp: App {
                         GearCard(gear: Gear(slot: .wearable(.feet))),
                         GearCard(gear: Gear(slot: .armament(.mainhand))),
                         ActionCard(title: "Move", description: "Move to an adjacent space", primaryAction: .movement(for: 1)),
-                        ActionCard(title: "Move", description: "Move to an adjacent space", primaryAction: .movement(for: 1)),
+                        ActionCard(title: "Move", description: "Mo ve to an adjacent space", primaryAction: .movement(for: 1)),
                     ])),
-                ], player: game.player), player: game.player)
+                ], player: game.player, cards: [
+                    LootableCard(card: GearCard(gear: Gear()), coords: Coords(Int.random(in: -20...20), Int.random(in: -20...20))),
+                    LootableCard(card: GearCard(gear: Gear()), coords: Coords(Int.random(in: -20...20), Int.random(in: -20...20))),
+                    LootableCard(card: GearCard(gear: Gear()), coords: Coords(Int.random(in: -20...20), Int.random(in: -20...20))),
+                    LootableCard(card: GearCard(gear: Gear()), coords: Coords(Int.random(in: -20...20), Int.random(in: -20...20))),
+                    LootableCard(card: GearCard(gear: Gear()), coords: Coords(Int.random(in: -20...20), Int.random(in: -20...20))),
+                    LootableCard(card: GearCard(gear: Gear()), coords: Coords(Int.random(in: -20...20), Int.random(in: -20...20))),
+                    LootableCard(card: GearCard(gear: Gear()), coords: Coords(Int.random(in: -20...20), Int.random(in: -20...20))),
+                    LootableCard(card: GearCard(gear: Gear()), coords: Coords(Int.random(in: -20...20), Int.random(in: -20...20))),
+                    LootableCard(card: GearCard(gear: Gear()), coords: Coords(Int.random(in: -20...20), Int.random(in: -20...20))),
+                    LootableCard(card: GearCard(gear: Gear()), coords: Coords(Int.random(in: -20...20), Int.random(in: -20...20))),
+                    LootableCard(card: GearCard(gear: Gear()), coords: Coords(Int.random(in: -20...20), Int.random(in: -20...20))),
+                    LootableCard(card: GearCard(gear: Gear()), coords: Coords(Int.random(in: -20...20), Int.random(in: -20...20))),
+                    LootableCard(card: GearCard(gear: Gear()), coords: Coords(Int.random(in: -20...20), Int.random(in: -20...20))),
+                    LootableCard(card: GearCard(gear: Gear()), coords: Coords(Int.random(in: -20...20), Int.random(in: -20...20))),
+                    LootableCard(card: GearCard(gear: Gear()), coords: Coords(Int.random(in: -20...20), Int.random(in: -20...20))),
+                    LootableCard(card: GearCard(gear: Gear()), coords: Coords(Int.random(in: -20...20), Int.random(in: -20...20))),
+                    LootableCard(card: GearCard(gear: Gear()), coords: Coords(Int.random(in: -20...20), Int.random(in: -20...20))),
+                    LootableCard(card: GearCard(gear: Gear()), coords: Coords(Int.random(in: -20...20), Int.random(in: -20...20))),
+                    LootableCard(card: GearCard(gear: Gear()), coords: Coords(Int.random(in: -20...20), Int.random(in: -20...20))),
+                    LootableCard(card: GearCard(gear: Gear()), coords: Coords(Int.random(in: -20...20), Int.random(in: -20...20))),
+                    LootableCard(card: GearCard(gear: Gear()), coords: Coords(Int.random(in: -20...20), Int.random(in: -20...20))),
+                    LootableCard(card: GearCard(gear: Gear()), coords: Coords(Int.random(in: -20...20), Int.random(in: -20...20))),
+                    LootableCard(card: GearCard(gear: Gear()), coords: Coords(Int.random(in: -20...20), Int.random(in: -20...20))),
+                    LootableCard(card: GearCard(gear: Gear()), coords: Coords(Int.random(in: -20...20), Int.random(in: -20...20))),
+                    LootableCard(card: GearCard(gear: Gear()), coords: Coords(Int.random(in: -20...20), Int.random(in: -20...20))),
+                ]), player: game.player)
                 .background {
                     Image("tabletop").resizable().scaledToFill().ignoresSafeArea()
                 }
