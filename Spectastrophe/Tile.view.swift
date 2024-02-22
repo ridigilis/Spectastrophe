@@ -35,6 +35,7 @@ struct TileView: View {
                             .onTapGesture {
                                 withAnimation {
                                     player.tile = tile.id
+                                    player.bolsteredBy = 0
                                     player.isMovingWith = nil
                                 }
                             }
@@ -48,6 +49,7 @@ struct TileView: View {
                                         if let action = player.isAttackingWith?.primaryAction {
                                             withAnimation {
                                                 action.perform(by: player, on: [enemy])
+                                                player.bolsteredBy = 0
                                                 player.isAttackingWith = nil
                                             }
                                         }

@@ -52,6 +52,7 @@ enum Action: Actionable {
 
             case let .equip(to):
                 if card == nil { return }
+                source.bolsteredBy = 0
                 switch to {
                 case .wearable(.head):
                     if source.deck.equipment.head != nil { source.deck.unequipGearCard(.wearable(.head)) }
