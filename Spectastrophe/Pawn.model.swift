@@ -14,6 +14,9 @@ final class Pawn: Targettable, HasDeck, ObservableObject {
     @Published var hp: Int
     @Published var maxHp: Int
     @Published var bolsteredBy: Int
+    @Published var op: Int
+    @Published var maxOp: Int
+
     @Published var tile: Coords?
 
     @Published var deck: Deck
@@ -28,6 +31,8 @@ final class Pawn: Targettable, HasDeck, ObservableObject {
         self.hp = maxHp
         self.maxHp = maxHp
         self.bolsteredBy = 0
+        self.op = 0
+        self.maxOp = 6
         self.tile = tile
         self.deck = deck
         self.turnToPlay = false

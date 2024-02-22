@@ -32,9 +32,11 @@ final class Encounter: Identifiable, ObservableObject {
     private func onEnterTurnStart() {
         //do something
         
-        if self.turn == .player {
+        switch self.turn {
+        case .player:
             self.player.bolsteredBy = 0
-        } else {
+        
+        case .enemy:
             self.enemies.filter { $0.hp > 0 }.forEach {
                 $0.bolsteredBy = 0
             }
@@ -161,15 +163,25 @@ final class Encounter: Identifiable, ObservableObject {
 
     func onExitPlayPhase() {
         //do something
-        if self.turn == .player {
+        switch self.turn {
+        case .player:
+            if self.player.op > 0 { self.player.op -= 1 }
+            self.player.op += Int(Double(self.player.deck.hand.count / 2).rounded(.down))
+            if self.player.op > self.player.maxOp { self.player.op = self.player.maxOp }
+            self.player.deck.clearPlayArea()
+            self.player.deck.discardHand()
             self.player.turnToPlay.toggle()
+            
+        case .enemy :
+            self.enemies.forEach { enemy in
+                if enemy.op > 0 { enemy.op -= 1 }
+                enemy.op += Int(Double(enemy.deck.hand.count / 2).rounded(.down))
+                if enemy.op > enemy.maxOp { enemy.op = enemy.maxOp }
+                enemy.deck.clearPlayArea()
+                enemy.deck.discardHand()
+            }
         }
-        self.player.deck.clearPlayArea()
-        self.player.deck.discardHand()
-        self.enemies.forEach { enemy in
-            enemy.deck.clearPlayArea()
-            enemy.deck.discardHand()
-        }
+        
         self.phase = self.phase.next()
         self.onEnterTurnEnd()
     }

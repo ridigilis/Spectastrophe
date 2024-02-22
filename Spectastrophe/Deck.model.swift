@@ -140,15 +140,6 @@ final class Deck: ObservableObject {
         
         self.discardPile = self.discardPile + [card ?? nil].compactMap { $0 }
     }
-
-//    enum GearSlot: String {
-//        case head
-//        case torso
-//        case feet
-//        case hands
-//        case mainhand
-//        case offhand
-//    }
     
     typealias GearSlot = Slot
 

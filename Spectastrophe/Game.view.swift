@@ -48,6 +48,17 @@ struct GameView: View {
                     .padding(.top)
                 Spacer()
             }
+            HStack {
+                ForEach(1...player.maxOp, id: \.self) { pos in
+                    if pos > player.op  {
+                        Image("opportunity-empty")
+                    } else {
+                        Image("opportunity-full")
+                    }
+                }
+            }
+            .padding(geo.size.width * 0.2)
+            .padding(.leading, geo.size.width * 0.05)
         }
     }
 
