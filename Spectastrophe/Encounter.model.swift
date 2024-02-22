@@ -34,6 +34,10 @@ final class Encounter: Identifiable, ObservableObject {
         
         if self.turn == .player {
             self.player.bolsteredBy = 0
+        } else {
+            self.enemies.filter { $0.hp > 0 }.forEach {
+                $0.bolsteredBy = 0
+            }
         }
         self.onExitTurnStart()
     }
@@ -74,6 +78,16 @@ final class Encounter: Identifiable, ObservableObject {
             //or maybe automatically if no other moves can be made?
         case .enemy:
             self.enemies.filter { $0.hp > 0 }.forEach { enemy in
+                enemy.deck.hand.forEach { card in
+                    switch card.primaryAction {
+                    case let .attack(_,_,range):
+                        if board.tiles[player.tile!]!.isInRangeOfAction(from: enemy.tile!, range: range) {
+                            enemy.deck.playFromHand(card)
+                            card.primaryAction?.perform(by: enemy, on: [player])
+                        }
+                    default: return
+                    }
+                }
                 if !self.player.tile!.isAdjacent(to: enemy.tile!) {
                     let path = self.board.shortestPath(from: self.board.tiles[enemy.tile!]!, to: self.board.tiles[self.player.tile!]!)
                     
@@ -95,13 +109,14 @@ final class Encounter: Identifiable, ObservableObject {
                     }
                 }
                 
-//                if self.player.tile!.isAdjacent(to: enemy.tile!) {
+
                     enemy.deck.hand.forEach { card in
-                        print(card.title, card.primaryAction)
                         switch card.primaryAction {
-                        case .attack:
-                            enemy.deck.playFromHand(card)
-                            card.primaryAction?.perform(by: enemy, on: [self.player])
+                        case let .attack(_,_,range):
+                            if board.tiles[player.tile!]!.isInRangeOfAction(from: enemy.tile!, range: range) {
+                                enemy.deck.playFromHand(card)
+                                card.primaryAction?.perform(by: enemy, on: [player])
+                            }
                         case .bolster:
                             enemy.deck.playFromHand(card)
                             card.primaryAction?.perform(by: enemy, on: [enemy])

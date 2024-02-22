@@ -15,16 +15,16 @@ struct Board {
         var tiles: [Coords: Tile] = [:]
         var byRow: [Int: [Tile]] = [:]
         
-        for n in 0...100 {
+        for n in 0...60 {
             let coordsToAppend: [Coords] = Coords(0,0).getBoundaryCoords(at: UInt(n))
             coordsToAppend.forEach { coords in
                 tiles[coords] = Tile(id: coords, isTraversable: Die.d100.roll()[0] >= 10)
             }
         }
         
-        for row in -100...100 {
-            let colCount = row.isMultiple(of: 2) ? 200 : 199
-            let colStart = Double((-100 - row) / 2).rounded(.down)
+        for row in -66...66 {
+            let colCount = row.isMultiple(of: 2) ? 132 : 131
+            let colStart = row.isMultiple(of: 2) ? -66 - Double(row / 2) : -66 - Double((row - 1) / 2)
             for col in Int(colStart)...(colCount + Int(colStart)) {
                 let coords = Coords(col, row)
 

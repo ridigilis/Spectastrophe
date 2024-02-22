@@ -30,7 +30,7 @@ struct SpectastropheApp: App {
                 MainMenuView(isPlaying: $isPlaying)
             } else {
                 GameView(encounter: Encounter(game.location, enemies: [
-                    Pawn(.enemy, maxHp: 24, tile: Coords(-3, 6), deck: Deck(drawPile: [
+                    Pawn(.enemy, maxHp: 24, tile: Coords(Int.random(in: -10...10), Int.random(in: -10...10)), deck: Deck(drawPile: [
                         GearCard(gear: Gear(slot: .wearable(.head))),
                         GearCard(gear: Gear(slot: .wearable(.torso))),
                         GearCard(gear: Gear(slot: .wearable(.hands))),
@@ -39,7 +39,7 @@ struct SpectastropheApp: App {
                         ActionCard(title: "Move", description: "Move to an adjacent space", primaryAction: .movement(for: 1)),
                         ActionCard(title: "Move", description: "Move to an adjacent space", primaryAction: .movement(for: 1)),
                     ])),
-                    Pawn(.enemy, maxHp: 24, tile: Coords(2, 4), deck: Deck(drawPile: [
+                    Pawn(.enemy, maxHp: 24, tile: Coords(Int.random(in: -10...10), Int.random(in: -10...10)), deck: Deck(drawPile: [
                         GearCard(gear: Gear(slot: .wearable(.head))),
                         GearCard(gear: Gear(slot: .wearable(.torso))),
                         GearCard(gear: Gear(slot: .wearable(.hands))),
@@ -48,7 +48,7 @@ struct SpectastropheApp: App {
                         ActionCard(title: "Move", description: "Move to an adjacent space", primaryAction: .movement(for: 1)),
                         ActionCard(title: "Move", description: "Move to an adjacent space", primaryAction: .movement(for: 1)),
                     ])),
-                    Pawn(.enemy, maxHp: 24, tile: Coords(0, -4), deck: Deck(drawPile: [
+                    Pawn(.enemy, maxHp: 24, tile: Coords(Int.random(in: -10...10), Int.random(in: -10...10)), deck: Deck(drawPile: [
                         GearCard(gear: Gear(slot: .wearable(.head))),
                         GearCard(gear: Gear(slot: .wearable(.torso))),
                         GearCard(gear: Gear(slot: .wearable(.hands))),
