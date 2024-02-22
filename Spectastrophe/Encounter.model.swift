@@ -109,7 +109,6 @@ final class Encounter: Identifiable, ObservableObject {
                     }
                 }
                 
-
                     enemy.deck.hand.forEach { card in
                         switch card.primaryAction {
                         case let .attack(_,_,range):
@@ -141,7 +140,6 @@ final class Encounter: Identifiable, ObservableObject {
                                     enemy.deck.equipment.hands = gearcard
                                 }
                             case .armament(.mainhand):
-                                print("enemy equipped a weapon", gearcard)
                                 if enemy.deck.equipment.mainhand == nil {
                                     enemy.deck.equipment.mainhand = gearcard
                                 }
@@ -153,7 +151,6 @@ final class Encounter: Identifiable, ObservableObject {
                         default:
                             return
                         }
-//                    }
                 }
             }
             

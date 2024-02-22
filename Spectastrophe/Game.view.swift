@@ -48,11 +48,6 @@ struct GameView: View {
                     .padding(.top)
                 Spacer()
             }
-//            .padding()
-//            .padding()
-//            .padding(.top)
-//            .padding(.top)
-//            .padding(.horizontal)
         }
     }
 
@@ -68,32 +63,19 @@ struct GameView: View {
                                 HitPointsView
                                 
                                 Grid(horizontalSpacing: -12,verticalSpacing: -12) {
-                                    
-                                
-                                GearSlotView(gearSlot: .wearable(.head), equipment: player.deck.equipment)
-                                    
-                                
-                                    
-                                GearSlotView(gearSlot: .wearable(.torso), equipment: player.deck.equipment)
-                                    
-                                    
+                                    GearSlotView(gearSlot: .wearable(.head), equipment: player.deck.equipment)
+                                    GearSlotView(gearSlot: .wearable(.torso), equipment: player.deck.equipment)
                                     HStack(spacing: -12) {
-                                    GearSlotView(gearSlot: .armament(.mainhand), equipment: player.deck.equipment)
-                                    GearSlotView(gearSlot: .armament(.offhand), equipment: player.deck.equipment)
+                                        GearSlotView(gearSlot: .armament(.mainhand), equipment: player.deck.equipment)
+                                        GearSlotView(gearSlot: .armament(.offhand), equipment: player.deck.equipment)
                                     }.padding(4)
-                                    
-                                    
-                                GearSlotView(gearSlot: .wearable(.hands), equipment: player.deck.equipment)
-                     
-                                GearSlotView(gearSlot: .wearable(.feet), equipment: player.deck.equipment)
-                                    
+                                    GearSlotView(gearSlot: .wearable(.hands), equipment: player.deck.equipment)
+                                    GearSlotView(gearSlot: .wearable(.feet), equipment: player.deck.equipment)
                                 }
                                 .offset(y: -geometry.size.height * 0.2)
                                 .background {
                                     Image("pawn-player").resizable().scaledToFit().opacity(0.2).offset(y: -geometry.size.height * 0.2)
                                 }
-                                
-                                
                             }
                         }
                         .frame(alignment: .topLeading)
@@ -153,8 +135,6 @@ struct GameView: View {
                 }
                 .frame(width: geometry.size.width * 0.3, height:
                         geometry.size.height * 0.9, alignment: .top)
-                
-//                Spacer()
                 
                 VStack {
                     Image("map")
@@ -218,7 +198,8 @@ struct GameView: View {
                             .font(.custom("Trattatello", size: 24))
                             .foregroundStyle(Color.black)
                             .background(Image("label-mid-common"))
-                        }.background(Color.white.opacity(0.75).blur(radius: 50))                    }
+                        }.background(Color.white.opacity(0.75).blur(radius: 50))
+                    }
                     .ignoresSafeArea()
             }
         }

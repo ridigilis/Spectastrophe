@@ -19,8 +19,6 @@ enum Action: Actionable {
     func perform(by source: Pawn, on targets: [Pawn]? = [], using card: GearCard? = nil) {
         switch self {
             case let .attack(_, magnitudeComponents, _):
-            
-            print("magnitudeComponents", magnitudeComponents)
                 
                 let amt: Int = magnitudeComponents.reduce(0) {
                     switch $1 {
@@ -28,26 +26,17 @@ enum Action: Actionable {
                     case let .roll(dice): $0 + dice.map { $0.roll().reduce(0, +) }.reduce(0, +)
                     }
                 }
-            
-                print("amt", amt)
 
                 targets?.forEach {
                     if $0.bolsteredBy > 0 {
                         if amt >= $0.bolsteredBy {
-                            print("hp before", $0.hp)
-                            print("bolsteredBy", $0.bolsteredBy)
                             $0.hp -= (amt - Int($0.bolsteredBy))
                             $0.bolsteredBy = 0
-                            print("hp after", $0.hp)
                         } else {
-                            print("bolsteredBy before", $0.bolsteredBy)
                             $0.bolsteredBy -= amt
-                            print("bolsteredBy after", $0.bolsteredBy)
                         }
                     } else {
-                        print("hp before", $0.hp)
                         $0.hp -= amt
-                        print("hp after", $0.hp)
                     }
                 }
             

@@ -68,18 +68,4 @@ struct TileView: View {
     let enemies = [Pawn(.enemy)]
 
     return TileView(tile: tile, player: player, enemies: enemies)
-    
-    
-//    struct SelectableTile: View {
-//        var body: some View {
-//            Image("grassytile-can-select").resizable().scaledToFit()
-//        }
-//    }
-//    
-//    return SelectableTile()
-//        .frame(width: 600, height: 600)
-//        .contentShape(TileTappableArea())
-//        .overlay {
-//            TileTappableArea()
-//    }
 }

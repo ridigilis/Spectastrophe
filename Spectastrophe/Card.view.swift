@@ -65,17 +65,6 @@ struct CardView: View {
                         .font(.custom("Trattatello", size: geometry.size.width * 0.07))
                         .frame(width: geometry.size.width * 0.8, height: geometry.size.height)
                         .padding(.leading, geometry.size.width * 0.1)
-//                if let gearcard = card as! GearCard {
-//                    ForEach(gearcard.gear.perks) { perk in
-//                        Text(perk)
-//                            .font(.custom("Trattatello", size: geometry.size.width * 0.07))
-//                            .frame(width: geometry.size.width * 0.8, height: geometry.size.height)
-//                            .padding(.leading, geometry.size.width * 0.1)
-//                            .task{print(perk.name)}
-//                    }
-//
-//                }
-
             }
             .frame(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
         }
@@ -128,11 +117,4 @@ struct CardView: View {
         })
     }
 }
-
-//#Preview {
-//    let card = ActionCard(action: .attack(.physical(.bludgeon), for: .constant(1), from: [.melee]))
-//    let player = Pawn(.player)
-//    
-//    return CardView(card: card, player: player)
-//}
     
