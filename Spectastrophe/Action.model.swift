@@ -15,6 +15,7 @@ enum Action: Actionable {
     case debuff(Debuff)
     case movement(for: Int)
     case equip(to: Deck.GearSlot)
+    case draw(for: Int)
 
     func perform(by source: Pawn, on targets: [Pawn]? = [], using card: GearCard? = nil) {
         switch self {
@@ -78,6 +79,9 @@ enum Action: Actionable {
                     if source.deck.equipment.offhand != nil { source.deck.unequipGearCard(.armament(.mainhand)) }
                     source.deck.equipGearCard(card!)
                 }
+            
+            case let .draw(amt): source.deck.draw(amt)
+            
             default:
                 return
         }

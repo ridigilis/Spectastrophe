@@ -17,7 +17,7 @@ final class Pawn: Targettable, HasDeck, ObservableObject {
     @Published var op: Int
     @Published var maxOp: Int
 
-    @Published var tile: Coords?
+    @Published var coords: Coords?
 
     @Published var deck: Deck
 
@@ -33,13 +33,56 @@ final class Pawn: Targettable, HasDeck, ObservableObject {
         self.bolsteredBy = 0
         self.op = 0
         self.maxOp = 6
-        self.tile = tile
+        self.coords = tile
         self.deck = deck
         self.turnToPlay = false
         self.isMovingWith = nil
         self.isAttackingWith = nil
     }
-
+    
+    init(_ type: PawnType) {
+        self.type = type
+        if type == .player {
+            self.maxHp = 60
+            self.coords = Coords(0,0)
+            self.deck = Deck(drawPile: [
+                GearCard(gear: Gear(slot: .wearable(.head))),
+                GearCard(gear: Gear(slot: .wearable(.torso))),
+                GearCard(gear: Gear(slot: .wearable(.hands))),
+                GearCard(gear: Gear(slot: .wearable(.feet))),
+                GearCard(gear: Gear(slot: .armament(.mainhand)))
+            ])
+            
+            self.id = UUID()
+            self.hp = 60
+            self.bolsteredBy = 0
+            self.op = 0
+            self.maxOp = 6
+            self.turnToPlay = false
+            self.isMovingWith = nil
+            self.isAttackingWith = nil
+        } else {
+            self.maxHp = 24
+            self.coords = Coords(Int.random(in: -10...10), Int.random(in: -10...10))
+            self.deck = Deck(drawPile: [
+                GearCard(gear: Gear(slot: .wearable(.head))),
+                GearCard(gear: Gear(slot: .wearable(.torso))),
+                GearCard(gear: Gear(slot: .wearable(.hands))),
+                GearCard(gear: Gear(slot: .wearable(.feet))),
+                GearCard(gear: Gear(slot: .armament(.mainhand)))
+            ])
+            
+            self.id = UUID()
+            self.hp = 24
+            self.bolsteredBy = 0
+            self.op = 0
+            self.maxOp = 6
+            self.turnToPlay = false
+            self.isMovingWith = nil
+            self.isAttackingWith = nil
+        }
+    }
+    
     enum PawnType {
         case player, enemy
     }

@@ -17,4 +17,22 @@ final class GameState: ObservableObject {
         self.world = world
         self.location = location
     }
+    
+    init() {
+        let location = Coords(0,0)
+        let player = Pawn(.player)
+        
+        self.player = player
+        self.world = [
+            location: Encounter(player: player)
+        ]
+        self.location = location
+    }
+    
+    func newGame() {
+        let location = Coords(0,0)
+        self.location = location
+        self.player = Pawn(.player)
+        self.world = [location: Encounter(player: self.player)]
+    }
 }

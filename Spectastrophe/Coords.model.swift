@@ -7,7 +7,9 @@
 
 import Foundation
 
-struct Coords: Hashable, Equatable {
+struct Coords: Hashable, Equatable, AdditiveArithmetic {
+    static var zero: Coords = Coords(0,0)
+    
     let x: Int
     let y: Int
     
@@ -90,6 +92,23 @@ struct Coords: Hashable, Equatable {
         }
         
         return coords
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(x)
+        hasher.combine(y)
+    }
+    
+    static func ==(lhs: Self, rhs: Self) -> Bool {
+        return lhs.x == rhs.x && lhs.y == rhs.y
+    }
+    
+    static func +(lhs: Coords, rhs: Coords) -> Self {
+        return Coords(lhs.x + rhs.x, lhs.y + rhs.y)
+    }
+    
+    static func -(lhs: Coords, rhs: Coords) -> Coords {
+        return Coords(lhs.x - rhs.x, lhs.y - rhs.y)
     }
     
     enum Direction {

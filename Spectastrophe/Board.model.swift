@@ -12,13 +12,15 @@ struct Board {
     let byRow: [[Tile]]
 
     init() {
-        var tiles: [Coords: Tile] = [:]
-        var byRow: [Int: [Tile]] = [:]
+        var initTiles: [Coords: Tile] = [:]
+        var initByRow: [Int: [Tile]] = [:]
         
         for n in 0...60 {
             let coordsToAppend: [Coords] = Coords(0,0).getBoundaryCoords(at: UInt(n))
             coordsToAppend.forEach { coords in
-                tiles[coords] = Tile(id: coords, isTraversable: Die.d100.roll()[0] >= 10)
+                if initTiles[coords] == nil {
+                    initTiles[coords] = Tile(coords: coords, isTraversable: Die.d100.roll()[0] >= 10)
+                }
             }
         }
         
@@ -28,24 +30,58 @@ struct Board {
             for col in Int(colStart)...(colCount + Int(colStart)) {
                 let coords = Coords(col, row)
 
-                if tiles[coords] == nil {
-                    tiles[coords] = Tile(id: coords, isTraversable: false)
+                if initTiles[coords] == nil {
+                    initTiles[coords] = Tile(coords: coords, isTraversable: false)
                 }
-                if byRow[row] == nil {
-                    byRow[row] = []
+                if initByRow[row] == nil {
+                    initByRow[row] = []
                 }
-                var byRowAtRow = byRow[row]
-                byRowAtRow!.append(tiles[coords]!)
-                byRow[row] = byRowAtRow
+                var byRowAtRow = initByRow[row]
+                byRowAtRow!.append(initTiles[coords]!)
+                initByRow[row] = byRowAtRow
             }
         }
-        self.tiles = tiles
-        self.byRow = byRow
+        self.tiles = initTiles
+        self.byRow = initByRow
             .sorted { a, b in a.key < b.key }
             .map { row in row.value }
             .reversed()
     }
-
+    
+    func getStaticRows(center coords: Coords = Coords(0,0)) -> [[Coords]] {
+        var boundaryCoords: [Coords] = []
+        for n in 0...16 {
+            boundaryCoords += coords.getBoundaryCoords(at: UInt(n))
+        }
+        
+        boundaryCoords = Array(Set(boundaryCoords))
+        
+        let max = boundaryCoords.max { a, b in a.y < b.y }
+        var rows: [[Coords]] = []
+        for n in 0...32 {
+            let row: [Coords] = boundaryCoords.filter { c in c.y == max!.y - n}.sorted { a, b in a.x < b.x }
+            rows.append(row)
+        }
+        return rows
+    }
+    
+    func getRows(center coords: Coords) -> [[Tile]]{
+        var boundaryCoords: [Coords] = []
+        for n in 0...10 {
+            boundaryCoords += coords.getBoundaryCoords(at: UInt(n))
+        }
+        
+        boundaryCoords = Array(Set(boundaryCoords))
+        
+        let max = boundaryCoords.max { a, b in a.y < b.y }
+        var rows: [[Tile]] = []
+        for n in 0...20 {
+            let row: [Tile] = boundaryCoords.filter { c in c.y == max!.y - n}.sorted { a, b in a.x < b.x }.map { c in self.tiles[c]! }
+            rows.append(row)
+        }
+        return rows
+    }
+    
     // TODO: this seems to be working, but might need some love later
     func shortestPath(from: Tile, to: Tile, _ closed: [Coords:Bool] = [:], _ path: [Tile] = []) -> [Tile]{
         let currentTile = path.last ?? from
@@ -54,19 +90,19 @@ struct Board {
             return path
         }
 
-        if currentTile.id.isAdjacent(to: to.id) {
+        if currentTile.coords.isAdjacent(to: to.coords) {
             return path + [to]
         }
 
         //
 
-        let adjacentCoords = currentTile.id.allAdjacentCoords
+        let adjacentCoords = currentTile.coords.allAdjacentCoords
 
         let scored: [(Coords, UInt)] = adjacentCoords
             .filter { self.tiles[$0]?.isTraversable ?? false }
             .filter { closed[$0] == true ? false : true }
             .compactMap { coords in
-                return (coords, UInt(abs(to.id.x - coords.x) + abs(to.id.y - coords.y)))
+                return (coords, UInt(abs(to.coords.x - coords.x) + abs(to.coords.y - coords.y)))
             }
 
         if let best = scored.min(by: { a, b in a.1 < b.1 }) {

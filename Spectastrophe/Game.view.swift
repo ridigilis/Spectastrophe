@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct GameView: View {
+    @Binding var isPlaying: Bool
+    @ObservedObject var game: GameState
     @ObservedObject var encounter: Encounter
     @ObservedObject var player: Pawn
 
@@ -63,6 +65,8 @@ struct GameView: View {
     }
 
     var body: some View {
+        var deck: [any Card] = player.deck.hand + player.deck.drawPile + player.deck.discardPile + player.deck.playArea
+
         GeometryReader { geometry in
             HStack(alignment: .top) {
                 VStack {
@@ -153,28 +157,31 @@ struct GameView: View {
                         .scaledToFit()
                         .overlay {
                             VStack {
-                                ScrollView([.horizontal, .vertical], showsIndicators: false) {
-                                    BoardView(encounter: encounter, player: player)
-                                        .scaleEffect(currentZoom + totalZoom)
-                                        .gesture(
-                                            MagnifyGesture()
-                                                .onChanged { value in
-                                                    currentZoom = value.magnification - 1
-                                                }
-                                                .onEnded { value in
-                                                    totalZoom += currentZoom
-                                                    currentZoom = 0
-                                                }
-                                        )
-                                        .accessibilityZoomAction { action in
-                                            if action.direction == .zoomIn {
-                                                totalZoom += 1
-                                            } else {
-                                                totalZoom -= 1
-                                            }
+                                ScrollViewReader { proxy in
+                                    ScrollView([.horizontal, .vertical], showsIndicators: false) {
+                                        BoardView(encounter: encounter, player: player)
+
+                                            .border(.red)
+                                    }
+                                    .border(.blue)
+                                    .defaultScrollAnchor(.center)
+//                                    .task {
+//                                        withAnimation(.easeInOut) {
+//                                            proxy.scrollTo("player", anchor: .center)
+//                                            
+//                                        }
+//                                    }
+                                    .onChange(of: player.coords) {
+                                        withAnimation(.easeInOut) {
+                                            proxy.scrollTo("player", anchor: .center)
                                         }
+                                    }
+                                    .onTapGesture(count: 2) {
+                                        withAnimation(.easeInOut) {
+                                            proxy.scrollTo("player", anchor: .center)
+                                        }
+                                    }
                                 }
-                                .defaultScrollAnchor(.center)
                             }
                             .padding(.bottom, 80)
                             .padding(.horizontal, 80)
@@ -203,8 +210,11 @@ struct GameView: View {
                                 .font(.custom("Trattatello", size: 96))
                                 .bold()
                                 .background(Color.white.opacity(0.75).blur(radius: 50))
-                            Button("New Game") {
-                                // TODO: start a new game
+                            Button("Main Menu") {
+                                withAnimation {
+                                    isPlaying.toggle()
+                                    game.newGame()
+                                }
                             }
                             .font(.custom("Trattatello", size: 24))
                             .foregroundStyle(Color.black)
@@ -212,17 +222,30 @@ struct GameView: View {
                         }.background(Color.white.opacity(0.75).blur(radius: 50))
                     }
                     .ignoresSafeArea()
+            } else if encounter.enemies.allSatisfy({ $0.hp <= 0 }) {
+                Color(.black)
+                    .opacity(0.25)
+                    .overlay {
+                        VStack {
+                            Text("~ I guess you win? ~")
+                                .font(.custom("Trattatello", size: 96))
+                                .bold()
+                                .background(Color.white.opacity(0.75).blur(radius: 50))
+                            Button("Main Menu") {
+                                withAnimation {
+                                    isPlaying.toggle()
+                                    game.newGame()
+                                }
+                            }
+                            .font(.custom("Trattatello", size: 24))
+                            .foregroundStyle(Color.black)
+                            .background(Image("label-mid-common"))
+                        }.background(Color.white.opacity(0.75).blur(radius: 50))
+                    }
+                    .ignoresSafeArea()
+            } else {
+                Color(.clear)
             }
         }
     }
-}
-
-#Preview {
-    let player = Pawn(.player)
-    let world = [Coords: Encounter]()
-    let location = Coords(0,0)
-    let game: GameState = GameState(player: player, world: world, location: location)
-    
-    return GameView(encounter: game.world[game.location] ?? Encounter(Coords(0,0), player: player), player: game.player)
-
 }

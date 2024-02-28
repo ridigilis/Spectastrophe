@@ -8,11 +8,12 @@
 import Foundation
 
 struct Tile: Identifiable, Hashable, Equatable {
-    let id: Coords
+    let id = UUID()
+    let coords: Coords
     let isTraversable: Bool
     
     static func ==(lhs: Tile, rhs: Tile) -> Bool {
-        lhs.id == rhs.id
+        lhs.coords == rhs.coords
     }
     
     func isInRangeOfAction(from coords: Coords, range: [Action.Range]) -> Bool {
@@ -32,11 +33,11 @@ struct Tile: Identifiable, Hashable, Equatable {
                     coords.getBoundaryCoords(at: 6) + coords.getBoundaryCoords(at: 7)
                     + coords.getBoundaryCoords(at: 8)
                 case .infinite:
-                    [self.id]
+                    [self.coords]
                 }
             }
         }
         .reduce([Coords]()) { $0 + $1 }
-        .contains(where: { $0 == self.id })
+        .contains(where: { $0 == self.coords })
     }
 }

@@ -38,7 +38,7 @@ struct GearCard: Card {
                 default: ""
                 }
                 
-                let description: String = switch gear.primaryAction!.0 {
+                var description: String = switch gear.primaryAction!.0 {
                 case .attack: "Attack"
                 case .bolster: "Bolster"
                 case .movement: "Move"
@@ -50,6 +50,7 @@ struct GearCard: Card {
                 default: nil
                 }
                 
+                description = description + ". Created by \(gear.name)"
                 
                 cards += [
                     ActionCard(

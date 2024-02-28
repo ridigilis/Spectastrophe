@@ -16,7 +16,11 @@ struct Gear {
     let weight: Weight
     let rarity: Rarity
     
+    let primaryPassive: Passive?
+    let uniquePassive: Passive?
+    
     let primaryAction: (Action, CardQuantity)?
+    let uniqueAction: (Action, CardQuantity)?
     
     private init(
         name: String? = "",
@@ -24,7 +28,10 @@ struct Gear {
         slot: Slot? = [.armament(.allCases.randomElement()!), .wearable(.allCases.randomElement()!)].randomElement()!,
         weight: Weight? = .allCases.randomElement()!,
         rarity: Rarity? = .roll(),
-        primaryAction: (Action, CardQuantity)? = nil
+        primaryPassive: Passive? = nil,
+        uniquePassive: Passive? = nil,
+        primaryAction: (Action, CardQuantity)? = nil,
+        uniqueAction: (Action, CardQuantity)? = nil
     ) {
         let perks = Gear.determineGearPerks(slot!, rarity!, weight!)
         
@@ -33,9 +40,14 @@ struct Gear {
         self.slot = slot!
         self.weight = weight!
         self.rarity = rarity!
+        
+        self.primaryPassive = primaryPassive
+        self.uniquePassive = uniquePassive
+        
         self.primaryAction = primaryAction != nil ? perks.reduce(primaryAction!) { acc, cur in
             cur.apply(to: acc)
         } : nil
+        self.uniqueAction = uniqueAction
     }
     
     init(
@@ -55,9 +67,14 @@ struct Gear {
         self.slot = slot!
         self.weight = weight
         self.rarity = rarity
+        
+        self.primaryPassive = gear?.primaryPassive
+        self.uniquePassive = gear?.uniquePassive
+        
         self.primaryAction = gear?.primaryAction != nil ? perks.reduce(gear!.primaryAction!) { acc, cur in
             cur.apply(to: acc)
         } : nil
+        self.uniqueAction = gear?.uniqueAction
     }
     
     private static let weapons: [Self] = [
@@ -169,12 +186,53 @@ struct Gear {
             primaryAction: (.attack(as: .physical(.bludgeon), for: [.roll([.d6])], from: [.melee]), 6)
         ),
         
-        ////    "Crossbow": (.medium, [.physical(.pierce)], [.ranged(.medium)], [.d8], 6),
-        ////    "Quarterstaff": (.medium, [.physical(.bludgeon)], [.melee], [.d6], 6),
-        ////    "Battleaxe": (.medium, [.physical(.slash)], [.melee], [.d8], 6),
-        ////    "Morningstar": (.medium, [.physical(.pierce)], [.melee], [.d8], 6),
-        ////    "Longsword": (.medium, [.physical(.slash)], [.melee], [.d8], 6),
-        ////    "Trident": (.medium, [.physical(.pierce)], [.melee], [.d6], 6),
+        Self(
+            name: "Crossbow",
+            description: "Adds 6 1d8 medium range attack cards.",
+            slot: .armament(.mainhand),
+            weight: .medium,
+            primaryAction: (.attack(as: .physical(.pierce), for: [.roll([.d8])], from: [.ranged(.medium)]), 6)
+        ),
+        
+        Self(
+            name: "Quarterstaff",
+            description: "Adds 6 1d6 melee attack cards.",
+            slot: .armament(.mainhand),
+            weight: .medium,
+            primaryAction: (.attack(as: .physical(.bludgeon), for: [.roll([.d6])], from: [.melee]), 6)
+        ),
+        
+        Self(
+            name: "Battleaxe",
+            description: "Adds 6 1d8 melee attack cards.",
+            slot: .armament(.mainhand),
+            weight: .medium,
+            primaryAction: (.attack(as: .physical(.slash), for: [.roll([.d8])], from: [.melee]), 6)
+        ),
+        
+        Self(
+            name: "Morningstar",
+            description: "Adds 6 1d8 melee attack cards.",
+            slot: .armament(.mainhand),
+            weight: .medium,
+            primaryAction: (.attack(as: .physical(.pierce), for: [.roll([.d8])], from: [.melee]), 6)
+        ),
+        
+        Self(
+            name: "Longsword",
+            description: "Adds 6 1d8 melee attack cards.",
+            slot: .armament(.mainhand),
+            weight: .medium,
+            primaryAction: (.attack(as: .physical(.slash), for: [.roll([.d8])], from: [.melee]), 6)
+        ),
+        
+        Self(
+            name: "Trident",
+            description: "Adds 6 1d6 melee attack cards.",
+            slot: .armament(.mainhand),
+            weight: .medium,
+            primaryAction: (.attack(as: .physical(.pierce), for: [.roll([.d6])], from: [.melee]), 6)
+        ),
         
         // heavy
         
@@ -186,15 +244,69 @@ struct Gear {
             primaryAction: (.attack(as: .physical(.slash), for: [.roll([.d12])], from: [.melee]), 8)
         ),
         
-        ////    "Greatsword": (.heavy, [.physical(.slash)], [.melee], [.d6, .d6], 8),
-        ////    "Glaive": (.heavy, [.physical(.slash)], [.melee, .reach], [.d10], 8),
-        ////    "Halberd": (.heavy, [.physical(.slash)], [.melee, .reach], [.d10], 8),
-        ////    "Lance": (.heavy, [.physical(.pierce)], [.melee, .reach], [.d12], 8),
-        ////    "Heavy Crossbow": (.heavy, [.physical(.pierce)], [.ranged(.long)], [.d10], 8),
-        ////    "Greatbow": (.heavy, [.physical(.pierce)], [.ranged(.long)], [.d6, .d6], 8),
-        ////    "Pike": (.heavy, [.physical(.pierce)], [.melee, .reach], [.d10], 10),
-        ////    "Maul": (.heavy, [.physical(.bludgeon)], [.melee], [.d6, .d6], 10),
-
+        Self(
+            name: "Greatsword",
+            description: "Adds 8 2d6 melee attack cards.",
+            slot: .armament(.mainhand),
+            weight: .heavy,
+            primaryAction: (.attack(as: .physical(.slash), for: [.roll([.d6, .d6])], from: [.melee]), 8)
+        ),
+        
+        Self(
+            name: "Glaive",
+            description: "Adds 8 1d10 melee attack cards with reach.",
+            slot: .armament(.mainhand),
+            weight: .heavy,
+            primaryAction: (.attack(as: .physical(.slash), for: [.roll([.d10])], from: [.melee, .reach]), 8)
+        ),
+        
+        Self(
+            name: "Halberd",
+            description: "Adds 8 1d10 melee attack cards with reach.",
+            slot: .armament(.mainhand),
+            weight: .heavy,
+            primaryAction: (.attack(as: .physical(.slash), for: [.roll([.d10])], from: [.melee, .reach]), 8)
+        ),
+        
+        Self(
+            name: "Lance",
+            description: "Adds 8 1d12 melee attack cards with reach.",
+            slot: .armament(.mainhand),
+            weight: .heavy,
+            primaryAction: (.attack(as: .physical(.pierce), for: [.roll([.d12])], from: [.melee, .reach]), 8)
+        ),
+        
+        Self(
+            name: "Heavy Crossbow",
+            description: "Adds 8 1d10 long range attack cards.",
+            slot: .armament(.mainhand),
+            weight: .heavy,
+            primaryAction: (.attack(as: .physical(.pierce), for: [.roll([.d10])], from: [.ranged(.long)]), 8)
+        ),
+        
+        Self(
+            name: "Greatbow",
+            description: "Adds 8 2d6 long range attack cards.",
+            slot: .armament(.mainhand),
+            weight: .heavy,
+            primaryAction: (.attack(as: .physical(.pierce), for: [.roll([.d6, .d6])], from: [.ranged(.long)]), 8)
+        ),
+        
+        Self(
+            name: "Maul",
+            description: "Adds 10 2d6 long range attack cards.",
+            slot: .armament(.mainhand),
+            weight: .heavy,
+            primaryAction: (.attack(as: .physical(.bludgeon), for: [.roll([.d6, .d6])], from: [.melee]), 10)
+        ),
+        
+        Self(
+            name: "Pike",
+            description: "Adds 10 1d10 melee attack cards with reach.",
+            slot: .armament(.mainhand),
+            weight: .heavy,
+            primaryAction: (.attack(as: .physical(.pierce), for: [.roll([.d10])], from: [.melee, .reach]), 10)
+        ),
     ]
     
     private static let armor: [Self] = [
@@ -221,8 +333,10 @@ struct Gear {
         
         Self(
             name: "Shoes",
+            description: "Adds 5 movement cards.",
             slot: .wearable(.feet),
-            weight: Weight.none
+            weight: Weight.none,
+            primaryAction: (.movement(for: 1), 5)
         ),
         
         // light armor
@@ -253,10 +367,10 @@ struct Gear {
         
         Self(
             name: "Light Boots",
-            description: "Adds 1 1d2+1 bolster card.",
+            description: "Adds 3 movement cards.",
             slot: .wearable(.feet),
             weight: .light,
-            primaryAction: (.bolster(for: [.roll([.d2]), .constant(1)]), 1)
+            primaryAction: (.movement(for: 1), 3)
         ),
         
         // medium armor
@@ -287,10 +401,10 @@ struct Gear {
         
         Self(
             name: "Medium Boots",
-            description: "Adds 2 1d4+2 bolster cards.",
+            description: "Adds 2 movement cards.",
             slot: .wearable(.feet),
             weight: .medium,
-            primaryAction: (.bolster(for: [.roll([.d4]), .constant(2)]), 2)
+            primaryAction: (.movement(for: 1), 2)
         ),
         
         // heavy armor
@@ -321,10 +435,10 @@ struct Gear {
         
         Self(
             name: "Heavy Boots",
-            description: "Adds 3 1d6+3 bolster cards.",
+            description: "Adds 1 movement card.",
             slot: .wearable(.feet),
             weight: .heavy,
-            primaryAction: (.bolster(for: [.roll([.d6]), .constant(3)]), 3)
+            primaryAction: (.movement(for: 1), 1)
         )
     ]
     
@@ -400,22 +514,6 @@ struct Gear {
         (.alterMagnitude(by: 15), (.legendary, nil, nil)),
         (.alterMagnitude(by: 150), (.mythical, nil, nil)),
         
-//        (.alterSpread(by: (min: -1, max: 1)), (.rare, nil, nil)),
-//        (.alterSpread(by: (min: 1, max: -1)), (.rare, nil, nil)),
-//        (.alterSpread(by: (min: -2, max: 2)), (.veryrare, nil, nil)),
-//        (.alterSpread(by: (min: 2, max: -2)), (.veryrare, nil, nil)),
-//        (.alterSpread(by: (min: -3, max: 3)), (.legendary, nil, nil)),
-//        (.alterSpread(by: (min: 3, max: -3)), (.legendary, nil, nil)),
-//        
-//        (.alterSpread(by: (min: 0, max: 1)), (.uncommon, nil, nil)),
-//        (.alterSpread(by: (min: 1, max: 0)), (.uncommon, nil, nil)),
-//        (.alterSpread(by: (min: 0, max: 2)), (.rare, nil, nil)),
-//        (.alterSpread(by: (min: 2, max: 0)), (.rare, nil, nil)),
-//        (.alterSpread(by: (min: 0, max: 3)), (.veryrare, nil, nil)),
-//        (.alterSpread(by: (min: 3, max: 0)), (.veryrare, nil, nil)),
-//        (.alterSpread(by: (min: 0, max: 4)), (.legendary, nil, nil)),
-//        (.alterSpread(by: (min: 4, max: 0)), (.legendary, nil, nil)),
-        
         (.alterCardQuantity(by: 1), (.rare, nil, nil)),
         (.alterCardQuantity(by: -1), (.rare, nil, nil)),
         (.alterCardQuantity(by: 2), (.veryrare, nil, nil)),
@@ -451,191 +549,13 @@ enum Weight: Int, CaseIterable {
 
 typealias Reqs = (Rarity, [Slot]?, [Weight]?)
 
-//enum Gear {
-//    case armament(Armament)
-//    case wearable(Wearable)
-////    case adornment(Adornment)
-////    case utility(Utility)
-//}
-//
-//extension Gear {
-//    struct Armament {
-//        let slot: Slot = .allCases.randomElement()!
-//        let weight: Weight = .allCases.randomElement()!
-//        let rarity: Rarity = .roll()
-//        let kind: Kind
-//    }
-//}
-//
-//extension Gear {
-//    enum Weight: Int, CaseIterable {
-//        case none = 0
-//        case light
-//        case medium
-//        case heavy
-//    }
-//}
-//
-//extension Gear.Armament {
-//    struct Weapon {
-//        let name: String
-//        let strike: Strike?
-//    }
-//}
-//
-//extension Gear.Armament.Weapon {
-//    struct Strike {
-//        let attack: Attack
-//        let quantity: Int
-//    }
-//}
-//
-//extension Gear.Armament.Weapon {
-//    init(
-//        slot: Gear.Armament.Slot = .allCases.randomElement()!,
-//        weight: Gear.Weight = .allCases.randomElement()!,
-//        range: Range = [.melee(reach: false), .melee(reach: true), .ranged(.short), .ranged(.mid), .ranged(.long)].randomElement()!
-//    ) {
-//        let weapon = table
-//            .filter {
-//                $0.value.0.contains { slot } &&
-//                $0.value.1 == weight &&
-//                $0.value.2.contains { range }
-//            }
-//    }
-//    
-//    private static let table: [String: (slots: [Gear.Armament.Slot], weight: Gear.Weight, range: Range, damage: Damage, Int)] = [
-//            "Dagger":(
-//                slots: [.mainhand, .offhand],
-//                weight: .none,
-//                range: .melee(reach: false),
-//                damage: Damage.physical(.pierce([.d4])),
-//                2
-//            ),
-////    "Throwing Stars": (.none, [.physical(.pierce)], [.ranged(.short)], [.d4], 2),
-////    
-////    "Shortbow": (.light, [.physical(.pierce)], [.ranged(.short)], [.d4], 2),
-////    "Handaxe": (.light, [.physical(.slash)], [.melee], [.d6], 4),
-////    "Spear": (.light, [.physical(.pierce)], [.melee], [.d6], 4),
-////    "Flail": (.light, [.physical(.bludgeon)], [.melee], [.d8], 4),
-////    "Rapier": (.light, [.physical(.pierce)], [.melee], [.d8], 4),
-////    "Hand Crossbow": (.light, [.physical(.pierce)], [.ranged(.short)], [.d6], 4),
-////    "Shortsword": (.light, [.physical(.pierce)], [.melee], [.d6], 4),
-////    "Scimitar": (.light, [.physical(.slash)], [.melee], [.d6], 4),
-////    "Whip": (.light, [.physical(.slash)], [.melee, .reach], [.d4], 4),
-////    "Longbow": (.light, [.physical(.pierce)], [.ranged(.long)], [.d8], 4),
-////    
-////    "Mace": (.medium, [.physical(.bludgeon)], [.melee], [.d6], 6),
-////    "Crossbow": (.medium, [.physical(.pierce)], [.ranged(.medium)], [.d8], 6),
-////    "Quarterstaff": (.medium, [.physical(.bludgeon)], [.melee], [.d6], 6),
-////    "Battleaxe": (.medium, [.physical(.slash)], [.melee], [.d8], 6),
-////    "Morningstar": (.medium, [.physical(.pierce)], [.melee], [.d8], 6),
-////    "Longsword": (.medium, [.physical(.slash)], [.melee], [.d8], 6),
-////    "Trident": (.medium, [.physical(.pierce)], [.melee], [.d6], 6),
-////    
-////    "Greataxe": (.heavy, [.physical(.slash)], [.melee], [.d12], 8),
-////    "Greatsword": (.heavy, [.physical(.slash)], [.melee], [.d6, .d6], 8),
-////    "Glaive": (.heavy, [.physical(.slash)], [.melee, .reach], [.d10], 8),
-////    "Halberd": (.heavy, [.physical(.slash)], [.melee, .reach], [.d10], 8),
-////    "Lance": (.heavy, [.physical(.pierce)], [.melee, .reach], [.d12], 8),
-////    "Heavy Crossbow": (.heavy, [.physical(.pierce)], [.ranged(.long)], [.d10], 8),
-////    "Greatbow": (.heavy, [.physical(.pierce)], [.ranged(.long)], [.d6, .d6], 8),
-////    "Pike": (.heavy, [.physical(.pierce)], [.melee, .reach], [.d10], 10),
-////    "Maul": (.heavy, [.physical(.bludgeon)], [.melee], [.d6, .d6], 10),
-//    ]
-//}
-//
-//extension Gear.Armament.Weapon {
-//    enum Range {
-//        case melee(reach: Bool)
-//        case ranged(Ranged)
-//    }
-//}
-//
-//extension Gear.Armament.Weapon.Range {
-//    enum Ranged: CaseIterable {
-//        case short
-//        case mid
-//        case long
-//    }
-//}
-//extension Gear.Armament.Weapon {
-//    struct Attack {
-//        let damage: Damage
-//    }
-//}
-//
-//extension Gear.Armament.Weapon {
-//    enum Damage {
-//        case physical(Style)
-//        case elemental(Element)
-//    }
-//}
-//
-//extension Gear.Armament.Weapon.Damage {
-//    enum Style {
-//        case pierce([ResourceEffectMagnitude])
-//        case slash([ResourceEffectMagnitude])
-//        case bludgeon([ResourceEffectMagnitude])
-//    }
-//}
-//
-//extension Gear.Armament.Weapon.Damage {
-//    enum Element {
-//        
-//    }
-//}
-//
-//extension Gear.Armament.Weapon {
-//    struct Perk {
-//
-//    }
-//}
-//
-//extension Gear.Armament {
-//    enum Slot: CaseIterable {
-//        case mainhand
-//        case offhand
-//        case twohand
-//    }
-//}
-//
-//extension Gear.Armament {
-//    enum Kind {
-//        case weapon(Weapon)
-//        case shield
-//    }
-//}
-//
-//extension Gear.Armament {
-//    init() {
-//        self.kind = switch self.slot {
-//        case .offhand: [Kind.weapon(Weapon(slot: self.slot)), Kind.shield].randomElement()!
-//        default: Kind.weapon(Weapon(slot: self.slot))
-//        }
-//    }
-//}
-//
-//extension Gear {
-//    struct Wearable {
-//        let slot: Slot = .allCases.randomElement()!
-//        let weight: Weight = .allCases.randomElement()!
-//        let rarity: Rarity = .roll()
-//    }
-//}
-//
-//extension Gear.Wearable {
-//    enum Slot: CaseIterable {
-//        case head
-//        case torso
-//        case hands
-//        case feet
-//    }
-//}
-//
 enum ResourceEffectMagnitude {
     case roll(Die)
     case constant(Int)
 }
 
 typealias CardQuantity = Int
+
+enum Passive {
+    case defense
+}

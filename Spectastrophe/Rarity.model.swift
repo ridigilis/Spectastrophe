@@ -7,6 +7,18 @@
 
 import Foundation
 
+protocol Rarifiable {
+    var rarity: Rarity { get }
+    
+    func determineRarity(with adjustment: Int?) -> Rarity
+}
+
+extension Rarifiable {
+    func determineRarity(with adjustment: Int = 0) -> Rarity {
+        Rarity.roll(with: adjustment)
+    }
+}
+
 enum Rarity: String {
     case common = "Common"
     case uncommon = "Uncommon"

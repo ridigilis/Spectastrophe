@@ -8,7 +8,7 @@
 import Foundation
 
 final class Encounter: Identifiable, ObservableObject {
-    let id: Coords
+    let coords: Coords
     @Published var board: Board
     @Published var enemies: [Pawn]
     @Published var cards: [LootableCard]
@@ -27,7 +27,7 @@ final class Encounter: Identifiable, ObservableObject {
         player: Pawn,
         cards: [LootableCard] = []
     ) {
-        self.id = id
+        self.coords = id
         self.board = board
         self.enemies = enemies
         self.turn = turn
@@ -38,7 +38,50 @@ final class Encounter: Identifiable, ObservableObject {
 
         self.onEnterTurnStart()
     }
-
+    
+    init(player: Pawn) {
+        self.coords = Coords(0,0)
+        self.board = Board()
+        self.enemies = [
+            Pawn(.enemy),
+            Pawn(.enemy),
+            Pawn(.enemy),
+        ]
+        self.turn = .player
+        self.phase = .turnStart
+        
+        self.player = player
+        self.cards = [
+                LootableCard(card: GearCard(gear: Gear()), coords: Coords(Int.random(in: -20...20), Int.random(in: -20...20))),
+                LootableCard(card: GearCard(gear: Gear()), coords: Coords(Int.random(in: -20...20), Int.random(in: -20...20))),
+                LootableCard(card: GearCard(gear: Gear()), coords: Coords(Int.random(in: -20...20), Int.random(in: -20...20))),
+                LootableCard(card: GearCard(gear: Gear()), coords: Coords(Int.random(in: -20...20), Int.random(in: -20...20))),
+                LootableCard(card: GearCard(gear: Gear()), coords: Coords(Int.random(in: -20...20), Int.random(in: -20...20))),
+                LootableCard(card: GearCard(gear: Gear()), coords: Coords(Int.random(in: -20...20), Int.random(in: -20...20))),
+                LootableCard(card: GearCard(gear: Gear()), coords: Coords(Int.random(in: -20...20), Int.random(in: -20...20))),
+                LootableCard(card: GearCard(gear: Gear()), coords: Coords(Int.random(in: -20...20), Int.random(in: -20...20))),
+                LootableCard(card: GearCard(gear: Gear()), coords: Coords(Int.random(in: -20...20), Int.random(in: -20...20))),
+                LootableCard(card: GearCard(gear: Gear()), coords: Coords(Int.random(in: -20...20), Int.random(in: -20...20))),
+                LootableCard(card: GearCard(gear: Gear()), coords: Coords(Int.random(in: -20...20), Int.random(in: -20...20))),
+                LootableCard(card: GearCard(gear: Gear()), coords: Coords(Int.random(in: -20...20), Int.random(in: -20...20))),
+                LootableCard(card: GearCard(gear: Gear()), coords: Coords(Int.random(in: -20...20), Int.random(in: -20...20))),
+                LootableCard(card: GearCard(gear: Gear()), coords: Coords(Int.random(in: -20...20), Int.random(in: -20...20))),
+                LootableCard(card: GearCard(gear: Gear()), coords: Coords(Int.random(in: -20...20), Int.random(in: -20...20))),
+                LootableCard(card: GearCard(gear: Gear()), coords: Coords(Int.random(in: -20...20), Int.random(in: -20...20))),
+                LootableCard(card: GearCard(gear: Gear()), coords: Coords(Int.random(in: -20...20), Int.random(in: -20...20))),
+                LootableCard(card: GearCard(gear: Gear()), coords: Coords(Int.random(in: -20...20), Int.random(in: -20...20))),
+                LootableCard(card: GearCard(gear: Gear()), coords: Coords(Int.random(in: -20...20), Int.random(in: -20...20))),
+                LootableCard(card: GearCard(gear: Gear()), coords: Coords(Int.random(in: -20...20), Int.random(in: -20...20))),
+                LootableCard(card: GearCard(gear: Gear()), coords: Coords(Int.random(in: -20...20), Int.random(in: -20...20))),
+                LootableCard(card: GearCard(gear: Gear()), coords: Coords(Int.random(in: -20...20), Int.random(in: -20...20))),
+                LootableCard(card: GearCard(gear: Gear()), coords: Coords(Int.random(in: -20...20), Int.random(in: -20...20))),
+                LootableCard(card: GearCard(gear: Gear()), coords: Coords(Int.random(in: -20...20), Int.random(in: -20...20))),
+                LootableCard(card: GearCard(gear: Gear()), coords: Coords(Int.random(in: -20...20), Int.random(in: -20...20))),
+            ]
+        
+        self.onEnterTurnStart()
+    }
+    
     private func onEnterTurnStart() {
         //do something
         
@@ -93,15 +136,15 @@ final class Encounter: Identifiable, ObservableObject {
                 enemy.deck.hand.forEach { card in
                     switch card.primaryAction {
                     case let .attack(_,_,range):
-                        if board.tiles[player.tile!]!.isInRangeOfAction(from: enemy.tile!, range: range) {
+                        if board.tiles[player.coords!]!.isInRangeOfAction(from: enemy.coords!, range: range) {
                             enemy.deck.playFromHand(card)
                             card.primaryAction?.perform(by: enemy, on: [player])
                         }
                     default: return
                     }
                 }
-                if !self.player.tile!.isAdjacent(to: enemy.tile!) {
-                    let path = self.board.shortestPath(from: self.board.tiles[enemy.tile!]!, to: self.board.tiles[self.player.tile!]!)
+                if !self.player.coords!.isAdjacent(to: enemy.coords!) {
+                    let path = self.board.shortestPath(from: self.board.tiles[enemy.coords!]!, to: self.board.tiles[self.player.coords!]!)
                     
                     if path.isEmpty {
                         return
@@ -109,11 +152,11 @@ final class Encounter: Identifiable, ObservableObject {
                     
                     for tile in path {
                         if let card = enemy.deck.hand.first(where: { $0.title == "Move"}) {
-                            if self.player.tile! != tile.id &&
-                                !self.player.tile!.isAdjacent(to: enemy.tile!) &&
-                                self.enemies.allSatisfy({ otherEnemy in otherEnemy.tile! != tile.id }) {
+                            if self.player.coords! != tile.coords &&
+                                !self.player.coords!.isAdjacent(to: enemy.coords!) &&
+                                self.enemies.allSatisfy({ otherEnemy in otherEnemy.coords! != tile.coords }) {
                                 enemy.deck.playFromHand(card)
-                                enemy.tile = tile.id
+                                enemy.coords = tile.coords
                             }
                         } else {
                             break
@@ -124,7 +167,7 @@ final class Encounter: Identifiable, ObservableObject {
                     enemy.deck.hand.forEach { card in
                         switch card.primaryAction {
                         case let .attack(_,_,range):
-                            if board.tiles[player.tile!]!.isInRangeOfAction(from: enemy.tile!, range: range) {
+                            if board.tiles[player.coords!]!.isInRangeOfAction(from: enemy.coords!, range: range) {
                                 enemy.deck.playFromHand(card)
                                 card.primaryAction?.perform(by: enemy, on: [player])
                             }

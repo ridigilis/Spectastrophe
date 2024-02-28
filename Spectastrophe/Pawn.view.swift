@@ -22,7 +22,7 @@ struct PawnView: View {
                     .scaleEffect(y: 2)
             }
             switch pawn.type {
-            case .player: Image("pawn-player").resizable().scaledToFit()
+            case .player: Image("pawn-player").resizable().scaledToFit().id("player")
             case .enemy: Image("pawn-enemy").resizable().scaledToFit()
             }
         }
@@ -52,7 +52,10 @@ struct PawnView: View {
 
     var body: some View {
         if pawn.hp <= 0 {
-            Avatar.rotationEffect(.degrees(90)).offset(x: -40, y: -12)
+            Avatar
+                .rotationEffect(.degrees(90))
+                .offset(x: -40, y: -12)
+                .frame(width: 60, height: 60)
         } else {
             Avatar
         }
